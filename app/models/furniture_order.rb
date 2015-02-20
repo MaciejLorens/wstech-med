@@ -1,0 +1,3 @@
+class FurnitureOrder < Order
+
+end
