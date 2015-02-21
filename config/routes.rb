@@ -2,5 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
-  resources :orders
+  resources :metal_orders do
+    get :not_confirmed, on: :collection
+    get :ordered, on: :collection
+    get :delivered, on: :collection
+  end
+
+  resources :furniture_orders
 end

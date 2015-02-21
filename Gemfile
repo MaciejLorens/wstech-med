@@ -11,11 +11,14 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'therubyracer'
-gem 'less-rails'
+gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'twitter-bootstrap-rails'
 gem 'slim-rails'
 gem 'devise'
 gem 'hirb'
+
+gem 'momentjs-rails', '>= 2.8.1'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 
 gem 'rails_12factor', group: :production
 

@@ -3,7 +3,7 @@ class CreateOrders < ActiveRecord::Migration
     create_table(:orders) do |t|
       t.text      :description,       null: false, default: ''
       t.integer   :user_id,           null: false
-      t.integer   :quantity,          null: false, default: 0
+      t.integer   :quantity,          null: false
       t.decimal   :price,             null: false, precision: 8, scale: 2
       t.string    :wz_name,           default: ''
       t.datetime  :delivery_request_date, null: false
