@@ -2,15 +2,15 @@ class MetalOrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   def not_confirmed
-    @metal_order = MetalOrder.where(status: 'not_confirmed')
+    @metal_order = MetalOrder.where(status: 'not_confirmed').order(created_at: :asc)
   end
 
   def ordered
-    @metal_order = MetalOrder.where(status: 'ordered')
+    @metal_order = MetalOrder.where(status: 'ordered').order(created_at: :asc)
   end
 
   def delivered
-    @metal_order = MetalOrder.where(status: 'delivered')
+    @metal_order = MetalOrder.where(status: 'delivered').order(created_at: :asc)
   end
 
   def show
@@ -35,7 +35,7 @@ class MetalOrdersController < ApplicationController
 
   def update
     if @metal_order.update(metal_order_params)
-      redirect_to action: :not_confirmed, notice: 'Zamówienie zostało zaktualizowane.'
+      redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało zaktualizowane.'
     else
       render :edit
     end

@@ -1,4 +1,4 @@
-h3 Zamówienia metalówka - zamówione
+h3 Zamówienia metalówka - zrealizowane
 
 table.table.table-hover
   tr
@@ -12,6 +12,8 @@ table.table.table-hover
     th Rysunki
     th Potwierdzenie daty zlecenia
     th Fakturowano dnia
+    th Data realizacji
+    th Numer WZ
     th
     th
 
@@ -28,6 +30,7 @@ table.table.table-hover
         td = ''
         td = date(order.confirmation_date)
         td = date(order.invoice_date)
+        td = date(order.delivery_date)
+        td = order.wz_name
         td = link_to 'Edytuj', edit_metal_order_path(order)
-        td = link_to 'Realizuj', metal_order_path(order, metal_order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
         td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

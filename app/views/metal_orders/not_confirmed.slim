@@ -27,4 +27,4 @@ table.table.table-hover
         td = ''
         td = date(order.confirmation_date)
         td = link_to 'Edytuj', edit_metal_order_path(order)
-        td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Are you sure?'}, method: :delete
+        td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

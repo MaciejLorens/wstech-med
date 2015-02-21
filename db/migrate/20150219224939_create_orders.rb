@@ -5,7 +5,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer   :user_id,           null: false
       t.integer   :quantity,          null: false
       t.decimal   :price,             null: false, precision: 8, scale: 2
-      t.string    :wz_name,           default: ''
+      t.string    :wz_name
       t.datetime  :delivery_request_date, null: false
       t.datetime  :confirmation_date
       t.datetime  :invoice_date
