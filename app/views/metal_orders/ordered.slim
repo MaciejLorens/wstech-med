@@ -11,6 +11,7 @@ table.table.table-hover
     th Cena
     th Rysunki
     th Potwierdzenie daty zlecenia
+    th Fakturowano dnia
     th
     th
 
@@ -20,11 +21,11 @@ table.table.table-hover
         td = order.id
         td = order.description
         td = "#{order.user.first_name} #{order.user.last_name}"
-        td = order.created_at.strftime('%d/%m/%Y')
-        td = order.delivery_request_date.strftime('%d/%m/%Y')
+        td = date(order.created_at)
+        td = date(order.delivery_request_date)
         td = order.quantity
         td = order.price
         td = ''
-        td = order.confirmation_date.strftime('%d/%m/%Y')
+        td = date(order.confirmation_date)
         td = link_to 'Edytuj', edit_metal_order_path(order)
         td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Are you sure?'}, method: :delete

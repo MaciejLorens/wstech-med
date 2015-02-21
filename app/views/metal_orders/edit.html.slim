@@ -16,7 +16,7 @@ h3
   .row
     .form-group.col-md-4
       = f.label 'Na kiedy ma być zrobione'
-      = f.text_field :delivery_request_date, value: @metal_order.delivery_request_date.strftime('%d-%m-%Y'), class: 'form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
+      = f.text_field :delivery_request_date, value: date(@metal_order.delivery_request_date), class: 'form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
 
     .form-group.col-md-4
       = f.label 'Ilość'
@@ -30,7 +30,10 @@ h3
     .row
       .form-group.col-md-4
         = f.label 'Potwierdzenie daty zlecenia'
-        = f.text_field :confirmation_date, value: @metal_order.confirmation_date.strftime('%d-%m-%Y'), class: 'form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
+        = f.text_field :confirmation_date, value: date(@metal_order.confirmation_date), class: 'form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
+      .form-group.col-md-4
+        = f.label 'Fakturowano dnia'
+        = f.text_field :invoice_date, value: date(@metal_order.invoice_date), class: 'form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
 
   .row
     .form-group.col-md-4

@@ -49,6 +49,12 @@ h3 {
   display: table;
 }
 
+table.table.table-hover {
+  td:nth-child(2) {
+    max-width: 350px;
+  }
+}
+
 #error_explanation {
   width: 450px;
   border: 2px solid red;
