@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
   belongs_to :user
+  has_many :resources
 
   before_update :check_status
 

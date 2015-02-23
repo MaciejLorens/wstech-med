@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150219224939) do
+ActiveRecord::Schema.define(version: 20150222181631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150219224939) do
     t.integer  "user_id",                                                                 null: false
     t.integer  "quantity",                                                                null: false
     t.decimal  "price",                 precision: 8, scale: 2,                           null: false
-    t.string   "wz_name",                                       default: ""
+    t.string   "wz_name"
     t.datetime "delivery_request_date",                                                   null: false
     t.datetime "confirmation_date"
     t.datetime "invoice_date"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 20150219224939) do
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "resources", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "link"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",                             null: false

@@ -15,6 +15,7 @@ gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem 'twitter-bootstrap-rails'
 gem 'slim-rails'
 gem 'devise'
+gem 'paperclip', '~> 4.2'
 gem 'hirb'
 
 gem 'momentjs-rails', '>= 2.8.1'
