@@ -7,7 +7,7 @@ class Order < ActiveRecord::Base
   private
 
   def check_status
-    if status == 'not_confirmed' && delivery_request_date.to_date == confirmation_date.to_date
+    if status == 'not_confirmed' && delivery_request_date.try(:to_date) == confirmation_date.try(:to_date)
       self.status = 'ordered'
     end
   end
