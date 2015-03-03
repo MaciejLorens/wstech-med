@@ -2,6 +2,8 @@ class Order < ActiveRecord::Base
   belongs_to :user
   has_many :resources
 
+  validates_presence_of :description, :user_id, :quantity, :delivery_request_date, :status, :type
+
   before_update :check_status
 
   private

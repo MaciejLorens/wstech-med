@@ -1,0 +1,20 @@
+pl:
+  activerecord:
+    models:
+      order: Zamówienie
+    attributes:
+      order:
+        description: Opis
+        quantity: Ilość
+        delivery_request_date: Na kiedy ma być zrobione
+    errors:
+      models:
+        order:
+          attributes:
+            description:
+              blank: nie może być pusty
+            quantity:
+              blank: nie może być pusta
+            delivery_request_date:
+              blank: nie może być puste
+
