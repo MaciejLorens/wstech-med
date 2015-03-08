@@ -13,13 +13,15 @@ table.table.table-hover
     th Potwierdzenie daty zlecenia
     th Fakturowano dnia
     th
-    th
+      - if current_user.admin?
+        th
+        th
     th
 
   tbody
     - @metal_order.each do |order|
       tr
-        td = order.id
+        td = order.number
         td = order.description
         td = "#{order.user.first_name} #{order.user.last_name}"
         td = date(order.created_at)
@@ -32,5 +34,7 @@ table.table.table-hover
         td = date(order.confirmation_date)
         td = date(order.invoice_date)
         td = link_to 'Edytuj', edit_metal_order_path(order)
-        td = link_to 'Realizuj', metal_order_path(order, metal_order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
+        - if current_user.admin?
+          td = link_to 'Realizuj', metal_order_path(order, metal_order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
+          td = link_to 'Historia', history_metal_order_path(order)
         td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

@@ -12,12 +12,14 @@ table.table.table-hover
     th Zdjęcia / rysunki
     th Potwierdzenie daty zlecenia
     th
+    - if current_user.admin?
+      th
     th
 
   tbody
     - @metal_order.each do |order|
       tr
-        td = order.id
+        td = order.number
         td = order.description
         td = "#{order.user.first_name} #{order.user.last_name}"
         td = date(order.created_at)
@@ -29,4 +31,6 @@ table.table.table-hover
             = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
         td = date(order.confirmation_date)
         td = link_to 'Edytuj', edit_metal_order_path(order)
+        - if current_user.admin?
+          td = link_to 'Historia', history_metal_order_path(order)
         td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

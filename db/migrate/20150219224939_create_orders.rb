@@ -1,7 +1,8 @@
 class CreateOrders < ActiveRecord::Migration
   def change
     create_table(:orders) do |t|
-      t.text      :description,       null: false, default: ''
+      t.string    :number
+      t.text      :description,       null: false
       t.integer   :user_id,           null: false
       t.integer   :quantity,          null: false
       t.decimal   :price,             null: true, precision: 8, scale: 2

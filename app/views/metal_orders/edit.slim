@@ -1,5 +1,5 @@
 h3
-  = "Zamówienie metalówka - Id: #{@metal_order.id}"
+  = "Zamówienie metalówka - Id: #{@metal_order.number}"
 
 = form_for @metal_order, url: metal_order_path(@metal_order) do |f|
   - if @metal_order.errors.any?

@@ -1,5 +1,5 @@
 class MetalOrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
   def not_confirmed
     @metal_order = MetalOrder.where(status: 'not_confirmed').order(created_at: :asc)
@@ -13,18 +13,21 @@ class MetalOrdersController < ApplicationController
     @metal_order = MetalOrder.where(status: 'delivered').order(created_at: :asc)
   end
 
+  def history
+  end
+
   def show
   end
 
   def new
-    @metal_order = current_user.metal_orders.new
+    @metal_order = MetalOrder.new(user_id: current_user.id)
   end
 
   def edit
   end
 
   def create
-    @metal_order = current_user.metal_orders.new(order_params)
+    @metal_order = MetalOrder.new(metal_order_params.merge(user_id: current_user.id))
 
     if @metal_order.save
       redirect_to action: :not_confirmed, notice: 'Zamówienie zostało stworzone.'
@@ -50,10 +53,6 @@ class MetalOrdersController < ApplicationController
 
   def set_order
     @metal_order = MetalOrder.find(params[:id])
-  end
-
-  def order_params
-    params.require(:order).permit!
   end
 
   def metal_order_params
