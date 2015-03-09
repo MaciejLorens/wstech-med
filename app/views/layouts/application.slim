@@ -53,6 +53,12 @@ html lang="en"
                 li= link_to 'Zamówione', ordered_metal_orders_path
                 li.divider
                 li= link_to 'Zrealizowane', delivered_metal_orders_path
+            li.dropdown
+              = link_to 'WZ', '/path4', class: 'dropdown-toggle', :'data-toggle' => 'dropdown'
+              ul.dropdown-menu
+                li= link_to 'Nowa', new_wz_path
+                li.divider
+                li= link_to 'Lista', wzs_path
 
           ul.nav.navbar-nav.pull-right
             - if user_signed_in?

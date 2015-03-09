@@ -4,6 +4,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string    :number
       t.text      :description,       null: false
       t.integer   :user_id,           null: false
+      t.integer   :wz_id,             null: true
       t.integer   :quantity,          null: false
       t.decimal   :price,             null: true, precision: 8, scale: 2
       t.string    :wz_name

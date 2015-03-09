@@ -1,0 +1,39 @@
+- @wzs.each do |wz|
+  h3
+    = "WZ Id: #{wz.number}"
+    .pull-right
+      = link_to 'Ściągnij WZ', download_wz_path(wz, format: 'csv'), class: 'btn btn-default'
+
+  table.table.table-hover
+    tr
+      th Id
+      th Opis
+      th Zamawiający
+      th Data zlecenia
+      th Na kiedy ma być
+      th Ilość
+      th Cena
+      th Zdjęcia / rysunki
+      th Potwierdzenie daty zlecenia
+      th Fakturowano dnia
+      th Data realizacji
+      th Numer WZ
+
+    tbody
+      - wz.orders.each do |order|
+        tr
+          td = order.number
+          td = order.description
+          td = "#{order.user.first_name} #{order.user.last_name}"
+          td = date(order.created_at)
+          td = date(order.delivery_request_date)
+          td = order.quantity
+          td = order.price
+          td
+            - order.resources.each_with_index do |resource, index|
+              = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
+          td = date(order.confirmation_date)
+          td = date(order.invoice_date)
+          td = date(order.delivery_date)
+          td = order.wz_name
+  br

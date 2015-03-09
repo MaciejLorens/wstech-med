@@ -1,0 +1,11 @@
+br
+
+.input-group.col-lg-6
+  = form_for @wz do |f|
+    .row
+      .form-group.col-md-4
+        = f.label 'Z dnia'
+        = f.text_field :created_at, class: 'form-control', placeholder: date(Time.now), value: date(Time.now)
+    .row
+      .form-group.col-md-4
+        = f.submit 'Zapisz', class: 'btn btn-default'

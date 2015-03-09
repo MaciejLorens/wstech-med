@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   end
 
   resources :furniture_orders
+
+  resources :wzs do
+    get :download, on: :member
+  end
 end
