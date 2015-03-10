@@ -10,7 +10,13 @@ Rails.application.routes.draw do
     get :history, on: :member
   end
 
-  resources :furniture_orders
+  resources :furniture_orders do
+    resources :resources
+    get :not_confirmed, on: :collection
+    get :ordered, on: :collection
+    get :delivered, on: :collection
+    get :history, on: :member
+  end
 
   resources :wzs do
     get :download, on: :member

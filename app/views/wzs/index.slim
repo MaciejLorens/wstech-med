@@ -1,6 +1,6 @@
 - @wzs.each do |wz|
   h3
-    = "WZ Id: #{wz.number}"
+    = wz.number
     .pull-right
       = link_to 'Ściągnij WZ', download_wz_path(wz, format: 'csv'), class: 'btn btn-default'
 
@@ -35,5 +35,5 @@
           td = date(order.confirmation_date)
           td = date(order.invoice_date)
           td = date(order.delivery_date)
-          td = order.wz_name
+          td = order.try(:wz).try(:number)
   br

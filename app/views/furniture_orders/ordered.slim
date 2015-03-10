@@ -1,4 +1,4 @@
-h3 Zamówienia metalówka - zrealizowane
+h3 Zamówienia stolarnia - zamówione
 
 table.table.table-hover
   tr
@@ -12,15 +12,14 @@ table.table.table-hover
     th Zdjęcia / rysunki
     th Potwierdzenie daty zlecenia
     th Fakturowano dnia
-    th Data realizacji
-    th Numer WZ
     th
       - if current_user.admin?
+        th
         th
     th
 
   tbody
-    - @metal_order.each do |order|
+    - @furniture_order.each do |order|
       tr
         td = order.number
         td = order.description
@@ -34,9 +33,8 @@ table.table.table-hover
             = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
         td = date(order.confirmation_date)
         td = date(order.invoice_date)
-        td = date(order.delivery_date)
-        td = order.try(:wz).try(:number)
-        td = link_to 'Edytuj', edit_metal_order_path(order)
+        td = link_to 'Edytuj', edit_furniture_order_path(order)
         - if current_user.admin?
-          td = link_to 'Historia', history_metal_order_path(order)
-        td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+          td = link_to 'Realizuj', furniture_order_path(order, furniture_order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
+          td = link_to 'Historia', history_furniture_order_path(order)
+        td = link_to 'Usuń', furniture_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

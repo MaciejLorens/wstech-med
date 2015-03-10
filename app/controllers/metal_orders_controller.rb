@@ -30,7 +30,7 @@ class MetalOrdersController < ApplicationController
     @metal_order = MetalOrder.new(metal_order_params.merge(user_id: current_user.id))
 
     if @metal_order.save
-      redirect_to action: :not_confirmed, notice: 'Zamówienie zostało stworzone.'
+      redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało stworzone.'
     else
       render :new
     end
@@ -38,7 +38,7 @@ class MetalOrdersController < ApplicationController
 
   def update
     if @metal_order.update(metal_order_params)
-      redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało zaktualizowane.'
+      redirect_to action: :ordered, notice: 'Zamówienie zostało zaktualizowane.'
     else
       render :edit
     end

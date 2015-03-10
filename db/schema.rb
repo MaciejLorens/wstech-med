@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20150901030445) do
     t.integer  "wz_id"
     t.integer  "quantity",                                                                null: false
     t.decimal  "price",                 precision: 8, scale: 2
-    t.string   "wz_name"
     t.datetime "delivery_request_date",                                                   null: false
     t.datetime "confirmation_date"
     t.datetime "invoice_date"

@@ -1,5 +1,5 @@
 h3
-  = "Zamówienie metalówka historia - #{@metal_order.number}"
+  = "Zamówienie stolarnia historia - #{@furniture_order.number}"
 
 table.table.table-hover
   tr
@@ -20,30 +20,31 @@ table.table.table-hover
 
   tbody
     tr
-      - version = @metal_order.versions.last
-      - version_author = User.find_by_id(@metal_order.versions.last.version_author)
-      td = @metal_order.number
-      td = @metal_order.description
-      td = "#{@metal_order.user.first_name} #{@metal_order.user.last_name}"
-      td = date(@metal_order.created_at)
-      td = date(@metal_order.delivery_request_date)
-      td = @metal_order.quantity
-      td = @metal_order.price
+      - version = @furniture_order.versions.last
+      - version_author = User.find_by_id(@furniture_order.versions.last.version_author)
+      td = @furniture_order.number
+      td = @furniture_order.description
+      td = "#{@furniture_order.user.first_name} #{@furniture_order.user.last_name}"
+      td = date(@furniture_order.created_at)
+      td = date(@furniture_order.delivery_request_date)
+      td = @furniture_order.quantity
+      td = @furniture_order.price
       td
-        - @metal_order.resources.each_with_index do |resource, index|
+        - @furniture_order.resources.each_with_index do |resource, index|
           = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
-      td = date(@metal_order.confirmation_date)
-      td = date(@metal_order.invoice_date)
-      td = date(@metal_order.delivery_date)
-      td = @metal_order.try(:wz).try(:number)
+      td = date(@furniture_order.confirmation_date)
+      td = date(@furniture_order.invoice_date)
+      td = date(@furniture_order.delivery_date)
+      td = @furniture_order.try(:wz).try(:number)
       td = "#{version_author.first_name} #{version_author.last_name}"
       td = version.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
 
-    - @metal_order.versions.reverse.each_with_index do |version, index|
+    - @furniture_order.versions.reverse.each_with_index do |version, index|
       tr
-        - if order = version.reify
+        - order = version.reify
+        - if order.present?
           - version_author = User.find_by_id(version.originator)
-          - version_after = @metal_order.versions.reverse[index+1]
+          - version_after = @furniture_order.versions.reverse[index+1]
           td = order.number
           td = order.description
           td = "#{order.user.first_name} #{order.user.last_name}"

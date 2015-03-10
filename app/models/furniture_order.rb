@@ -6,7 +6,7 @@ class FurnitureOrder < Order
 
   def set_number
     time = Time.now
-    self.update_attribute(:number, "ZF/#{time.year}/#{time.month}/#{time.day}/#{self.id}")
+    self.update_column(:number, "ZS/#{time.strftime('%y')}/#{time.month}/#{time.day}/#{self.id}")
   end
 
 end
