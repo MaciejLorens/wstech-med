@@ -38,7 +38,7 @@ class FurnitureOrdersController < ApplicationController
 
   def update
     if @furniture_order.update(furniture_order_params)
-      redirect_to action: :ordered, notice: 'Zamówienie zostało zaktualizowane.'
+      redirect_to action: @furniture_order.status.to_sym, notice: 'Zamówienie zostało zaktualizowane.'
     else
       render :edit
     end

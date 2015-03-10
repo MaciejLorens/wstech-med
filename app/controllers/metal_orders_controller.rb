@@ -38,7 +38,7 @@ class MetalOrdersController < ApplicationController
 
   def update
     if @metal_order.update(metal_order_params)
-      redirect_to action: :ordered, notice: 'Zamówienie zostało zaktualizowane.'
+      redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało zaktualizowane.'
     else
       render :edit
     end
