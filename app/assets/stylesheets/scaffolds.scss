@@ -85,3 +85,31 @@ footer {
     }
   }
 }
+
+.table-hover {
+  td:nth-child(1) {
+    width: 90px;
+  }
+  td:nth-child(2) {
+    min-width: 300px;
+  }
+  td:nth-child(4) {
+    width: 85px;
+  }
+  td:nth-child(5) {
+    width: 85px;
+  }
+  td:nth-child(9) {
+    width: 85px;
+  }
+  td:nth-child(10) {
+    width: 85px;
+  }
+  td:nth-child(11) {
+    width: 85px;
+  }
+}
+
+.container {
+  width: 1300px;
+}

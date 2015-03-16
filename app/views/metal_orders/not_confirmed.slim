@@ -2,7 +2,7 @@ h3 Zamówienia metalówka - niezatwierdzone
 
 table.table.table-hover
   tr
-    th Id
+    th Numer zamówienia
     th Opis
     th Zamawiający
     th Data zlecenia
@@ -11,9 +11,6 @@ table.table.table-hover
     th Cena
     th Zdjęcia / rysunki
     th Potwierdzenie daty zlecenia
-    th
-    - if current_user.admin?
-      th
     th
 
   tbody
@@ -30,7 +27,10 @@ table.table.table-hover
           - order.resources.each_with_index do |resource, index|
             = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
         td = date(order.confirmation_date)
-        td = link_to 'Edytuj', edit_metal_order_path(order)
-        - if current_user.admin?
-          td = link_to 'Historia', history_metal_order_path(order)
-        td = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+        td
+          = link_to 'Edytuj', edit_metal_order_path(order)
+          br
+          - if current_user.admin?
+            = link_to 'Historia', history_metal_order_path(order)
+            br
+          = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
