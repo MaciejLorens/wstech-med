@@ -2,4 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
-
+  $('.datepicker').datepicker({
+    format: 'dd-mm-yyyy',
+    autoclose: true,
+    language: 'pl'
+  });

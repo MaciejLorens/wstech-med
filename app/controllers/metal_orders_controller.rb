@@ -46,7 +46,7 @@ class MetalOrdersController < ApplicationController
 
   def destroy
     @metal_order.destroy
-    redirect_to action: :not_confirmed, notice: 'Zamówienie zostało usunięte.'
+    redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało usunięte.'
   end
 
   private

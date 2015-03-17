@@ -6,7 +6,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
-gem 'turbolinks'
+#gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -19,6 +19,7 @@ gem 'paperclip', '~> 4.2'
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'hirb'
 gem 'flickraw'
+gem 'bootstrap-datepicker-rails'
 
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
