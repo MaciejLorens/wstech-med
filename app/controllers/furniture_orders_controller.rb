@@ -30,6 +30,9 @@ class FurnitureOrdersController < ApplicationController
     @furniture_order = FurnitureOrder.new(furniture_order_params.merge(user_id: current_user.id))
 
     if @furniture_order.save
+      resources_params.each do |resource|
+        @furniture_order.resources.create(resource) if resource['image'].present? || resource['link'].present?
+      end
       redirect_to action: @furniture_order.status.to_sym, notice: 'Zamówienie zostało stworzone.'
     else
       render :new
@@ -56,6 +59,10 @@ class FurnitureOrdersController < ApplicationController
   end
 
   def furniture_order_params
-    params.require(:furniture_order).permit!
+    params.require(:furniture_order).permit!.except(:image1, :image2, :image3, :url1, :url2, :url3)
+  end
+
+  def resources_params
+    [params[:furniture_order][:image1], params[:furniture_order][:image2], params[:furniture_order][:image3], params[:furniture_order][:url1], params[:furniture_order][:url2], params[:furniture_order][:url3]].compact
   end
 end

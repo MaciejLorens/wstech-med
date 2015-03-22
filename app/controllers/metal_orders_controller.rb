@@ -30,6 +30,9 @@ class MetalOrdersController < ApplicationController
     @metal_order = MetalOrder.new(metal_order_params.merge(user_id: current_user.id))
 
     if @metal_order.save
+      resources_params.each do |resource|
+        @metal_order.resources.create(resource) if resource['image'].present? || resource['link'].present?
+      end
       redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało stworzone.'
     else
       render :new
@@ -56,6 +59,10 @@ class MetalOrdersController < ApplicationController
   end
 
   def metal_order_params
-    params.require(:metal_order).permit!
+    params.require(:metal_order).permit!.except(:image1, :image2, :image3, :url1, :url2, :url3)
+  end
+
+  def resources_params
+    [params[:metal_order][:image1], params[:metal_order][:image2], params[:metal_order][:image3], params[:metal_order][:url1], params[:metal_order][:url2], params[:metal_order][:url3]].compact
   end
 end

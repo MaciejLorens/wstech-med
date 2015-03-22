@@ -5,6 +5,8 @@ class Order < ActiveRecord::Base
 
   has_paper_trail
 
+  accepts_nested_attributes_for :resources
+
   validates_presence_of :description, :user_id, :quantity, :delivery_request_date, :status, :type
 
   before_update :check_status
