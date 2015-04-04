@@ -5,7 +5,7 @@ table.table.table-hover
     th Id
     th Opis
     th Zamawiający
-    th Data zlecenia
+    th Data utworzenia
     th Na kiedy ma być
     th Ilość
     th Cena
@@ -20,13 +20,15 @@ table.table.table-hover
         td = order.description
         td = "#{order.user.first_name} #{order.user.last_name}"
         td = date(order.created_at)
-        td = date(order.delivery_request_date)
+        td.red
+          = date(order.delivery_request_date)
         td = order.quantity
         td = order.price
         td
           - order.resources.each_with_index do |resource, index|
             = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
-        td = date(order.confirmation_date)
+        td.red
+          = date(order.confirmation_date)
         td
           = link_to 'Edytuj', edit_furniture_order_path(order)
           br
