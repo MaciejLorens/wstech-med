@@ -9,6 +9,9 @@ h3 Nowe zamówienie metalówka
           li = message
   .row
     .form-group.col-md-12
+      = f.hidden_field :status, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
+
+    .form-group.col-md-12
       = f.label 'Opis'
       = f.text_area :description, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
 

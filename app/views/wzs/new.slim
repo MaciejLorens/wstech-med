@@ -5,7 +5,7 @@ br
     .row
       .form-group.col-md-4
         = f.label 'Z dnia'
-        = f.text_field :created_at, class: 'form-control', placeholder: date(Time.now)
+        = f.text_field :created_at, class: 'datepicker form-control', placeholder: date(Time.now)
     .row
       .form-group.col-md-4
         = f.submit 'Zapisz', class: 'btn btn-default'

@@ -1,6 +1,14 @@
 class FurnitureOrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
+  def inquiry
+    @furniture_order = FurnitureOrder.where(status: 'inquiry').order(created_at: :asc)
+  end
+
+  def proposition
+    @furniture_order = FurnitureOrder.where(status: 'proposition').order(created_at: :asc)
+  end
+
   def not_confirmed
     @furniture_order = FurnitureOrder.where(status: 'not_confirmed').order(created_at: :asc)
   end
@@ -21,6 +29,11 @@ class FurnitureOrdersController < ApplicationController
 
   def new
     @furniture_order = FurnitureOrder.new(user_id: current_user.id)
+  end
+
+  def new_inquiry
+    @furniture_order = FurnitureOrder.new(user_id: current_user.id, status: 'inquiry')
+    render :new
   end
 
   def edit
@@ -49,7 +62,7 @@ class FurnitureOrdersController < ApplicationController
 
   def destroy
     @furniture_order.destroy
-    redirect_to action: :not_confirmed, notice: 'Zamówienie zostało usunięte.'
+    redirect_to action: @furniture_order.status.to_sym, notice: 'Zamówienie zostało usunięte.'
   end
 
   private

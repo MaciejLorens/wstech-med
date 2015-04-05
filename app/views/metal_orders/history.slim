@@ -6,6 +6,7 @@ table.table.table-hover
     th Numer zamówienia
     th Opis
     th Zamawiający
+    th Status
     th Data zlecenia
     th Na kiedy ma być
     th Ilość
@@ -25,6 +26,7 @@ table.table.table-hover
       td = @metal_order.number
       td = @metal_order.description
       td = "#{@metal_order.user.first_name} #{@metal_order.user.last_name}"
+      td = status(@metal_order)
       td = date(@metal_order.created_at)
       td = date(@metal_order.delivery_request_date)
       td = @metal_order.quantity
@@ -47,6 +49,7 @@ table.table.table-hover
           td = order.number
           td = order.description
           td = "#{order.user.first_name} #{order.user.last_name}"
+          td = status(order)
           td = date(order.created_at)
           td = date(order.delivery_request_date)
           td = order.quantity

@@ -6,6 +6,7 @@ table.table.table-hover
     th Numer zamówienia
     th Opis
     th Zamawiający
+    th Status
     th Data zlecenia
     th Na kiedy ma być
     th Ilość
@@ -25,6 +26,7 @@ table.table.table-hover
       td = @furniture_order.number
       td = @furniture_order.description
       td = "#{@furniture_order.user.first_name} #{@furniture_order.user.last_name}"
+      td = status(@furniture_order)
       td = date(@furniture_order.created_at)
       td = date(@furniture_order.delivery_request_date)
       td = @furniture_order.quantity
@@ -48,6 +50,7 @@ table.table.table-hover
           td = order.number
           td = order.description
           td = "#{order.user.first_name} #{order.user.last_name}"
+          td = status(order)
           td = date(order.created_at)
           td = date(order.delivery_request_date)
           td = order.quantity

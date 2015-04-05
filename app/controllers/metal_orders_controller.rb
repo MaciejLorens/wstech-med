@@ -1,6 +1,14 @@
 class MetalOrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
+  def inquiry
+    @metal_order = MetalOrder.where(status: 'inquiry').order(created_at: :asc)
+  end
+
+  def proposition
+    @metal_order = MetalOrder.where(status: 'proposition').order(created_at: :asc)
+  end
+
   def not_confirmed
     @metal_order = MetalOrder.where(status: 'not_confirmed').order(created_at: :asc)
   end
@@ -21,6 +29,11 @@ class MetalOrdersController < ApplicationController
 
   def new
     @metal_order = MetalOrder.new(user_id: current_user.id)
+  end
+
+  def new_inquiry
+    @metal_order = MetalOrder.new(user_id: current_user.id, status: 'inquiry')
+    render :new
   end
 
   def edit
