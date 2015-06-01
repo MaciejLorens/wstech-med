@@ -26,7 +26,10 @@ table.table.table-hover
         td = order.price
         td
           - order.resources.each_with_index do |resource, index|
-            = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
+            - if resource.image.present?
+              = link_to image_tag(resource.image(:thumb)), resource.image.url
+            - else
+              = link_to "[#{index}]", resource.link, target: '_blank'
         td.red
           = date(order.confirmation_date)
         td
