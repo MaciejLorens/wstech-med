@@ -1,4 +1,7 @@
-h3 Oferty stolarnia
+h3
+  | Oferty stolarnia
+  .pull-right
+    = link_to 'Pobierz', download_furniture_orders_path(status: 'proposition', format: 'csv'), class: 'btn btn-default'
 
 table.table.table-hover
   tr

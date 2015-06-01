@@ -65,6 +65,12 @@ class MetalOrdersController < ApplicationController
     redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało usunięte.'
   end
 
+  def download
+    respond_to do |format|
+      format.csv { send_data MetalOrder.to_csv(params[:status]) }
+    end
+  end
+
   private
 
   def set_order

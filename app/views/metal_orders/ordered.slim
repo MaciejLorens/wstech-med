@@ -1,4 +1,7 @@
-h3 Zamówienia metalówka - zamówione
+h3
+  | Zamówienia metalówka - zamówione
+  .pull-right
+    = link_to 'Pobierz', download_metal_orders_path(status: 'ordered', format: 'csv'), class: 'btn btn-default'
 
 table.table.table-hover
   tr

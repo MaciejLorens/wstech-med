@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get :not_confirmed, on: :collection
     get :ordered, on: :collection
     get :delivered, on: :collection
+    get :download, on: :collection
     get :history, on: :member
   end
 
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
     get :not_confirmed, on: :collection
     get :ordered, on: :collection
     get :delivered, on: :collection
+    get :download, on: :collection
     get :history, on: :member
   end
 

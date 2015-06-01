@@ -1,4 +1,7 @@
-h3 Zamówienia stolarnia - niezatwierdzone
+h3
+  | Zamówienia stolarnia - niezatwierdzone
+  .pull-right
+    = link_to 'Pobierz', download_furniture_orders_path(status: 'not_confirmed', format: 'csv'), class: 'btn btn-default'
 
 table.table.table-hover
   tr

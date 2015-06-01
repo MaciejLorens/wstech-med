@@ -1,4 +1,7 @@
-h3 Zapytania stolarnia
+h3
+  | Zapytania stolarnia
+  .pull-right
+    = link_to 'Pobierz', download_furniture_orders_path(status: 'inquiry', format: 'csv'), class: 'btn btn-default'
 
 table.table.table-hover
   tr

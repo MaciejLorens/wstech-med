@@ -1,4 +1,7 @@
-h3 Zamówienia stolarnia - zamówione
+h3
+  | Zamówienia stolarnia - zamówione
+  .pull-right
+    = link_to 'Pobierz', download_furniture_orders_path(status: 'ordered', format: 'csv'), class: 'btn btn-default'
 
 table.table.table-hover
   tr

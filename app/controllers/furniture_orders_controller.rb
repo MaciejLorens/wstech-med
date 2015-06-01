@@ -65,6 +65,12 @@ class FurnitureOrdersController < ApplicationController
     redirect_to action: @furniture_order.status.to_sym, notice: 'Zamówienie zostało usunięte.'
   end
 
+  def download
+    respond_to do |format|
+      format.csv { send_data FurnitureOrder.to_csv(params[:status]) }
+    end
+  end
+
   private
 
   def set_order
