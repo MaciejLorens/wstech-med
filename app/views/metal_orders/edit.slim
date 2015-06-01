@@ -2,6 +2,7 @@ h3
   = "Zamówienie metalówka - #{@metal_order.number}"
 
 = form_for @metal_order, url: metal_order_path(@metal_order) do |f|
+  = hidden_field_tag :referer, request.referer
   - if @metal_order.errors.any?
     #error_explanation
       h2 = 'Błędy uniemożliwiające wysłanie formularza:'

@@ -46,7 +46,7 @@ class MetalOrdersController < ApplicationController
       resources_params.each do |resource|
         @metal_order.resources.create(resource) if resource['image'].present? || resource['link'].present?
       end
-      redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało stworzone.'
+      redirect_to params[:referer], notice: 'Zamówienie zostało stworzone.'
     else
       render :new
     end
@@ -54,7 +54,7 @@ class MetalOrdersController < ApplicationController
 
   def update
     if @metal_order.update(metal_order_params)
-      redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało zaktualizowane.'
+      redirect_to params[:referer], notice: 'Zamówienie zostało zaktualizowane.'
     else
       render :edit
     end

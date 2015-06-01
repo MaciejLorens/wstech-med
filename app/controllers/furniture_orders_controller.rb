@@ -46,7 +46,7 @@ class FurnitureOrdersController < ApplicationController
       resources_params.each do |resource|
         @furniture_order.resources.create(resource) if resource['image'].present? || resource['link'].present?
       end
-      redirect_to action: @furniture_order.status.to_sym, notice: 'Zamówienie zostało stworzone.'
+      redirect_to params[:referer], notice: 'Zamówienie zostało stworzone.'
     else
       render :new
     end
@@ -54,7 +54,7 @@ class FurnitureOrdersController < ApplicationController
 
   def update
     if @furniture_order.update(furniture_order_params)
-      redirect_to action: @furniture_order.status.to_sym, notice: 'Zamówienie zostało zaktualizowane.'
+      redirect_to params[:referer], notice: 'Zamówienie zostało zaktualizowane.'
     else
       render :edit
     end

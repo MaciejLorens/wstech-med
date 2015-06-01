@@ -33,7 +33,7 @@ table.table.table-hover
         td class="#{request_date_match(order)}"
           = date(order.confirmation_date)
         td
-          = link_to 'Utwórz zamówienie', furniture_order_path(order, furniture_order: {status: 'not_confirmed'}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
+          = link_to 'Utwórz zamówienie', furniture_order_path(order, referer: proposition_furniture_orders_path, furniture_order: {status: 'not_confirmed'}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
           br
           = link_to 'Edytuj', edit_furniture_order_path(order)
           br

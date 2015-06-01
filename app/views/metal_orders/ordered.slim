@@ -36,7 +36,7 @@ table.table.table-hover
           = link_to 'Edytuj', edit_metal_order_path(order)
           br
           - if current_user.admin?
-            = link_to 'Zakończ zlecenie', metal_order_path(order, metal_order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
+            = link_to 'Zakończ zlecenie', metal_order_path(order, referer: ordered_metal_orders_path, metal_order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
             br
             = link_to 'Historia', history_metal_order_path(order)
             br
