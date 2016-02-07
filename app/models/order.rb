@@ -7,6 +7,8 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :resources
 
+  scope :at_year, ->(year) { where('created_at >= ? AND created_at < ?', "#{year}/01/01".to_datetime, "#{year.to_i + 1}/01/01".to_datetime) }
+
   validates_presence_of :description, :user_id, :quantity, :delivery_request_date, :status, :type
 
   before_update :check_status

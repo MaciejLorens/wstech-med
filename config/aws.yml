@@ -1,0 +1,7 @@
+development:
+  access_key_id: AKIAJBNYHR4L7YG257YA
+  secret_access_key: 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
+
+production:
+  access_key_id: AKIAJBNYHR4L7YG257YA
+  secret_access_key: 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

@@ -39,5 +39,11 @@
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  config.paperclip_defaults = {
+      :s3_host_name => 's3-eu-west-1.amazonaws.com',
+      :storage => :s3,
+      :bucket => 'wstechmanagement'
+  }
+
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end

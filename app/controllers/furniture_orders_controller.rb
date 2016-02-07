@@ -18,7 +18,7 @@ class FurnitureOrdersController < ApplicationController
   end
 
   def delivered
-    @furniture_order = FurnitureOrder.where(status: 'delivered').order(created_at: :asc)
+    @furniture_order = FurnitureOrder.at_year(params[:year]).where(status: 'delivered').order(created_at: :asc)
   end
 
   def history

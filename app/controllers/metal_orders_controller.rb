@@ -18,7 +18,7 @@ class MetalOrdersController < ApplicationController
   end
 
   def delivered
-    @metal_order = MetalOrder.where(status: 'delivered').order(created_at: :asc)
+    @metal_order = MetalOrder.at_year(params[:year]).where(status: 'delivered').order(created_at: :asc)
   end
 
   def history
