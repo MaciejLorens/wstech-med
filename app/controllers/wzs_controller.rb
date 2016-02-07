@@ -25,6 +25,11 @@ class WzsController < ApplicationController
     end
   end
 
+  def destroy
+    Wz.find(params[:id]).destroy
+    redirect_to action: :index, notice: 'WZ została usunięta.'
+  end
+
   private
 
   def wz_params
