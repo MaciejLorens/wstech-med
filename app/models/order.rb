@@ -13,6 +13,7 @@ class Order < ActiveRecord::Base
   before_create :check_status
 
   scope :at_date, ->(date) { where('created_at >= ? AND created_at < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
+  scope :delivered_at, ->(date) { where('delivery_date >= ? AND delivery_date < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
   scope :at_status, ->(status) { where('status = ?', status) }
 
   def check_status

@@ -13,7 +13,7 @@ class WzsController < ApplicationController
     at = wz_params[:created_at].to_datetime
     wz = Wz.at_date(at).first.presence || Wz.create(created_at: at, number: 'sample')
 
-    Order.at_date(at).at_status('delivered').each{|order| order.update_attribute(:wz_id, wz.id)}
+    Order.delivered_at(at).at_status('delivered').each{|order| order.update_attribute(:wz_id, wz.id)}
 
     redirect_to action: :index, notice: 'WZ została stworzona.'
   end
