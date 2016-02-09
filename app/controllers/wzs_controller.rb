@@ -1,5 +1,5 @@
 class WzsController < ApplicationController
-  before_filter :authentication
+  before_filter :authentication, except: [:index]
 
   def new
     @wz = Wz.new

@@ -3,22 +3,18 @@
     = wz.number
     .pull-right
       = link_to 'Pobierz WZ', download_wz_path(wz, format: 'csv'), class: 'btn btn-default'
-      = link_to 'Usuń', wz_path(wz), data: {confirm: 'Czy jesteś pewien?'}, method: :delete, class: 'btn btn-default remove-wz'
+      - if current_user.admin?
+        = link_to 'Usuń', wz_path(wz), data: {confirm: 'Czy jesteś pewien?'}, method: :delete, class: 'btn btn-default remove-wz'
 
   table.table.table-hover
     tr
-      th Numer WZ
+      th Numer zamówienia
       th Opis
       th Zamawiający
       th Data zlecenia
-      th Na kiedy ma być
       th Ilość
       th Cena
-      th Zdjęcia / rysunki
-      th Potwierdzenie daty zlecenia
-      th Fakturowano dnia
       th Data realizacji
-      th Numer WZ
 
     tbody
       - wz.orders.each do |order|
@@ -27,14 +23,7 @@
           td = order.description
           td = "#{order.user.first_name} #{order.user.last_name}"
           td = date(order.created_at)
-          td = date(order.delivery_request_date)
           td = order.quantity
           td = order.price
-          td
-            - order.resources.each_with_index do |resource, index|
-              = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
-          td = date(order.confirmation_date)
-          td = date(order.invoice_date)
           td = date(order.delivery_date)
-          td = order.try(:wz).try(:number)
   br
