@@ -5,7 +5,8 @@ class Wz < ActiveRecord::Base
 
   validates_presence_of :number
 
-  scope :at_date, ->(date) {Wz.where('created_at >= ? AND created_at < ?', date.beginning_of_day, date.beginning_of_day + 1.day)}
+  scope :at_date, ->(date) { where('created_at >= ? AND created_at < ?', date.beginning_of_day, date.beginning_of_day + 1.day)}
+  scope :at_year_at_month, ->(year, month) { where('created_at >= ? AND created_at < ?', "#{year}/#{month}/01".to_datetime, "#{year}/#{month.to_i + 1}/01".to_datetime) }
 
   after_create :set_number
 

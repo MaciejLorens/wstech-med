@@ -17,4 +17,15 @@ pl:
               blank: nie może być pusta
             delivery_request_date:
               blank: nie może być puste
-
+  January: Styczeń
+  February: Luty
+  March: Marzec
+  April: Kwiecień
+  May: Maj
+  June: Czerwiec
+  July: Lipiec
+  August: Sierpień
+  September: Wrzesień
+  October: Październik
+  November: Listopad
+  December: Grudzień

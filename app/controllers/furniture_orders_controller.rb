@@ -2,23 +2,23 @@ class FurnitureOrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
   def inquiry
-    @furniture_order = FurnitureOrder.where(status: 'inquiry').order(created_at: :asc)
+    @furniture_order = FurnitureOrder.where(status: 'inquiry').order(created_at: :desc)
   end
 
   def proposition
-    @furniture_order = FurnitureOrder.where(status: 'proposition').order(created_at: :asc)
+    @furniture_order = FurnitureOrder.where(status: 'proposition').order(created_at: :desc)
   end
 
   def not_confirmed
-    @furniture_order = FurnitureOrder.where(status: 'not_confirmed').order(created_at: :asc)
+    @furniture_order = FurnitureOrder.where(status: 'not_confirmed').order(created_at: :desc)
   end
 
   def ordered
-    @furniture_order = FurnitureOrder.where(status: 'ordered').order(created_at: :asc)
+    @furniture_order = FurnitureOrder.where(status: 'ordered').order(created_at: :desc)
   end
 
   def delivered
-    @furniture_order = FurnitureOrder.at_year(params[:year]).where(status: 'delivered').order(created_at: :asc)
+    @furniture_order = FurnitureOrder.at_year_at_month(params[:year], params[:month]).where(status: 'delivered').order(created_at: :desc)
   end
 
   def history

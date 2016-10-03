@@ -2,23 +2,23 @@ class MetalOrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
   def inquiry
-    @metal_order = MetalOrder.where(status: 'inquiry').order(created_at: :asc)
+    @metal_order = MetalOrder.where(status: 'inquiry').order(created_at: :desc)
   end
 
   def proposition
-    @metal_order = MetalOrder.where(status: 'proposition').order(created_at: :asc)
+    @metal_order = MetalOrder.where(status: 'proposition').order(created_at: :desc)
   end
 
   def not_confirmed
-    @metal_order = MetalOrder.where(status: 'not_confirmed').order(created_at: :asc)
+    @metal_order = MetalOrder.where(status: 'not_confirmed').order(created_at: :desc)
   end
 
   def ordered
-    @metal_order = MetalOrder.where(status: 'ordered').order(created_at: :asc)
+    @metal_order = MetalOrder.where(status: 'ordered').order(created_at: :desc)
   end
 
   def delivered
-    @metal_order = MetalOrder.at_year(params[:year]).where(status: 'delivered').order(created_at: :asc)
+    @metal_order = MetalOrder.at_year_at_month(params[:year], params[:month]).where(status: 'delivered').order(created_at: :desc)
   end
 
   def history

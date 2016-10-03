@@ -1,13 +1,14 @@
-h3
-  | Zamówienia metalówka - zrealizowane #{params[:year]}
+h2
+  | Lista zamówień metalówka - zrealizowane z&nbsp;
+  = select_tag('order-select-month', options_for_select(name_of_months, params[:month]), class: 'metal-select')
+  | &nbsp;
+  = select_tag('order-select-year', options_for_select((2014..Time.now.year).to_a.reverse, params[:year]), class: 'metal-select')
+  | &nbsp;r.
   .pull-right
     = link_to 'Pobierz', download_metal_orders_path(status: 'delivered', format: 'csv'), class: 'btn btn-default'
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
-
-h3
-  - current_year = Time.now.year
-  - (current_year - 2014).times do |i|
-    = link_to(current_year - i, delivered_metal_orders_path(year: current_year - i), class: 'year-link')
+  br
+  br
 
 table.table.table-hover
   tr

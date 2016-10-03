@@ -1,3 +1,12 @@
+h2
+  | Lista WZ z&nbsp;
+  = select_tag('wz-select-month', options_for_select(name_of_months, params[:month]), class: 'wz-select')
+  | &nbsp;
+  = select_tag('wz-select-year', options_for_select((2014..Time.now.year).to_a.reverse, params[:year]), class: 'wz-select')
+  | &nbsp;r.
+  br
+  br
+
 - @wzs.each do |wz|
   h3
     = wz.number

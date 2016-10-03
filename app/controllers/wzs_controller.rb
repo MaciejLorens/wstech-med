@@ -6,7 +6,7 @@ class WzsController < ApplicationController
   end
 
   def index
-    @wzs = Wz.all
+    @wzs = Wz.at_year_at_month(params[:year], params[:month]).order(created_at: :desc)
   end
 
   def create
