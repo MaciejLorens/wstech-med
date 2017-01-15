@@ -17,8 +17,21 @@ class FurnitureOrdersController < ApplicationController
     @furniture_order = FurnitureOrder.where(status: 'ordered').order(created_at: :desc)
   end
 
-  def delivered
-    @furniture_order = FurnitureOrder.at_year_at_month(params[:year], params[:month]).where(status: 'delivered').order(created_at: :desc)
+  def delivered_without_wz
+    @furniture_order = FurnitureOrder
+                         .without_wz
+                         .where(status: 'delivered')
+                         .includes(:resources, :user)
+                         .order(created_at: :desc)
+  end
+
+  def delivered_with_wz
+    @furniture_order = FurnitureOrder
+                         .with_wz
+                         .at_year_at_month(params[:year], params[:month])
+                         .where(status: 'delivered')
+                         .includes(:resources, :user, :wz)
+                         .order(created_at: :desc)
   end
 
   def history

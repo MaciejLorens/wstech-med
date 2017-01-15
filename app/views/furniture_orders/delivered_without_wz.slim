@@ -1,11 +1,6 @@
 h2
-  | Lista zamówień stolarnia - zrealizowane z&nbsp;
-  = select_tag('order-select-month', options_for_select(name_of_months, params[:month]), class: 'furniture-select')
-  | &nbsp;
-  = select_tag('order-select-year', options_for_select((2014..Time.now.year).to_a.reverse, params[:year]), class: 'furniture-select')
-  | &nbsp;r.
+  | Lista zamówień stolarnia - zrealizowane bez WZ
   .pull-right
-    = link_to 'Pobierz', download_furniture_orders_path(status: 'delivered', format: 'csv'), class: 'btn btn-default'
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
   br
   br
@@ -19,7 +14,7 @@ table.table.table-hover
     th Na kiedy ma być
     th Ilość
     th Cena
-    th Zdjęcia / rysunki
+    th Zdjęcia
     th Potwierdzenie daty zlecenia
     th Fakturowano dnia
     th Data realizacji
@@ -39,7 +34,8 @@ table.table.table-hover
         td
           - order.resources.each_with_index do |resource, index|
             - if resource.image.present?
-              = link_to image_tag(resource.image(:thumb)), resource.image.url
+              object data="" type="image/png"
+                = link_to image_tag(resource.image(:thumb), alt: ''), resource.image.url
             - else
               = link_to "[#{index}]", resource.link, target: '_blank'
         td = date(order.confirmation_date)

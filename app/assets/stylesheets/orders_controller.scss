@@ -13,3 +13,7 @@
 .remove-wz {
   margin-left: 20px;
 }
+
+a[href]:after {
+  display: none;
+}

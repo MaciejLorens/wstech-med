@@ -17,8 +17,21 @@ class MetalOrdersController < ApplicationController
     @metal_order = MetalOrder.where(status: 'ordered').order(created_at: :desc)
   end
 
-  def delivered
-    @metal_order = MetalOrder.at_year_at_month(params[:year], params[:month]).where(status: 'delivered').order(created_at: :desc)
+  def delivered_without_wz
+    @metal_order = MetalOrder
+                     .without_wz
+                     .where(status: 'delivered')
+                     .includes(:resources, :user)
+                     .order(created_at: :desc)
+  end
+
+  def delivered_with_wz
+    @metal_order = MetalOrder
+                     .with_wz
+                     .at_year_at_month(params[:year], params[:month])
+                     .where(status: 'delivered')
+                     .includes(:resources, :user, :wz)
+                     .order(created_at: :desc)
   end
 
   def history

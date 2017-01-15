@@ -16,6 +16,8 @@ class Order < ActiveRecord::Base
   scope :delivered_at, ->(date) { where('delivery_date >= ? AND delivery_date < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
   scope :at_status, ->(status) { where('status = ?', status) }
   scope :at_year_at_month, ->(year, month) { where('created_at >= ? AND created_at < ?', "#{year}/#{month}/01".to_datetime, "#{year}/#{month}/01".to_datetime.end_of_month) }
+  scope :without_wz, -> () { where('wz_id IS NULL') }
+  scope :with_wz, -> () { where('wz_id IS NOT NULL') }
 
   def check_status
     if status == 'not_confirmed' && delivery_request_date.try(:to_date) == confirmation_date.try(:to_date)
