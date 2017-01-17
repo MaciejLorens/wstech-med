@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
+  get 'search' => 'home#search'
+
   resources :metal_orders do
     resources :resources
     get :new_inquiry, on: :collection

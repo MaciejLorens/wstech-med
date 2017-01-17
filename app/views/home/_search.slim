@@ -1,9 +1,7 @@
 h2
-  | Lista zamówień metalówka - zrealizowane z WZ z&nbsp;
-  = select_tag('order-select-month', options_for_select(name_of_months, params[:month]), class: 'metal-select')
-  | &nbsp;
-  = select_tag('order-select-year', options_for_select((2014..Time.now.year).to_a.reverse, params[:year]), class: 'metal-select')
-  | &nbsp;r.
+  | Wyniki wyszukania klucza
+  span
+    = params[:query]
   .pull-right
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
   br
@@ -20,13 +18,13 @@ table.table.table-hover
     th Cena
     th Zdjęcia
     th Potwierdzenie daty zlecenia
-    th Fakturowano dnia
     th Data realizacji
+    th Status
     th Numer WZ
     th
 
   tbody
-    - @metal_order.each do |order|
+    - @orders.each do |order|
       tr
         td = order.number
         td = order.description
@@ -42,13 +40,13 @@ table.table.table-hover
             - else
               = link_to "[#{index}]", resource.link, target: '_blank'
         td = date(order.confirmation_date)
-        td = date(order.invoice_date)
         td = date(order.delivery_date)
+        td = status(order)
         td = order.wz.present? ? link_to(order.wz.number, wz_path(order.wz)) : ''
         td
-          = link_to 'Edytuj', edit_metal_order_path(order)
+          = link_to 'Edytuj', edit_furniture_order_path(order)
           br
           - if current_user.admin?
-            = link_to 'Historia', history_metal_order_path(order)
+            = link_to 'Historia', history_furniture_order_path(order)
             br
-          = link_to 'Usuń', metal_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+          = link_to 'Usuń', furniture_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

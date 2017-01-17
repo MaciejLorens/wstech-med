@@ -41,7 +41,7 @@ table.table.table-hover
         td = date(order.confirmation_date)
         td = date(order.invoice_date)
         td = date(order.delivery_date)
-        td = order.try(:wz).try(:number)
+        td = order.wz.present? ? link_to(order.wz.number, wz_path(order.wz)) : ''
         td
           = link_to 'Edytuj', edit_furniture_order_path(order)
           br

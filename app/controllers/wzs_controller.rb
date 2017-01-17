@@ -9,6 +9,10 @@ class WzsController < ApplicationController
     @wzs = Wz.at_year_at_month(params[:year], params[:month]).order(created_at: :desc)
   end
 
+  def show
+    @wz = Wz.find(params[:id])
+  end
+
   def create
     at = wz_params[:created_at].to_datetime
     wz = Wz.at_date(at).first.presence || Wz.create(created_at: at, number: 'sample')

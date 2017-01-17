@@ -25,7 +25,7 @@ html lang="en"
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        = link_to 'WS-TECH Management', root_path, class: 'navbar-brand'
+        = link_to 'WS-TECH', root_path, class: 'navbar-brand'
         .navbar-collapse.collapse.navbar-responsive-collapse
           ul.nav.navbar-nav
             li.dropdown
@@ -76,15 +76,17 @@ html lang="en"
                 li= link_to 'Lista', wzs_path(year: Time.now.year, month: Time.now.month)
 
           ul.nav.navbar-nav.pull-right
+            = text_field_tag :search_tag, '', placeholder: 'Szukaj w opisie...', class: 'search_tag'
             - if user_signed_in?
-              | #{current_user.first_name} #{current_user.last_name} (#{current_user.email})&nbsp&nbsp
+              | #{current_user.first_name} #{current_user.last_name} &nbsp&nbsp
               = link_to 'Wyloguj', destroy_user_session_path, method: :delete, class: 'btn btn-default navbar-btn'
             - else
               = link_to 'Zaloguj', new_user_session_path, class: 'btn btn-default navbar-btn'
 
     .container
       .row
-        .col-lg-12
+        .search-results
+        .col-lg-12.main-body
           = bootstrap_flash
           = yield
 

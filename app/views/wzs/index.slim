@@ -11,7 +11,7 @@ h2
   h3
     = wz.number
     .pull-right
-      = link_to 'Pobierz WZ', download_wz_path(wz, format: 'csv'), class: 'btn btn-default'
+      = link_to 'Widok pojedynczy', wz_path(wz), class: 'btn btn-default'
       - if current_user.admin?
         = link_to 'Usuń', wz_path(wz), data: {confirm: 'Czy jesteś pewien?'}, method: :delete, class: 'btn btn-default remove-wz'
 
