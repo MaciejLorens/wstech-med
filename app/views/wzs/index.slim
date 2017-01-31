@@ -1,8 +1,8 @@
 h2
   | Lista WZ z&nbsp;
-  = select_tag('wz-select-month', options_for_select(name_of_months, params[:month]), class: 'wz-select')
+  = select_tag('wz-select-month', options_for_select(name_of_months, params[:month] || Date.today.month), class: 'wz-select')
   | &nbsp;
-  = select_tag('wz-select-year', options_for_select((2014..Time.now.year).to_a.reverse, params[:year]), class: 'wz-select')
+  = select_tag('wz-select-year', options_for_select((2014..Date.today.year).to_a.reverse, params[:year] || Date.today.year), class: 'wz-select')
   | &nbsp;r.
   br
   br
@@ -21,7 +21,7 @@ h2
       th Opis
       th Zamawiający
       th Data zlecenia
-      th Ilość
+      th Ilość zamówiona / Ilość w WZ
       th Cena
       th Data realizacji
 
@@ -32,7 +32,7 @@ h2
           td = order.description
           td = "#{order.user.first_name} #{order.user.last_name}"
           td = date(order.created_at)
-          td = order.quantity
+          td = "#{order.quantity} / #{wz.orders_wzs.find_by(order_id: order.id).quantity}"
           td = order.price
           td = date(order.delivery_date)
   br

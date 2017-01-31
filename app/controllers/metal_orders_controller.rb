@@ -2,36 +2,34 @@ class MetalOrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
   def inquiry
-    @metal_order = MetalOrder.where(status: 'inquiry').order(created_at: :desc)
+    @metal_order = Order.metal.where(status: 'inquiry').order(created_at: :desc)
   end
 
   def proposition
-    @metal_order = MetalOrder.where(status: 'proposition').order(created_at: :desc)
+    @metal_order = Order.metal.where(status: 'proposition').order(created_at: :desc)
   end
 
   def not_confirmed
-    @metal_order = MetalOrder.where(status: 'not_confirmed').order(created_at: :desc)
+    @metal_order = Order.metal.where(status: 'not_confirmed').order(created_at: :desc)
   end
 
   def ordered
-    @metal_order = MetalOrder.where(status: 'ordered').order(created_at: :desc)
+    @metal_order = Order.metal.where(status: 'ordered').order(created_at: :desc)
   end
 
   def delivered_without_wz
-    @metal_order = MetalOrder
-                     .without_wz
-                     .where(status: 'delivered')
-                     .includes(:resources, :user)
-                     .order(created_at: :desc)
+    @metal_order = Order.metal
+                     .includes(:resources, :user, :wzs)
+                     .where(status: 'delivered', full_in_wz: false)
+                     .order('orders.created_at DESC')
   end
 
   def delivered_with_wz
-    @metal_order = MetalOrder
-                     .with_wz
+    @metal_order = Order.metal
+                     .includes(:resources, :user, :wzs)
+                     .where(status: 'delivered', full_in_wz: true)
                      .at_year_at_month(params[:year], params[:month])
-                     .where(status: 'delivered')
-                     .includes(:resources, :user, :wz)
-                     .order(created_at: :desc)
+                     .order('orders.created_at DESC')
   end
 
   def history
@@ -41,11 +39,11 @@ class MetalOrdersController < ApplicationController
   end
 
   def new
-    @metal_order = MetalOrder.new(user_id: current_user.id)
+    @metal_order = Order.metal.new(user_id: current_user.id)
   end
 
   def new_inquiry
-    @metal_order = MetalOrder.new(user_id: current_user.id, status: 'inquiry')
+    @metal_order = Order.metal.new(user_id: current_user.id, status: 'inquiry')
     render :new
   end
 
@@ -53,7 +51,7 @@ class MetalOrdersController < ApplicationController
   end
 
   def create
-    @metal_order = MetalOrder.new(metal_order_params.merge(user_id: current_user.id))
+    @metal_order = Order.metal.new(metal_order_params.merge(user_id: current_user.id))
 
     if @metal_order.save
       resources_params.each do |resource|
@@ -74,20 +72,24 @@ class MetalOrdersController < ApplicationController
   end
 
   def destroy
+    status = @metal_order.status.to_sym
+    if status == :delivered
+      status = @metal_order.full_in_wz? ? :delivered_with_wz : :delivered_without_wz
+    end
     @metal_order.destroy
-    redirect_to action: @metal_order.status.to_sym, notice: 'Zamówienie zostało usunięte.'
+    redirect_to action: status, notice: 'Zamówienie zostało usunięte.'
   end
 
   def download
     respond_to do |format|
-      format.csv { send_data MetalOrder.to_csv(params[:status]) }
+      format.csv { send_data Order.metal.to_csv(params[:status]) }
     end
   end
 
   private
 
   def set_order
-    @metal_order = MetalOrder.find(params[:id])
+    @metal_order = Order.metal.find(params[:id])
   end
 
   def metal_order_params

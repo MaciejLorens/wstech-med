@@ -2,35 +2,33 @@ class FurnitureOrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
   def inquiry
-    @furniture_order = FurnitureOrder.where(status: 'inquiry').order(created_at: :desc)
+    @furniture_order = Order.furniture.where(status: 'inquiry').order(created_at: :desc)
   end
 
   def proposition
-    @furniture_order = FurnitureOrder.where(status: 'proposition').order(created_at: :desc)
+    @furniture_order = Order.furniture.where(status: 'proposition').order(created_at: :desc)
   end
 
   def not_confirmed
-    @furniture_order = FurnitureOrder.where(status: 'not_confirmed').order(created_at: :desc)
+    @furniture_order = Order.furniture.where(status: 'not_confirmed').order(created_at: :desc)
   end
 
   def ordered
-    @furniture_order = FurnitureOrder.where(status: 'ordered').order(created_at: :desc)
+    @furniture_order = Order.furniture.where(status: 'ordered').order(created_at: :desc)
   end
 
   def delivered_without_wz
-    @furniture_order = FurnitureOrder
-                         .without_wz
-                         .where(status: 'delivered')
-                         .includes(:resources, :user)
+    @furniture_order = Order.furniture
+                         .includes(:resources, :user, :wzs)
+                         .where(status: 'delivered', full_in_wz: false)
                          .order(created_at: :desc)
   end
 
   def delivered_with_wz
-    @furniture_order = FurnitureOrder
-                         .with_wz
+    @furniture_order = Order.furniture
+                         .includes(:resources, :user, :wzs)
+                         .where(status: 'delivered', full_in_wz: true)
                          .at_year_at_month(params[:year], params[:month])
-                         .where(status: 'delivered')
-                         .includes(:resources, :user, :wz)
                          .order(created_at: :desc)
   end
 
@@ -41,11 +39,11 @@ class FurnitureOrdersController < ApplicationController
   end
 
   def new
-    @furniture_order = FurnitureOrder.new(user_id: current_user.id)
+    @furniture_order = Order.furniture.new(user_id: current_user.id)
   end
 
   def new_inquiry
-    @furniture_order = FurnitureOrder.new(user_id: current_user.id, status: 'inquiry')
+    @furniture_order = Order.furniture.new(user_id: current_user.id, status: 'inquiry')
     render :new
   end
 
@@ -53,7 +51,7 @@ class FurnitureOrdersController < ApplicationController
   end
 
   def create
-    @furniture_order = FurnitureOrder.new(furniture_order_params.merge(user_id: current_user.id))
+    @furniture_order = Order.furniture.new(furniture_order_params.merge(user_id: current_user.id))
 
     if @furniture_order.save
       resources_params.each do |resource|
@@ -74,20 +72,24 @@ class FurnitureOrdersController < ApplicationController
   end
 
   def destroy
+    status = @furniture_order.status.to_sym
+    if status == :delivered
+      status = @furniture_order.full_in_wz? ? :delivered_with_wz : :delivered_without_wz
+    end
     @furniture_order.destroy
-    redirect_to action: @furniture_order.status.to_sym, notice: 'Zamówienie zostało usunięte.'
+    redirect_to action: status, notice: 'Zamówienie zostało usunięte.'
   end
 
   def download
     respond_to do |format|
-      format.csv { send_data FurnitureOrder.to_csv(params[:status]) }
+      format.csv { send_data Order.furniture.to_csv(params[:status]) }
     end
   end
 
   private
 
   def set_order
-    @furniture_order = FurnitureOrder.find(params[:id])
+    @furniture_order = Order.furniture.find(params[:id])
   end
 
   def furniture_order_params

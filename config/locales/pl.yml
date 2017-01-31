@@ -6,6 +6,7 @@ pl:
       order:
         description: Opis
         quantity: Ilość
+        quantity_in_wz: łącznie w WZ
         delivery_request_date: Na kiedy ma być zrobione
     errors:
       models:

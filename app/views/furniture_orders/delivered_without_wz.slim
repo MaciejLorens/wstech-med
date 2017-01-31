@@ -12,7 +12,7 @@ table.table.table-hover
     th Zamawiający
     th Data zlecenia
     th Na kiedy ma być
-    th Ilość
+    th Ilość / łącznie w WZ
     th Cena
     th Zdjęcia
     th Potwierdzenie daty zlecenia
@@ -29,7 +29,7 @@ table.table.table-hover
         td = "#{order.user.first_name} #{order.user.last_name}"
         td = date(order.created_at)
         td = date(order.delivery_request_date)
-        td = order.quantity
+        td = "#{order.quantity} / <span class='quantity_in_wz'>#{order.quantity_in_wz}</span>".html_safe
         td = order.price
         td
           - order.resources.each_with_index do |resource, index|
@@ -41,7 +41,9 @@ table.table.table-hover
         td = date(order.confirmation_date)
         td = date(order.invoice_date)
         td = date(order.delivery_date)
-        td = order.wz.present? ? link_to(order.wz.number, wz_path(order.wz)) : ''
+        td
+          - order.wzs.each do |wz|
+            = link_to(wz.number, wz_path(wz))
         td
           = link_to 'Edytuj', edit_furniture_order_path(order)
           br

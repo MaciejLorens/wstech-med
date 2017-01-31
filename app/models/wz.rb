@@ -1,7 +1,6 @@
 class Wz < ActiveRecord::Base
-  has_many :orders
-  has_many :metal_orders, -> () { where type: 'MetalOrder' }, class_name: 'Order'
-  has_many :furniture_orders, -> () { where type: 'FurnitureOrder' }, class_name: 'Order'
+  has_many :orders_wzs
+  has_many :orders, through: :orders_wzs
 
   validates_presence_of :number
 

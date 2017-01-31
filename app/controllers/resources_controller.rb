@@ -2,7 +2,7 @@ class ResourcesController < ApplicationController
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
 
   def create
-    metal_order = MetalOrder.find(params[:metal_order_id])
+    metal_order = Order.metal.find(params[:metal_order_id])
     @resource = metal_order.resources.new(resource_params)
 
     if @resource.save
@@ -13,7 +13,7 @@ class ResourcesController < ApplicationController
   end
 
   def destroy
-    metal_order = MetalOrder.find(params[:metal_order_id])
+    metal_order = Order.metal.find(params[:metal_order_id])
     @resource.destroy
     redirect_to controller: 'metal_orders', action: :edit, id: metal_order.id
   end
