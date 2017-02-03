@@ -19,8 +19,7 @@ class WzsController < ApplicationController
   end
 
   def create
-    at = DateTime.now
-    wz = Wz.at_date(at).first.presence || Wz.create(created_at: at, number: 'sample')
+    wz = Wz.create(number: 'sample')
 
     params[:orders].map(&:last).each do |id, quantity_in_wz|
       order = Order.find(id)
@@ -42,6 +41,8 @@ class WzsController < ApplicationController
       order.update(full_in_wz: false) if order.quantity_in_wz != order.quantity
       orders_wz.destroy
     end
+
+    wz.destroy
 
     redirect_to action: :index, notice: 'WZ została usunięta.'
   end
