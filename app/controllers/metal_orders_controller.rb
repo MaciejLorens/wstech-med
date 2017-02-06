@@ -21,7 +21,7 @@ class MetalOrdersController < ApplicationController
     @metal_order = Order.metal
                      .includes(:resources, :user, :wzs)
                      .where(status: 'delivered', full_in_wz: false)
-                     .order('orders.created_at DESC')
+                     .order(created_at: :desc)
   end
 
   def delivered_with_wz
@@ -29,7 +29,7 @@ class MetalOrdersController < ApplicationController
                      .includes(:resources, :user, :wzs)
                      .where(status: 'delivered', full_in_wz: true)
                      .at_year_at_month(params[:year], params[:month])
-                     .order('orders.created_at DESC')
+                     .order(created_at: :desc)
   end
 
   def history
@@ -39,11 +39,11 @@ class MetalOrdersController < ApplicationController
   end
 
   def new
-    @metal_order = Order.metal.new(user_id: current_user.id)
+    @metal_order = MetalOrder.new(user_id: current_user.id)
   end
 
   def new_inquiry
-    @metal_order = Order.metal.new(user_id: current_user.id, status: 'inquiry')
+    @metal_order = MetalOrder.new(user_id: current_user.id, status: 'inquiry')
     render :new
   end
 
@@ -51,13 +51,13 @@ class MetalOrdersController < ApplicationController
   end
 
   def create
-    @metal_order = Order.metal.new(metal_order_params.merge(user_id: current_user.id))
+    @metal_order = MetalOrder.new(metal_order_params.merge(user_id: current_user.id))
 
     if @metal_order.save
       resources_params.each do |resource|
         @metal_order.resources.create(resource) if resource['image'].present? || resource['link'].present?
       end
-      redirect_to params[:referer], notice: 'Zamówienie zostało stworzone.'
+      redirect_to '/', notice: 'Zamówienie zostało stworzone.'
     else
       render :new
     end
@@ -76,14 +76,23 @@ class MetalOrdersController < ApplicationController
     if status == :delivered
       status = @metal_order.full_in_wz? ? :delivered_with_wz : :delivered_without_wz
     end
-    @metal_order.destroy
-    redirect_to action: status, notice: 'Zamówienie zostało usunięte.'
+    @metal_order.update(status: 'deleted', deleted_at: Time.now, deleted_by: "#{current_user.first_name} #{current_user.last_name}")
+
+    if status == :delivered_with_wz
+      redirect_to params[:referer]
+    else
+      redirect_to action: status
+    end
   end
 
   def download
     respond_to do |format|
       format.csv { send_data Order.metal.to_csv(params[:status]) }
     end
+  end
+
+  def deleted
+    @metal_order = Order.metal.where(status: 'deleted').order(created_at: :desc)
   end
 
   private

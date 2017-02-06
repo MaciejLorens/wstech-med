@@ -1,9 +1,5 @@
 h2
-  | Lista zamówień stolarnia - zrealizowane z WZ z&nbsp;
-  = select_tag('order-select-month', options_for_select(name_of_months, params[:month]), class: 'furniture-select')
-  | &nbsp;
-  = select_tag('order-select-year', options_for_select((2014..Time.now.year).to_a.reverse, params[:year]), class: 'furniture-select')
-  | &nbsp;r.
+  | Lista zamówień stolarnia - usunięte
   .pull-right
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
   br
@@ -20,10 +16,10 @@ table.table.table-hover
     th Cena
     th Zdjęcia
     th Potwierdzenie daty zlecenia
-    th Fakturowano dnia
     th Data realizacji
     th Numer WZ
-    th
+    th Data usunięcia
+    th Usunięte przez
 
   tbody
     - @furniture_order.each do |order|
@@ -42,15 +38,9 @@ table.table.table-hover
             - else
               = link_to "[#{index}]", resource.link, target: '_blank'
         td = date(order.confirmation_date)
-        td = date(order.invoice_date)
         td = date(order.delivery_date)
         td
           - order.wzs.each do |wz|
             = link_to(wz.number, wz_path(wz))
-        td
-          = link_to 'Edytuj', edit_furniture_order_path(order)
-          br
-          - if current_user.admin?
-            = link_to 'Historia', history_furniture_order_path(order)
-            br
-          = link_to 'Usuń', furniture_order_path(order, referer: delivered_with_wz_furniture_orders_path(year: params[:year], month: params[:month])), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+        td = date(order.deleted_at)
+        td = order.deleted_by

@@ -39,11 +39,11 @@ class FurnitureOrdersController < ApplicationController
   end
 
   def new
-    @furniture_order = Order.furniture.new(user_id: current_user.id)
+    @furniture_order = FurnitureOrder.new(user_id: current_user.id)
   end
 
   def new_inquiry
-    @furniture_order = Order.furniture.new(user_id: current_user.id, status: 'inquiry')
+    @furniture_order = FurnitureOrder.new(user_id: current_user.id, status: 'inquiry')
     render :new
   end
 
@@ -51,13 +51,13 @@ class FurnitureOrdersController < ApplicationController
   end
 
   def create
-    @furniture_order = Order.furniture.new(furniture_order_params.merge(user_id: current_user.id))
+    @furniture_order = FurnitureOrder.new(furniture_order_params.merge(user_id: current_user.id))
 
     if @furniture_order.save
       resources_params.each do |resource|
         @furniture_order.resources.create(resource) if resource['image'].present? || resource['link'].present?
       end
-      redirect_to params[:referer], notice: 'Zamówienie zostało stworzone.'
+      redirect_to '/', notice: 'Zamówienie zostało stworzone.'
     else
       render :new
     end
@@ -76,14 +76,23 @@ class FurnitureOrdersController < ApplicationController
     if status == :delivered
       status = @furniture_order.full_in_wz? ? :delivered_with_wz : :delivered_without_wz
     end
-    @furniture_order.destroy
-    redirect_to action: status, notice: 'Zamówienie zostało usunięte.'
+    @furniture_order.update(status: 'deleted', deleted_at: Time.now, deleted_by: "#{current_user.first_name} #{current_user.last_name}")
+
+    if status == :delivered_with_wz
+      redirect_to params[:referer]
+    else
+      redirect_to action: status
+    end
   end
 
   def download
     respond_to do |format|
       format.csv { send_data Order.furniture.to_csv(params[:status]) }
     end
+  end
+
+  def deleted
+    @furniture_order = Order.furniture.where(status: 'deleted').order(created_at: :desc)
   end
 
   private

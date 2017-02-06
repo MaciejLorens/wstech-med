@@ -21,6 +21,7 @@ module OrdersControllerHelper
       when 'not_confirmed' then 'Niezatwierdzone'
       when 'ordered' then 'Zamówione'
       when 'delivered' then 'Zrealizowane'
+      when 'deleted' then 'Usunięte'
     end
   end
 

@@ -11,7 +11,7 @@ class WzsController < ApplicationController
   def index
     year = params[:year] || Date.today.year
     month = params[:month] || Date.today.month
-    @wzs = Wz.at_year_at_month(year, month).includes(orders: [:user]).order(created_at: :desc)
+    @wzs = Wz.where('status IS NULL').at_year_at_month(year, month).includes(orders: [:user]).order(created_at: :desc)
   end
 
   def show
@@ -42,9 +42,13 @@ class WzsController < ApplicationController
       orders_wz.destroy
     end
 
-    wz.destroy
+    wz.update(status: 'deleted')
 
     redirect_to action: :index, notice: 'WZ została usunięta.'
+  end
+
+  def deleted
+    @wzs = Wz.where('status IS ?', 'deleted').includes(orders: [:user]).order(created_at: :desc)
   end
 
   private

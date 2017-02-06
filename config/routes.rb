@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get :ordered, on: :collection
     get :delivered_without_wz, on: :collection
     get :delivered_with_wz, on: :collection
+    get :deleted, on: :collection
     get :download, on: :collection
     get :history, on: :member
   end
@@ -28,11 +29,13 @@ Rails.application.routes.draw do
     get :ordered, on: :collection
     get :delivered_without_wz, on: :collection
     get :delivered_with_wz, on: :collection
+    get :deleted, on: :collection
     get :download, on: :collection
     get :history, on: :member
   end
 
   resources :wzs do
     get :download, on: :member
+    get :deleted, on: :collection
   end
 end
