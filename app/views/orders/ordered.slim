@@ -1,7 +1,7 @@
 h3
-  | Zamówienia stolarnia - niezatwierdzone
+  | Zamówione
   .pull-right
-    = link_to 'Pobierz', download_furniture_orders_path(status: 'not_confirmed', format: 'csv'), class: 'btn btn-default'
+    = link_to 'Pobierz', download_orders_path(status: 'ordered', format: 'csv'), class: 'btn btn-default'
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
 
 table.table.table-hover
@@ -9,23 +9,23 @@ table.table.table-hover
     th Id
     th Opis
     th Zamawiający
-    th Data utworzenia
+    th Data zlecenia
     th Na kiedy ma być
     th Ilość
     th Cena
     th Zdjęcia
     th Potwierdzenie daty zlecenia
+    th Fakturowano dnia
     th
 
   tbody
-    - @furniture_order.each do |order|
+    - @order.each do |order|
       tr
         td = order.number
         td = order.description
         td = "#{order.user.first_name} #{order.user.last_name}"
         td = date(order.created_at)
-        td.red
-          = date(order.delivery_request_date)
+        td = date(order.delivery_request_date)
         td = order.quantity
         td = order.price
         td
@@ -34,12 +34,14 @@ table.table.table-hover
               = link_to image_tag(resource.image(:thumb)), resource.image.url
             - else
               = link_to "[#{index}]", resource.link, target: '_blank'
-        td.red
-          = date(order.confirmation_date)
+        td = date(order.confirmation_date)
+        td = date(order.invoice_date)
         td
-          = link_to 'Edytuj', edit_furniture_order_path(order)
+          = link_to 'Edytuj', edit_order_path(order)
           br
           - if current_user.admin?
-            = link_to 'Historia', history_furniture_order_path(order)
+            = link_to 'Zakończ zlecenie', order_path(order, referer: ordered_orders_path, order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
             br
-          = link_to 'Usuń', furniture_order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+            = link_to 'Historia', history_order_path(order)
+            br
+          = link_to 'Usuń', order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

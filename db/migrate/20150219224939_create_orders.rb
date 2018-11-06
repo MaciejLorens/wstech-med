@@ -11,8 +11,7 @@ class CreateOrders < ActiveRecord::Migration
       t.datetime  :confirmation_date
       t.datetime  :invoice_date
       t.datetime  :delivery_date
-      t.string    :status,            null: false, default: 'not_confirmed'
-      t.string    :type,              null: false
+      t.string    :status,            null: false, default: 'ordered'
 
       t.timestamps
     end

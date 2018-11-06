@@ -1,13 +1,13 @@
 h3
-  = "Zamówienie metalówka - #{@metal_order.number}"
+  = "Zamówienie - #{@order.number}"
 
-= form_for @metal_order, url: metal_order_path(@metal_order) do |f|
+= form_for @order, url: order_path(@order) do |f|
   = hidden_field_tag :referer, request.referer
-  - if @metal_order.errors.any?
+  - if @order.errors.any?
     #error_explanation
       h2 = 'Błędy uniemożliwiające wysłanie formularza:'
       ul
-        - @metal_order.errors.full_messages.each do |message|
+        - @order.errors.full_messages.each do |message|
           li = message
   .row
     .form-group.col-md-12
@@ -17,7 +17,7 @@ h3
   .row
     .form-group.col-md-4
       = f.label 'Na kiedy ma być zrobione'
-      = f.text_field :delivery_request_date, value: date(@metal_order.delivery_request_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
+      = f.text_field :delivery_request_date, value: date(@order.delivery_request_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
 
     .form-group.col-md-4
       = f.label 'Ilość'
@@ -31,16 +31,16 @@ h3
     .row
       .form-group.col-md-4
         = f.label 'Potwierdzenie daty zlecenia'
-        = f.text_field :confirmation_date, value: date(@metal_order.confirmation_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
+        = f.text_field :confirmation_date, value: date(@order.confirmation_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
       .form-group.col-md-4
         = f.label 'Fakturowano dnia'
-        = f.text_field :invoice_date, value: date(@metal_order.invoice_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
+        = f.text_field :invoice_date, value: date(@order.invoice_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
       .form-group.col-md-4
         = f.label 'Data realizacji'
-        = f.text_field :delivery_date, value: date(@metal_order.delivery_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
+        = f.text_field :delivery_date, value: date(@order.delivery_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
       .form-group.col-md-4
         = f.label :status
-        = f.select :status, options_for_select([['Zapytanie', 'inquiry'], ['Oferta', 'proposition'], ['Niezatwierdzone', 'not_confirmed'], ['Zamówione', 'ordered'], ['Zrealizowane', 'delivered']], @metal_order.status), {}, {class: 'form-control'}
+        = f.select :status, options_for_select([['Oferta', 'proposition'], ['Zamówione', 'ordered'], ['Gotowe do wysyłki', 'ready_to_delivery'], ['Zrealizowane', 'delivered']], @order.status), {}, {class: 'form-control'}
 
   .row
     .form-group.col-md-4
@@ -50,14 +50,14 @@ br
 
 .row
   .col-md-4
-    = form_for :resource, url: metal_order_resources_path(metal_order_id: @metal_order.id) do |f|
+    = form_for :resource, url: order_resources_path(order_id: @order.id) do |f|
       .form-group
         = f.label 'Dodaj zdjęcie / rysunek'
         = f.file_field :image
       .form-group
         = f.submit 'Zapisz zdjęcie', class: 'btn btn-default'
   .col-md-4
-    = form_for :resource, url: metal_order_resources_path(metal_order_id: @metal_order.id) do |f|
+    = form_for :resource, url: order_resources_path(order_id: @order.id) do |f|
       .form-group
         = f.label 'Dodaj link zewnętrzny'
         = f.text_field :link, class: 'form-control', placeholder: 'http://google.com/...'
@@ -67,7 +67,7 @@ br
 br
 br
 
-- if @metal_order.resources.present?
+- if @order.resources.present?
   label
     | Lista zdjęć / rysunków / linków zewnętrznych
 
@@ -82,11 +82,11 @@ br
       th Nazwa pliku
       th Data zapisania
       th
-    - @metal_order.resources.each do |resource|
+    - @order.resources.each do |resource|
       tr
         td = resource.id
         td = link_to image_tag(resource.image.url(:thumb)), resource.image.url, target: '_blank' if resource.image.present?
         td = link_to resource.link, resource.link, target: '_blank' if resource.link.present?
         td = resource.image_file_name
         td = date_time(resource.created_at)
-        td = link_to 'Usuń', metal_order_resource_path(@metal_order, resource), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+        td = link_to 'Usuń', order_resource_path(@order, resource), data: {confirm: 'Czy jesteś pewien?'}, method: :delete

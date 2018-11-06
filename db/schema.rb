@@ -27,8 +27,7 @@ ActiveRecord::Schema.define(version: 20170203211513) do
     t.datetime "confirmation_date"
     t.datetime "invoice_date"
     t.datetime "delivery_date"
-    t.string   "status",                                        default: "not_confirmed", null: false
-    t.string   "type",                                                                    null: false
+    t.string   "status",                                        default: "ordered",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "quantity_in_wz",                                default: 0

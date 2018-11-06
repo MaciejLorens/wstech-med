@@ -8,15 +8,10 @@ $ ->
     language: 'pl'
   });
 
-  $('.metal-select').change ->
+  $('.order-select').change ->
     year = $('#order-select-year').val()
     month = $('#order-select-month').val()
-    window.location.href = '/metal_orders/delivered_with_wz?year=' + year + '&month=' + month
-
-  $('.furniture-select').change ->
-    year = $('#order-select-year').val()
-    month = $('#order-select-month').val()
-    window.location.href = '/furniture_orders/delivered_with_wz?year=' + year + '&month=' + month
+    window.location.href = '/orders/delivered?year=' + year + '&month=' + month
 
   $('.search_tag').keyup ->
     query = $(@).val()

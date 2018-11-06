@@ -7,19 +7,10 @@ module OrdersControllerHelper
     date.localtime.strftime('%d-%m-%Y %H:%M') if date.present?
   end
 
-  def type(order)
-    case order.type
-      when 'MetalOrder' then 'Metalówka'
-      when 'FurnitureOrder' then 'Stolarnia'
-    end
-  end
-
   def status(order)
     case order.status
-      when 'inquiry' then 'Zapytanie'
-      when 'proposition' then 'Oferta'
-      when 'not_confirmed' then 'Niezatwierdzone'
       when 'ordered' then 'Zamówione'
+      when 'ready_to_delivery' then 'Gotowe do wysyłki'
       when 'delivered' then 'Zrealizowane'
       when 'deleted' then 'Usunięte'
     end
