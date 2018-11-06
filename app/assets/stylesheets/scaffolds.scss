@@ -55,7 +55,13 @@ table.table.table-hover {
 }
 
 footer {
-  margin-top: 150px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  p {
+    text-align: center;
+  }
 }
 
 #resource_image {
