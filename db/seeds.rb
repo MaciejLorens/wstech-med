@@ -6,12 +6,12 @@ client = User.create(first_name: 'Tomasz', last_name: 'Somer', email: 'tomasz@so
 
 50.times do |idnex|
   Order.create(
-    user_id: client.id,
+    user_id: [maciej, jacek, client].sample.id,
+    purchaser: %w(stomil autosan airbus luxsoft).sample,
     description: "Lorem ipsum dolor sit amet #{idnex}",
     quantity: rand(100),
     price: rand * 200,
     delivery_request_date: Time.now - rand(10).days,
-    confirmation_date: Time.now - rand(10).days,
     status: %w(ordered ready_to_delivery delivered deleted).sample
   )
 end

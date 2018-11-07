@@ -16,7 +16,4 @@ module OrdersControllerHelper
     end
   end
 
-  def request_date_match(order)
-    'red' if date(order.delivery_request_date) != date(order.confirmation_date)
-  end
 end

@@ -15,8 +15,4 @@ Rails.application.routes.draw do
     get :history, on: :member
   end
 
-  resources :wzs do
-    get :download, on: :member
-    get :deleted, on: :collection
-  end
 end

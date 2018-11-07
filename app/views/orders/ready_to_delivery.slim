@@ -9,16 +9,15 @@ table.table.table-hover
   tr
     th Numer zamówienia
     th Opis
+    th Tworzący
     th Zamawiający
     th Data zlecenia
     th Na kiedy ma być
-    th Ilość / łącznie w WZ
+    th Ilość
     th Cena
     th Zdjęcia
-    th Potwierdzenie daty zlecenia
     th Fakturowano dnia
     th Data realizacji
-    th Numer WZ
     th
 
   tbody
@@ -27,9 +26,10 @@ table.table.table-hover
         td = order.number
         td = order.description
         td = "#{order.user.first_name} #{order.user.last_name}"
+        td = order.purchaser
         td = date(order.created_at)
         td = date(order.delivery_request_date)
-        td = "#{order.quantity} / <span class='quantity_in_wz'>#{order.quantity_in_wz}</span>".html_safe
+        td = order.quantity
         td = order.price
         td
           - order.resources.each_with_index do |resource, index|
@@ -38,12 +38,8 @@ table.table.table-hover
                 = link_to image_tag(resource.image(:thumb), alt: ''), resource.image.url
             - else
               = link_to "[#{index}]", resource.link, target: '_blank'
-        td = date(order.confirmation_date)
         td = date(order.invoice_date)
         td = date(order.delivery_date)
-        td
-          - order.wzs.each do |wz|
-            = link_to(wz.number, wz_path(wz))
         td
           = link_to 'Edytuj', edit_order_path(order)
           br

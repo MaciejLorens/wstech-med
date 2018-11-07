@@ -7,14 +7,14 @@ class OrdersController < ApplicationController
 
   def ready_to_delivery
     @order = Order
-               .includes(:resources, :user, :wzs)
+               .includes(:resources, :user)
                .where(status: 'ready_to_delivery')
                .order(created_at: :desc)
   end
 
   def delivered
     @order = Order
-               .includes(:resources, :user, :wzs)
+               .includes(:resources, :user)
                .where(status: 'delivered')
                .at_year_at_month(params[:year], params[:month])
                .order(created_at: :desc)
@@ -56,18 +56,12 @@ class OrdersController < ApplicationController
 
   def destroy
     status = @order.status.to_sym
-    if status == :delivered
-      # === TODO:Maciej:
-      # status = @order.full_in_wz? ? :delivered_with_wz : :delivered_without_wz
-    end
     @order.update(status: 'deleted', deleted_at: Time.now, deleted_by: "#{current_user.first_name} #{current_user.last_name}")
-
-    # === TODO:Maciej: 
-    # if status == :delivered_with_wz
-    #   redirect_to params[:referer]
-    # else
+    if status == :delivered
+      redirect_to params[:referer]
+    else
       redirect_to action: status
-    # end
+    end
   end
 
   def download

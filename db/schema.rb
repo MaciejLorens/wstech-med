@@ -11,38 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203211513) do
+ActiveRecord::Schema.define(version: 20170203204937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "orders", force: :cascade do |t|
     t.string   "number"
-    t.text     "description",                                                             null: false
-    t.integer  "user_id",                                                                 null: false
-    t.integer  "wz_id"
-    t.integer  "quantity",                                                                null: false
+    t.text     "description",                                                       null: false
+    t.integer  "user_id",                                                           null: false
+    t.integer  "quantity",                                                          null: false
+    t.string   "purchaser",                                                         null: false
     t.decimal  "price",                 precision: 8, scale: 2
-    t.datetime "delivery_request_date",                                                   null: false
-    t.datetime "confirmation_date"
+    t.datetime "delivery_request_date",                                             null: false
     t.datetime "invoice_date"
     t.datetime "delivery_date"
-    t.string   "status",                                        default: "ordered",       null: false
+    t.string   "status",                                        default: "ordered", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quantity_in_wz",                                default: 0
-    t.boolean  "full_in_wz",                                    default: false
     t.datetime "deleted_at"
     t.string   "deleted_by"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
-
-  create_table "orders_wzs", force: :cascade do |t|
-    t.integer "order_id",             null: false
-    t.integer "wz_id",                null: false
-    t.integer "quantity", default: 0
-  end
 
   create_table "resources", force: :cascade do |t|
     t.integer  "order_id"
@@ -82,12 +73,5 @@ ActiveRecord::Schema.define(version: 20170203211513) do
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-
-  create_table "wzs", force: :cascade do |t|
-    t.string   "number",     default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "status"
-  end
 
 end

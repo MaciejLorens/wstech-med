@@ -10,10 +10,6 @@
   margin: 20px;
 }
 
-.remove-wz {
-  margin-left: 20px;
-}
-
 a[href]:after {
   display: none;
 }
@@ -34,12 +30,5 @@ tbody.clickable tr {
 
   &.clicked {
     background-color: #D3FFFF;
-  }
-}
-
-.wz-create {
-  span {
-    margin: 0;
-    color: black;
   }
 }
