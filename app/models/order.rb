@@ -22,9 +22,9 @@ class Order < ActiveRecord::Base
   def self.to_csv(status)
     @orders = self.where(status: status).order(created_at: :asc)
     CSV.generate do |csv|
-      csv << ['Id', 'Opis', 'Tworzący', 'Zamawiający', 'Data zlecenia', 'Na kiedy ma być', 'Ilość', 'Cena', 'Fakturowano dnia', 'Data realizacji']
+      csv << ['Id', 'Opis', 'Twórca', 'Zamawiający', 'Data zlecenia', 'Na kiedy ma być', 'Ilość', 'Cena', 'Fakturowano dnia', 'Data realizacji']
       @orders.each do |order|
-        csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.price, date(order.invoice_date), date(order.delivery_date)]
+        csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.price, date(order.delivery_date)]
       end
     end
   end

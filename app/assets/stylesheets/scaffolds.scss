@@ -48,14 +48,7 @@ h3 {
   background-color: red;
 }
 
-table.table.table-hover {
-  td:nth-child(2) {
-    max-width: 350px;
-  }
-}
-
 footer {
-  position: fixed;
   bottom: 0;
   width: 100%;
 
@@ -93,31 +86,72 @@ footer {
 }
 
 .table-hover {
-  td:nth-child(1) {
+
+  tr {
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+  }
+
+  .inner-table {
+    padding: 0;
+    width: 100%;
+
+    tr {
+      border: none;
+      border-bottom: 1px solid lightgray;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: 8px;
+      vertical-align: top;
+    }
+  }
+
+  .id {
     width: 90px;
   }
-  td:nth-child(2) {
+
+  .no {
+    width: 10px;
+  }
+
+  .inner {
+    padding: 0px;
+  }
+
+  .description {
     min-width: 200px;
   }
-  td:nth-child(4) {
+
+  .quantity {
+    width: 60px;
+  }
+
+  .price {
+    width: 70px;
+  }
+
+  .user {
+    width: 120px;
+  }
+
+  .purchaser {
+    width: 115px;
+  }
+
+  .created_at {
     width: 100px;
   }
-  td:nth-child(5) {
-    width: 115px;
+
+  .delivery_request_date {
+    width: 100px;
   }
-  td:nth-child(6) {
-    width: 115px;
-  }
-  td:nth-child(9) {
-    width: 85px;
-  }
-  td:nth-child(10) {
-    width: 85px;
-  }
-  td:nth-child(11) {
-    width: 85px;
-  }
-  td:nth-child(12) {
+
+  .actions {
     width: 70px;
   }
 }

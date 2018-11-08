@@ -6,42 +6,41 @@ h3
 
 table.table.table-hover
   tr
-    th Id
-    th Opis
-    th Tworzący
+    th.id Id
+    th
+      table.inner-table
+        tr
+          th.description Opis
+          th.quantity Ilość
+          th.price Cena
+    th Twórca
     th Zamawiający
-    th Data zlecenia
+    th Data utworzenia
     th Na kiedy ma być
-    th Ilość
-    th Cena
-    th Zdjęcia
-    th Fakturowano dnia
     th
 
   tbody
-    - @order.each do |order|
+    - @orders.each do |order|
       tr
-        td = order.number
-        td = order.description
-        td = "#{order.user.first_name} #{order.user.last_name}"
-        td = order.purchaser
-        td = date(order.created_at)
-        td = date(order.delivery_request_date)
-        td = order.quantity
-        td = order.price
-        td
-          - order.resources.each_with_index do |resource, index|
-            - if resource.image.present?
-              = link_to image_tag(resource.image(:thumb)), resource.image.url
-            - else
-              = link_to "[#{index}]", resource.link, target: '_blank'
-        td = date(order.invoice_date)
-        td
-          = link_to 'Edytuj', edit_order_path(order)
+        td.id = order.number
+        td.inner
+          table.inner-table
+            - order.items.each_with_index do |item, index|
+              tr
+                td.no = "#{index + 1}."
+                td.description = item.description
+                td.quantity = item.quantity
+                td.price = item.price
+        td.user = "#{order.user.first_name} #{order.user.last_name}"
+        td.purchaser = order.purchaser.name
+        td.created_at = date(order.created_at)
+        td.delivery_request_date = date(order.delivery_request_date)
+        td.actions
+          = link_to 'Edycja', edit_order_path(order)
           br
           - if current_user.admin?
-            = link_to 'Zakończ zlecenie', order_path(order, referer: ordered_orders_path, order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy jesteś pewien?'}, method: :patch
+            = link_to 'Gotowe', order_path(order, referer: ordered_orders_path, order: {status: 'delivered', delivery_date: Time.now}), data: {confirm: 'Czy zamówienie jest zmontowane, spakowane i gotowe do wysyłki?'}, method: :patch
             br
             = link_to 'Historia', history_order_path(order)
             br
-          = link_to 'Usuń', order_path(order), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+          = link_to 'Usuń', order_path(order), data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'}, method: :delete

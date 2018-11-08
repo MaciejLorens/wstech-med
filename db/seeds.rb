@@ -8,6 +8,7 @@ purchaser_3 = Purchaser.create(name: 'Airbus')
 purchaser_4 = Purchaser.create(name: 'Tesla')
 purchaser_5 = Purchaser.create(name: 'Spacex')
 
+lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua)
 
 50.times do |i|
   order = Order.create(
@@ -17,9 +18,9 @@ purchaser_5 = Purchaser.create(name: 'Spacex')
     status: %w(ordered ready_to_delivery delivered deleted).sample,
   )
 
-  (rand(5) + 1).times do
+  (rand(5) + 1).times do |j|
     order.items.create(
-      description: "Lorem ipsum dolor sit amet #{i}-#{j}",
+      description: "start-#{Array.new(rand(30)).map{lorem.sample}.join(' ')}-end",
       quantity: rand(100),
       price: rand * 200
     )

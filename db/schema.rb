@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20181107163100) do
     t.integer  "user_id",                                   null: false
     t.integer  "purchaser_id",                              null: false
     t.datetime "delivery_request_date",                     null: false
-    t.datetime "invoice_date"
     t.datetime "delivery_date"
+    t.datetime "completed_at"
     t.datetime "deleted_at"
     t.string   "deleted_by"
     t.string   "status",                default: "ordered", null: false

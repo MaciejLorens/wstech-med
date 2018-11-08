@@ -2,7 +2,10 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
 
   def ordered
-    @order = Order.where(status: 'ordered').order(created_at: :desc)
+    @orders = Order
+               .includes(:purchaser, :user)
+               .where(status: 'ordered')
+               .order(created_at: :desc)
   end
 
   def ready_to_delivery
