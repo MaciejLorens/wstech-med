@@ -34,7 +34,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params.merge(user_id: current_user.id))
+
+    @order = Order.new(order_params)
 
     if @order.save
       resources_params.each do |resource|
@@ -81,7 +82,17 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit!.except(:image1, :image2, :image3, :url1, :url2, :url3)
+    refactored_params = params.require(:order).permit!
+
+    purchaser_name = refactored_params[:purchaser_name]
+    purchaser = Purchaser.find_or_create_by(name: purchaser_name)
+
+    refactored_params.delete(:purchaser_name)
+    refactored_params.merge!(user_id: current_user.id, purchaser_id: purchaser.id)
+
+    Rails.logger.info "   ===== refactored_params : #{refactored_params}"
+
+    refactored_params
   end
 
   def resources_params

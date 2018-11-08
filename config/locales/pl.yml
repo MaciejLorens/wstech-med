@@ -2,21 +2,33 @@ pl:
   activerecord:
     models:
       order: Zamówienie
+      item: Przedmiot
     attributes:
       order:
-        description: Opis
-        quantity: Ilość
         delivery_request_date: Na kiedy ma być zrobione
+        purchaser: Zamawiający
+      items:
+        description: Opis przedmiotu
+        quantity: Ilość przedmiotu
+        price: Cena przedmiotu
+
     errors:
       models:
         order:
+          attributes:
+            delivery_request_date:
+              blank: nie może być puste
+            purchaser:
+              blank: nie może być pusty
+        item:
           attributes:
             description:
               blank: nie może być pusty
             quantity:
               blank: nie może być pusta
-            delivery_request_date:
-              blank: nie może być puste
+            price:
+              blank: nie może być pusta
+
   January: Styczeń
   February: Luty
   March: Marzec

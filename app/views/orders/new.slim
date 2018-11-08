@@ -1,4 +1,4 @@
-h3 Nowe zamówienie stolarnia
+h3 Nowe zamówienie
 
 = form_for @order, url: orders_path do |f|
   = hidden_field_tag :referer, request.referer
@@ -8,65 +8,52 @@ h3 Nowe zamówienie stolarnia
       ul
         - @order.errors.full_messages.each do |message|
           li = message
+
   .row
     .form-group.col-md-12
       = f.hidden_field :status, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
-
-    .form-group.col-md-12
-      = f.label 'Opis'
-      = f.text_area :description, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
-
-  .row
-    .form-group.col-md-4
+    .form-group.col-md-3
       = f.label 'Na kiedy ma być zrobione'
-      = f.text_field :delivery_request_date, class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
-
+      = f.text_field :delivery_request_date, class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
     .form-group.col-md-4
-      = f.label 'Ilość'
-      = f.text_field :quantity, class: 'form-control', placeholder: '1'
+      = f.label 'Zamawiający'
+      = text_field_tag 'order[purchaser_name]', nil, class: 'form-control', id: 'order_purchaser', placeholder: 'firma xyz', required: true
+      - if Purchaser.all.present?
+        ul.purchasers_list
+          - Purchaser.all.each do |purchaser|
+            li.purchaser_name = purchaser.name
 
-    .form-group.col-md-4
-      = f.label 'Cena'
-      = f.text_field :price, class: 'form-control', placeholder: '100.00'
+  br
+  h4 Przedmioty zamówienia
+  br
+
+  .items
+    = hidden_field_tag :current_item_index, 1
+    .row
+      .form-group.col-md-8
+        = label_tag 'Opis'
+      .form-group.col-md-1
+        = label_tag 'Ilość'
+      .form-group.col-md-2
+        = label_tag 'Cena'
+      .form-group.col-md-1
+        = label_tag 'akcje'
+
+    = f.fields_for :items, @order.items.build do |i|
+      .row
+        .form-group.col-md-8
+          / = i.text_field :description, class: 'form-control', placeholder: 'Opis przedmiotu', required: true
+          = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
+        .form-group.col-md-1
+          = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
+        .form-group.col-md-2
+          = i.text_field :price, class: 'form-control', placeholder: '100.00', required: true
+        .form-group.col-md-1
 
   .row
-    = f.fields_for 'image1', @order.resources.new do |r|
-      .col-md-4
-        .form-group
-          = r.label 'Dodaj zdjęcie / rysunek'
-          = r.file_field :image
-
-    = f.fields_for 'image2', @order.resources.new do |r|
-      .col-md-4
-        .form-group
-          = r.label 'Dodaj zdjęcie / rysunek'
-          = r.file_field :image
-
-    = f.fields_for 'image3', @order.resources.new do |r|
-      .col-md-4
-        .form-group
-          = r.label 'Dodaj zdjęcie / rysunek'
-          = r.file_field :image
-
+    .form-group.col-md-12
+      .btn.btn-default.add-item.pull-right
+        | Dodaj przedmiot
   .row
-    = f.fields_for 'url1', @order.resources.new do |r|
-      .col-md-4
-        .form-group
-          = r.label 'Dodaj link zewnętrzny'
-          = r.text_field :link, class: 'form-control', placeholder: 'http://google.com/...'
-
-    = f.fields_for 'url2', @order.resources.new do |r|
-      .col-md-4
-        .form-group
-          = r.label 'Dodaj link zewnętrzny'
-          = r.text_field :link, class: 'form-control', placeholder: 'http://google.com/...'
-
-    = f.fields_for 'url3', @order.resources.new do |r|
-      .col-md-4
-        .form-group
-          = r.label 'Dodaj link zewnętrzny'
-          = r.text_field :link, class: 'form-control', placeholder: 'http://google.com/...'
-
-  .row
-    .form-group.col-md-4
-      = f.submit 'Zapisz', class: 'btn btn-default'
+    .form-group.col-md-12
+      = f.submit 'Zapisz zamówienie', class: 'btn btn-default'

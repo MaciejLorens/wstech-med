@@ -1,14 +1,16 @@
 class Order < ActiveRecord::Base
 
   has_many :resources
+  has_many :items
 
+  belongs_to :purchaser
   belongs_to :user
 
-  accepts_nested_attributes_for :resources
+  accepts_nested_attributes_for :resources, :items
 
   has_paper_trail
 
-  validates_presence_of :description, :user_id, :quantity, :delivery_request_date, :status
+  validates_presence_of :purchaser_id, :user_id, :delivery_request_date, :status
 
   after_create :set_number
 

@@ -11,29 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203204937) do
+ActiveRecord::Schema.define(version: 20181107163100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "orders", force: :cascade do |t|
-    t.string   "number"
-    t.text     "description",                                                       null: false
-    t.integer  "user_id",                                                           null: false
-    t.integer  "quantity",                                                          null: false
-    t.string   "purchaser",                                                         null: false
-    t.decimal  "price",                 precision: 8, scale: 2
-    t.datetime "delivery_request_date",                                             null: false
-    t.datetime "invoice_date"
-    t.datetime "delivery_date"
-    t.string   "status",                                        default: "ordered", null: false
+  create_table "items", force: :cascade do |t|
+    t.string   "description",                         null: false
+    t.integer  "quantity",                            null: false
+    t.decimal  "price",       precision: 8, scale: 2, null: false
+    t.integer  "order_id",                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
+
+  create_table "orders", force: :cascade do |t|
+    t.string   "number"
+    t.integer  "user_id",                                   null: false
+    t.integer  "purchaser_id",                              null: false
+    t.datetime "delivery_request_date",                     null: false
+    t.datetime "invoice_date"
+    t.datetime "delivery_date"
     t.datetime "deleted_at"
     t.string   "deleted_by"
+    t.string   "status",                default: "ordered", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "purchasers", force: :cascade do |t|
+    t.string "name", null: false
+  end
 
   create_table "resources", force: :cascade do |t|
     t.integer  "order_id"

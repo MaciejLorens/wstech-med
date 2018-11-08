@@ -32,3 +32,33 @@ tbody.clickable tr {
     background-color: #D3FFFF;
   }
 }
+
+.purchasers_list {
+  margin-top: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  position: absolute;
+  width: 403px;
+  z-index: 1;
+  display: none;
+
+  li.purchaser_name {
+    list-style: none;
+    padding: 5px 10px;
+    color: black;
+
+    &:hover {
+      background-color: #bfbfbf;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 34px;
+}
