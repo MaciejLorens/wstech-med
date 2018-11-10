@@ -1,5 +1,4 @@
-h3
-  = "Zamówienie - #{@order.number}"
+h3 Edycja zamówienia
 
 = form_for @order, url: order_path(@order) do |f|
   = hidden_field_tag :referer, request.referer
@@ -9,76 +8,55 @@ h3
       ul
         - @order.errors.full_messages.each do |message|
           li = message
+
   .row
     .form-group.col-md-12
-      = f.label 'Opis'
-      = f.text_area :description, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
-
-  .row
-    .form-group.col-md-4
+      = f.hidden_field :status, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
+    .form-group.col-md-3
       = f.label 'Na kiedy ma być zrobione'
-      = f.text_field :delivery_request_date, value: date(@order.delivery_request_date), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y')
-
+      / = f.text_field :delivery_request_date, class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
+      = text_field_tag 'order[delivery_request_date]', @order.delivery_request_date.strftime('%d-%m-%Y'), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
     .form-group.col-md-4
-      = f.label 'Ilość'
-      = f.text_field :quantity, class: 'form-control', placeholder: '1'
+      = f.label 'Zamawiający'
+      = text_field_tag 'order[purchaser_name]', @order.purchaser.name, class: 'form-control', id: 'order_purchaser', placeholder: 'firma xyz', required: true
+      - if Purchaser.all.present?
+        ul.purchasers_list
+          - Purchaser.all.each do |purchaser|
+            li.purchaser_name = purchaser.name
 
-    .form-group.col-md-4
-      = f.label 'Cena'
-      = f.text_field :price, class: 'form-control', placeholder: '100.00'
+  br
+  h4 Przedmioty zamówienia
+  br
 
-  - if current_user.admin?
+  .items
+    = hidden_field_tag :current_item_index, 1
     .row
-      .form-group.col-md-4
-      .form-group.col-md-4
-        = f.label :status
-        = f.select :status, options_for_select([['Oferta', 'proposition'], ['Zamówione', 'ordered'], ['Gotowe do wysyłki', 'ready_to_delivery'], ['Zrealizowane', 'delivered']], @order.status), {}, {class: 'form-control'}
+      .form-group.col-md-8
+        = label_tag 'Opis'
+      .form-group.col-md-1
+        = label_tag 'Ilość'
+      .form-group.col-md-2
+        = label_tag 'Cena'
+      .form-group.col-md-1
+        = label_tag 'akcje'
+
+    = f.fields_for :items, @order.items do |i|
+      .row
+        .form-group.col-md-8
+          / = i.text_field :description, class: 'form-control', placeholder: 'Opis przedmiotu', required: true
+          = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
+        .form-group.col-md-1
+          = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
+        .form-group.col-md-2
+          = i.text_field :price, class: 'form-control', placeholder: '100.00', required: true
+        .form-group.col-md-1
+          .btn.btn-default.remove-item.form-control
+            | Usuń
 
   .row
-    .form-group.col-md-4
-      = f.submit 'Zapisz dane', class: 'btn btn-default'
-br
-br
-
-.row
-  .col-md-4
-    = form_for :resource, url: order_resources_path(order_id: @order.id) do |f|
-      .form-group
-        = f.label 'Dodaj zdjęcie / rysunek'
-        = f.file_field :image
-      .form-group
-        = f.submit 'Zapisz zdjęcie', class: 'btn btn-default'
-  .col-md-4
-    = form_for :resource, url: order_resources_path(order_id: @order.id) do |f|
-      .form-group
-        = f.label 'Dodaj link zewnętrzny'
-        = f.text_field :link, class: 'form-control', placeholder: 'http://google.com/...'
-      .form-group
-        = f.submit 'Zapisz link', class: 'btn btn-default'
-
-br
-br
-
-- if @order.resources.present?
-  label
-    | Lista zdjęć / rysunków / linków zewnętrznych
-
-  br
-  br
-
-  table.table.table-hover
-    tr
-      th Id
-      th Zdjęcie / rysunek
-      th Link zewnętrzny
-      th Nazwa pliku
-      th Data zapisania
-      th
-    - @order.resources.each do |resource|
-      tr
-        td = resource.id
-        td = link_to image_tag(resource.image.url(:thumb)), resource.image.url, target: '_blank' if resource.image.present?
-        td = link_to resource.link, resource.link, target: '_blank' if resource.link.present?
-        td = resource.image_file_name
-        td = date_time(resource.created_at)
-        td = link_to 'Usuń', order_resource_path(@order, resource), data: {confirm: 'Czy jesteś pewien?'}, method: :delete
+    .form-group.col-md-12
+      .btn.btn-default.add-item.pull-right
+        | Dodaj przedmiot
+  .row
+    .form-group.col-md-12
+      = f.submit 'Zapisz zamówienie', class: 'btn btn-default'

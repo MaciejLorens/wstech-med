@@ -40,10 +40,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      resources_params.each do |resource|
-        @order.resources.create(resource) if resource['image'].present? || resource['link'].present?
-      end
-      redirect_to '/', notice: 'Zamówienie zostało stworzone.'
+      redirect_to root_path, notice: 'Zamówienie zostało stworzone.'
     else
       render :new
     end
@@ -51,9 +48,7 @@ class OrdersController < ApplicationController
 
   def update
     if @order.update(order_params)
-      notice = 'Zamówienie zostało stworzone.'
-      notice = 'Zamówienie zostało przygotowane do wysyłki.' if order_params[:status] == 'ready_to_delivery'
-      redirect_to params[:referer], notice: notice
+      redirect_to params[:referer], notice: 'Zamówienie zostało uaktualnione.'
     else
       render :edit
     end
