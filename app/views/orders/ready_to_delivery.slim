@@ -20,6 +20,7 @@ h3
       th Zamawiający
       th Data utworzenia
       th Na kiedy ma być
+      th Gotowe do wysyłki
       th
 
     tbody
@@ -38,12 +39,10 @@ h3
           td.purchaser = order.purchaser.name
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
+          td.ready_to_delivery = date(order.ready_to_delivery_at)
           td.actions
+            = link_to 'Wyślij', order_path(order, referer: ordered_orders_path, order: { status: 'delivered' }), data: { confirm: 'Czy zamówienie zostało wysłane?' }, method: :patch, class: 'btn btn-default btn-sm'
             = link_to 'Edycja', edit_order_path(order), class: 'btn btn-default btn-sm'
-            br
             - if current_user.admin?
-              = link_to 'Gotowe', order_path(order, referer: ordered_orders_path, order: {status: 'ready_to_delivery', ready_to_delivery_at: Time.now}), data: {confirm: 'Czy zamówienie jest zmontowane, spakowane i gotowe do wysyłki?'}, method: :patch, class: 'btn btn-default btn-sm'
-              br
               = link_to 'Historia', history_order_path(order), class: 'btn btn-default btn-sm'
-              br
             = link_to 'Usuń', order_path(order), data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'}, method: :delete, class: 'btn btn-default btn-sm'
