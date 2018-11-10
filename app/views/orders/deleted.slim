@@ -16,7 +16,6 @@ table.table.table-hover
     th Ilość
     th Cena
     th Zdjęcia
-    th Data realizacji
     th Data usunięcia
     th Usunięte przez
 
@@ -37,6 +36,5 @@ table.table.table-hover
               = link_to image_tag(resource.image(:thumb)), resource.image.url
             - else
               = link_to "[#{index}]", resource.link, target: '_blank'
-        td = date(order.delivery_date)
         td = date(order.deleted_at)
         td = order.deleted_by

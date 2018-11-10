@@ -62,3 +62,24 @@ textarea.form-control {
   resize: vertical;
   min-height: 34px;
 }
+
+.btn-sm {
+  width: 100%;
+  padding: 1px 10px;
+  margin: 2px 0;
+}
+
+.actions {
+  padding: 2px 8px !important;
+}
+
+a:visited {
+  color: #333333 !important;
+}
+
+.alert {
+  position: absolute;
+  width: 400px;
+  right: 450px;
+  margin-top: 10px;
+}

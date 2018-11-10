@@ -13,7 +13,6 @@ table.table.table-hover
     th Ilość
     th Cena
     th Zdjęcia
-    th Data realizacji
     th Autor zmiany
     th Data zmiany
 
@@ -36,7 +35,6 @@ table.table.table-hover
             = link_to image_tag(resource.image(:thumb)), resource.image.url
           - else
             = link_to "[#{index}]", resource.link, target: '_blank'
-      td = date(@order.delivery_date)
       td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
       td = version.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
 
@@ -57,6 +55,5 @@ table.table.table-hover
           td
             - order.resources.each_with_index do |resource, index|
               = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
-          td = date(order.delivery_date)
           td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
           td = version_after.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S') if version_after.present?

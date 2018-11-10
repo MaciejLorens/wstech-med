@@ -3,21 +3,21 @@ class OrdersController < ApplicationController
 
   def ordered
     @orders = Order
-               .includes(:purchaser, :user)
+               .includes(:purchaser, :user, :items)
                .where(status: 'ordered')
                .order(created_at: :desc)
   end
 
   def ready_to_delivery
-    @order = Order
-               .includes(:resources, :user)
+    @orders = Order
+               .includes(:resources, :user, :items)
                .where(status: 'ready_to_delivery')
                .order(created_at: :desc)
   end
 
   def delivered
-    @order = Order
-               .includes(:resources, :user)
+    @orders = Order
+               .includes(:resources, :user, :items)
                .where(status: 'delivered')
                .at_year_at_month(params[:year], params[:month])
                .order(created_at: :desc)
@@ -37,7 +37,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-
     @order = Order.new(order_params)
 
     if @order.save
@@ -52,7 +51,9 @@ class OrdersController < ApplicationController
 
   def update
     if @order.update(order_params)
-      redirect_to params[:referer], notice: 'Zamówienie zostało zaktualizowane.'
+      notice = 'Zamówienie zostało stworzone.'
+      notice = 'Zamówienie zostało przygotowane do wysyłki.' if order_params[:status] == 'ready_to_delivery'
+      redirect_to params[:referer], notice: notice
     else
       render :edit
     end
@@ -88,17 +89,14 @@ class OrdersController < ApplicationController
     refactored_params = params.require(:order).permit!
 
     purchaser_name = refactored_params[:purchaser_name]
-    purchaser = Purchaser.find_or_create_by(name: purchaser_name)
+    if purchaser_name.present?
+      purchaser = Purchaser.find_or_create_by(name: purchaser_name)
+      refactored_params.delete(:purchaser_name)
+      refactored_params.merge!(purchaser_id: purchaser.id)
+    end
 
-    refactored_params.delete(:purchaser_name)
-    refactored_params.merge!(user_id: current_user.id, purchaser_id: purchaser.id)
-
-    Rails.logger.info "   ===== refactored_params : #{refactored_params}"
-
+    refactored_params.merge!(user_id: current_user.id)
     refactored_params
   end
 
-  def resources_params
-    [params[:order][:image1], params[:order][:image2], params[:order][:image3], params[:order][:url1], params[:order][:url2], params[:order][:url3]].compact
-  end
 end

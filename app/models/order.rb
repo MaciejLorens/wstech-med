@@ -15,16 +15,16 @@ class Order < ActiveRecord::Base
   after_create :set_number
 
   scope :at_date, ->(date) { where('created_at >= ? AND created_at < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
-  scope :delivered_at, ->(date) { where('delivery_date >= ? AND delivery_date < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
+  # scope :delivered_at, ->(date) { where('delivery_date >= ? AND delivery_date < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
   scope :at_status, ->(status) { where('status = ?', status) }
   scope :at_year_at_month, ->(year, month) { where('orders.created_at >= ? AND orders.created_at < ?', "#{year}/#{month}/01".to_datetime, "#{year}/#{month}/01".to_datetime.end_of_month) }
 
   def self.to_csv(status)
     @orders = self.where(status: status).order(created_at: :asc)
     CSV.generate do |csv|
-      csv << ['Id', 'Opis', 'Twórca', 'Zamawiający', 'Data zlecenia', 'Na kiedy ma być', 'Ilość', 'Cena', 'Fakturowano dnia', 'Data realizacji']
+      csv << ['Id', 'Opis', 'Twórca', 'Zamawiający', 'Data zlecenia', 'Na kiedy ma być', 'Ilość', 'Cena']
       @orders.each do |order|
-        csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.price, date(order.delivery_date)]
+        csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.price]
       end
     end
   end
