@@ -10,17 +10,24 @@ class OrdersController < ApplicationController
 
   def ready_to_delivery
     @orders = Order
-               .includes(:resources, :user, :items)
+               .includes(:purchaser, :user, :items)
                .where(status: 'ready_to_delivery')
                .order(created_at: :desc)
   end
 
   def delivered
     @orders = Order
-               .includes(:resources, :user, :items)
+               .includes(:purchaser, :user, :items)
                .where(status: 'delivered')
                .at_year_at_month(params[:year], params[:month])
                .order(created_at: :desc)
+  end
+
+  def deleted
+    @orders = Order
+                .includes(:purchaser, :user, :items)
+                .where(status: 'deleted')
+                .order(created_at: :desc)
   end
 
   def history
@@ -56,7 +63,7 @@ class OrdersController < ApplicationController
 
   def destroy
     status = @order.status.to_sym
-    @order.update(status: 'deleted', deleted_at: Time.now, deleted_by: "#{current_user.first_name} #{current_user.last_name}")
+    @order.update(status: 'deleted', deleted_at: Time.now, deleted_by: current_user.id)
     if status == :delivered
       redirect_to params[:referer]
     else
@@ -68,10 +75,6 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.csv { send_data Order.to_csv(params[:status]) }
     end
-  end
-
-  def deleted
-    @order = Order.where(status: 'deleted').order(created_at: :desc)
   end
 
   private

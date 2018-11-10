@@ -7,7 +7,7 @@ class CreateOrders < ActiveRecord::Migration
       t.datetime  :delivery_request_date, null: false
       t.datetime  :ready_to_delivery_at
       t.datetime  :deleted_at,            null: true
-      t.string    :deleted_by,            null: true
+      t.integer   :deleted_by_id,         null: true
       t.string    :status,                null: false, default: 'ordered'
 
       t.timestamps

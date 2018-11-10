@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20181107163100) do
     t.datetime "delivery_request_date",                     null: false
     t.datetime "ready_to_delivery_at"
     t.datetime "deleted_at"
-    t.string   "deleted_by"
+    t.integer  "deleted_by_id"
     t.string   "status",                default: "ordered", null: false
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -6,6 +6,10 @@ class Order < ActiveRecord::Base
   belongs_to :purchaser
   belongs_to :user
 
+  belongs_to :deleted_by,
+             class_name: User,
+             foreign_key: :deleted_by_id
+
   accepts_nested_attributes_for :resources, :items
 
   has_paper_trail
