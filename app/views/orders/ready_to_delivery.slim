@@ -46,8 +46,20 @@ h3
           td.serial_number = order.serial_number
           td.shipping_address = order.shipping_address
           td.actions
-            = link_to 'Wyślij', order_path(order, referer: ready_to_delivery_orders, order: { status: 'delivered', delivered_at: Time.now }), data: { confirm: 'Czy zamówienie zostało wysłane?' }, method: :patch, class: 'btn btn-default btn-sm'
-            = link_to 'Edycja', edit_order_path(order), class: 'btn btn-default btn-sm'
+            = link_to 'Wyślij',
+                order_path(order, referer: ready_to_delivery_orders_path, order: { status: 'delivered', delivered_at: Time.now }),
+                data: { confirm: 'Czy zamówienie zostało wysłane?' },
+                method: :patch,
+                class: 'btn btn-default btn-sm'
+            = link_to 'Edycja',
+                edit_order_path(order),
+                class: 'btn btn-default btn-sm'
             - if current_user.admin?
-              = link_to 'Historia', history_order_path(order), class: 'btn btn-default btn-sm'
-            = link_to 'Usuń', order_path(order), data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'}, method: :delete, class: 'btn btn-default btn-sm'
+              = link_to 'Historia',
+                  history_order_path(order),
+                  class: 'btn btn-default btn-sm'
+            = link_to 'Usuń',
+                order_path(order, referer: ready_to_delivery_orders_path),
+                data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},
+                method: :delete,
+                class: 'btn btn-default btn-sm'

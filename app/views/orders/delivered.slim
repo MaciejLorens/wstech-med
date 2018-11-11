@@ -52,7 +52,15 @@ h3
           td.serial_number = order.serial_number
           td.shipping_address = order.shipping_address
           td.actions
-            = link_to 'Edycja', edit_order_path(order), class: 'btn btn-default btn-sm'
+            = link_to 'Edycja',
+                edit_order_path(order),
+                class: 'btn btn-default btn-sm'
             - if current_user.admin?
-              = link_to 'Historia', history_order_path(order), class: 'btn btn-default btn-sm'
-            = link_to 'Usuń', order_path(order), data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'}, method: :delete, class: 'btn btn-default btn-sm'
+              = link_to 'Historia',
+                  history_order_path(order),
+                  class: 'btn btn-default btn-sm'
+            = link_to 'Usuń',
+                order_path(order, referer: delivered_orders_path(year: params[:year], month: params[:month])),
+                data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},
+                method: :delete,
+                class: 'btn btn-default btn-sm'

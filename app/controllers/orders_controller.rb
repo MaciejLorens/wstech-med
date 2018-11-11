@@ -63,7 +63,7 @@ class OrdersController < ApplicationController
 
   def destroy
     status = @order.status.to_sym
-    @order.update(status: 'deleted', deleted_at: Time.now, deleted_by: current_user.id)
+    @order.update(status: 'deleted', deleted_at: Time.now, deleted_by_id: current_user.id)
     if status == :delivered
       redirect_to params[:referer]
     else
