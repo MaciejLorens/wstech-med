@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(version: 20181107163100) do
     t.datetime "ready_to_delivery_at"
     t.datetime "deleted_at"
     t.integer  "deleted_by_id"
+    t.string   "invoice_number"
+    t.string   "serial_number"
+    t.string   "shipping_address"
     t.string   "status",                default: "ordered", null: false
     t.datetime "created_at"
     t.datetime "updated_at"

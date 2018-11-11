@@ -1,4 +1,5 @@
-h3 Edycja zamówienia
+h3
+  | Edycja zamówienia #{@order.number}
 
 = form_for @order, url: order_path(@order) do |f|
   = hidden_field_tag :referer, request.referer
@@ -10,19 +11,30 @@ h3 Edycja zamówienia
           li = message
 
   .row
-    .form-group.col-md-12
-      = f.hidden_field :status, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
+    = f.hidden_field :status, class: 'form-control', rows: '3'
     .form-group.col-md-3
       = f.label 'Na kiedy ma być zrobione'
-      / = f.text_field :delivery_request_date, class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
-      = text_field_tag 'order[delivery_request_date]', @order.delivery_request_date.strftime('%d-%m-%Y'), class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
-    .form-group.col-md-4
+      = text_field_tag 'order[delivery_request_date]', @order.delivery_request_date.strftime('%d-%m-%Y'), class: 'datepicker form-control', required: true
+    .form-group.col-md-3
       = f.label 'Zamawiający'
-      = text_field_tag 'order[purchaser_name]', @order.purchaser.name, class: 'form-control', id: 'order_purchaser', placeholder: 'firma xyz', required: true
+      = text_field_tag 'order[purchaser_name]', @order.purchaser.name, class: 'form-control', id: 'order_purchaser', required: true
       - if Purchaser.all.present?
         ul.purchasers_list
           - Purchaser.all.each do |purchaser|
             li.purchaser_name = purchaser.name
+
+  - if @order.status == 'ready_to_delivery'
+    .row
+      .form-group.col-md-3
+        = f.label 'Numer faktury'
+        = f.text_field :invoice_number, class: 'form-control', required: true
+      .form-group.col-md-3
+        = f.label 'Numer seryjny'
+        = f.text_field :serial_number, class: 'form-control', required: true
+    .row
+      .form-group.col-md-6
+        = f.label 'Adres wysyłki'
+        = f.text_field :shipping_address, class: 'form-control', required: true
 
   br
   h4 Przedmioty zamówienia

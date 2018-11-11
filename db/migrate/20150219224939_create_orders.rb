@@ -8,6 +8,9 @@ class CreateOrders < ActiveRecord::Migration
       t.datetime  :ready_to_delivery_at
       t.datetime  :deleted_at,            null: true
       t.integer   :deleted_by_id,         null: true
+      t.string    :invoice_number,        null: true
+      t.string    :serial_number,         null: true
+      t.string    :shipping_address,      null: true
       t.string    :status,                null: false, default: 'ordered'
 
       t.timestamps
