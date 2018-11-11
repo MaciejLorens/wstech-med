@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20181107163100) do
     t.integer  "purchaser_id",                              null: false
     t.datetime "delivery_request_date",                     null: false
     t.datetime "ready_to_delivery_at"
+    t.datetime "delivered_at"
     t.datetime "deleted_at"
     t.integer  "deleted_by_id"
     t.string   "invoice_number"

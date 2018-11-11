@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
 
   validates_presence_of :purchaser_id, :user_id, :delivery_request_date, :status
 
-  after_create :set_number
+  before_create :set_number
 
   scope :at_date, ->(date) { where('created_at >= ? AND created_at < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
   # scope :delivered_at, ->(date) { where('delivery_date >= ? AND delivery_date < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
@@ -35,13 +35,14 @@ class Order < ActiveRecord::Base
 
   private
 
-  def set_number
-    time = Time.now
-    self.update_column(:number, "ZM/#{time.strftime('%y')}/#{time.month}/#{time.day}/#{self.id}")
-  end
-
   def self.date(date)
     date.localtime.strftime('%d-%m-%Y') if date.present?
+  end
+
+  def set_number
+    time = Time.now
+    this_month_orders_count = Order.where('created_at >= ?', DateTime.now.beginning_of_month).count
+    self.number = "ZM/#{time.strftime('%y')}/#{time.month}/#{this_month_orders_count + 1}"
   end
 
 end

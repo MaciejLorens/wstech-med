@@ -5,11 +5,11 @@ h3
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
 
 - if @orders.empty?
-  | Brak zamówień
+  | - Brak zamówień -
 - else
   table.table.table-hover
     tr
-      th.id Id
+      th.id Numer zamówienia
       th
         table.inner-table
           tr
@@ -21,6 +21,9 @@ h3
       th Data utworzenia
       th Na kiedy ma być
       th Gotowe do wysyłki
+      th Numer faktury
+      th Numer seryjny
+      th Adres wysyłki
       th
 
     tbody
@@ -31,7 +34,6 @@ h3
             table.inner-table
               - order.items.each_with_index do |item, index|
                 tr
-                  td.no = "#{index + 12}."
                   td.description = item.description
                   td.quantity = item.quantity
                   td.price = item.price
@@ -40,8 +42,11 @@ h3
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
           td.ready_to_delivery = date(order.ready_to_delivery_at)
+          td.invoice_number = order.invoice_number
+          td.serial_number = order.serial_number
+          td.shipping_address = order.shipping_address
           td.actions
-            = link_to 'Wyślij', order_path(order, referer: ordered_orders_path, order: { status: 'delivered' }), data: { confirm: 'Czy zamówienie zostało wysłane?' }, method: :patch, class: 'btn btn-default btn-sm'
+            = link_to 'Wyślij', order_path(order, referer: ready_to_delivery_orders, order: { status: 'delivered', delivered_at: Time.now }), data: { confirm: 'Czy zamówienie zostało wysłane?' }, method: :patch, class: 'btn btn-default btn-sm'
             = link_to 'Edycja', edit_order_path(order), class: 'btn btn-default btn-sm'
             - if current_user.admin?
               = link_to 'Historia', history_order_path(order), class: 'btn btn-default btn-sm'

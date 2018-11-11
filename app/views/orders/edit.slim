@@ -55,7 +55,6 @@ h3
     = f.fields_for :items, @order.items do |i|
       .row
         .form-group.col-md-8
-          / = i.text_field :description, class: 'form-control', placeholder: 'Opis przedmiotu', required: true
           = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
         .form-group.col-md-1
           = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true

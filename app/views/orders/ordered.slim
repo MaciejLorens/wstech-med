@@ -9,7 +9,7 @@ h3
 - else
   table.table.table-hover
     tr
-      th.id Id
+      th.id Numer zamówienia
       th
         table.inner-table
           tr
@@ -30,7 +30,6 @@ h3
             table.inner-table
               - order.items.each_with_index do |item, index|
                 tr
-                  td.no = "#{index + 12}."
                   td.description = item.description
                   td.quantity = item.quantity
                   td.price = item.price

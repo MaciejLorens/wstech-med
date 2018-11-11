@@ -6,6 +6,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer   :purchaser_id,          null: false
       t.datetime  :delivery_request_date, null: false
       t.datetime  :ready_to_delivery_at
+      t.datetime  :delivered_at
       t.datetime  :deleted_at,            null: true
       t.integer   :deleted_by_id,         null: true
       t.string    :invoice_number,        null: true
