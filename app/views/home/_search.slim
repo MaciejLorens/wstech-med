@@ -1,48 +1,76 @@
-h2
+h3
   | Wyniki wyszukania klucza
   span
-    = params[:query]
+    |  #{params[:query]}
   .pull-right
+    = link_to 'Pobierz', download_orders_path(status: 'ordered', format: 'csv'), class: 'btn btn-default'
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
-  br
-  br
 
-table.table.table-hover
-  tr
-    th Numer zamówienia
-    th Opis
-    th Twórca
-    th Zamawiający
-    th Data zlecenia
-    th Na kiedy ma być
-    th Ilość
-    th Cena
-    th Zdjęcia
-    th Status
-    th
+- if @orders.empty?
+  | - Brak wyników wyszukiwania -
+- else
+  table.table.table-hover
+    tr
+      th.id Numer zamówienia
+      th
+        table.inner-table
+          tr
+            th.description Opis
+            th.quantity Ilość
+            th.price Cena
+      th Twórca
+      th Zamawiający
+      th Data utworzenia
+      th Na kiedy ma być
+      th Gotowe do wysyłki
+      th Zrealizowane
+      th Numer faktury
+      th Numer seryjny
+      th Adres wysyłki
+      th
 
-  tbody
-    - @orders.each do |order|
-      tr
-        td = order.number
-        td = order.description
-        td = "#{order.user.first_name} #{order.user.last_name}"
-        td = order.purchaser
-        td = date(order.created_at)
-        td = date(order.delivery_request_date)
-        td = order.quantity
-        td = order.price
-        td
-          - order.resources.each_with_index do |resource, index|
-            - if resource.image.present?
-              = link_to image_tag(resource.image(:thumb)), resource.image.url
-            - else
-              = link_to "[#{index}]", resource.link, target: '_blank'
-        td = status(order)
-        td
-          = link_to 'Edycja', edit_order_path(order)
-          br
-          - if current_user.admin?
-            = link_to 'Historia', history_order_path(order)
-            br
-          = link_to 'Usuń', order_path(order), data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'}, method: :delete
+    tbody
+      - @orders.each do |order|
+        tr
+          td.id = order.number
+          td.inner
+            table.inner-table
+              - order.items.visible.each_with_index do |item, index|
+                tr
+                  td.description = item.description
+                  td.quantity = item.quantity
+                  td.price = item.price
+          td.user = "#{order.user.first_name} #{order.user.last_name}"
+          td.purchaser = order.purchaser.name
+          td.created_at = date(order.created_at)
+          td.delivery_request_date = date(order.delivery_request_date)
+          td.ready_to_delivery = date(order.ready_to_delivery_at)
+          td.delivered = date(order.delivered_at)
+          td.invoice_number = order.invoice_number
+          td.serial_number = order.serial_number
+          td.shipping_address = order.shipping_address
+          td.actions
+            - if order.status == 'ordered'
+              = link_to 'Gotowe',
+                  order_path(order, referer: ordered_orders_path, order: { status: 'ready_to_delivery', ready_to_delivery_at: Time.now }),
+                  data: { confirm: 'Czy zamówienie jest zmontowane, spakowane i gotowe do wysyłki?' },
+                  method: :patch,
+                  class: 'btn btn-default btn-sm'
+            - if order.status == 'ready_to_delivery'
+              = link_to 'Wyślij',
+                  order_path(order, referer: ready_to_delivery_orders_path, order: { status: 'delivered', delivered_at: Time.now }),
+                  data: { confirm: 'Czy zamówienie zostało wysłane?' },
+                  method: :patch,
+                  class: 'btn btn-default btn-sm'
+            = link_to 'Edycja',
+                edit_order_path(order),
+                class: 'btn btn-default btn-sm'
+            - if current_user.admin?
+              = link_to 'Historia',
+                  history_order_path(order),
+                  class: 'btn btn-default btn-sm'
+            = link_to 'Usuń',
+                order_path(order, referer: delivered_orders_path(year: params[:year], month: params[:month])),
+                data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},
+                method: :delete,
+                class: 'btn btn-default btn-sm'

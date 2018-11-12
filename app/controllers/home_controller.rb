@@ -4,7 +4,12 @@ class HomeController < ApplicationController
   end
 
   def search
-    @orders = Order.where('lower(description) LIKE ?', "%#{params[:query].downcase}%").includes(:resources, :user).order(created_at: :desc)
+    @orders = Order
+                .joins(:items)
+                .where('items.description LIKE ?', "%#{params[:query].downcase}%")
+                .includes(:purchaser, :user, :items)
+                .order(created_at: :desc)
+
     render json: {content: render_to_string(partial: 'search')}
   end
 
