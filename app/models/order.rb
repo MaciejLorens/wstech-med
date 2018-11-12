@@ -1,6 +1,5 @@
 class Order < ActiveRecord::Base
 
-  has_many :resources
   has_many :items
 
   belongs_to :purchaser
@@ -10,7 +9,7 @@ class Order < ActiveRecord::Base
              class_name: User,
              foreign_key: :deleted_by_id
 
-  accepts_nested_attributes_for :resources, :items
+  accepts_nested_attributes_for :items
 
   has_paper_trail
 
@@ -24,7 +23,7 @@ class Order < ActiveRecord::Base
   scope :at_year_at_month, ->(year, month) { where('orders.created_at >= ? AND orders.created_at < ?', "#{year}/#{month}/01".to_datetime, "#{year}/#{month}/01".to_datetime.end_of_month) }
 
   def self.to_csv(status)
-    @orders = self.where(status: status).order(created_at: :asc)
+    @orders = self.where(status: status).order(created_at:   :asc)
     CSV.generate do |csv|
       csv << ['Id', 'Opis', 'Twórca', 'Zamawiający', 'Data zlecenia', 'Na kiedy ma być', 'Ilość', 'Cena']
       @orders.each do |order|

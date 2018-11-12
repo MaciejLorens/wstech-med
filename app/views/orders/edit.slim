@@ -41,7 +41,7 @@ h3
   br
 
   .items
-    = hidden_field_tag :current_item_index, 1
+    = hidden_field_tag :current_item_index, @order.items.count
     .row
       .form-group.col-md-8
         = label_tag 'Opis'
@@ -52,7 +52,7 @@ h3
       .form-group.col-md-1
         = label_tag 'akcje'
 
-    = f.fields_for :items, @order.items do |i|
+    = f.fields_for :items, @order.items.visible do |i|
       .row
         .form-group.col-md-8
           = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'

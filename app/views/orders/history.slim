@@ -1,59 +1,82 @@
 h3
-  = "Zamówienie stolarnia historia - #{@order.number}"
+  | Historia zamówienia #{@order.number}
 
-table.table.table-hover
-  tr
-    th Numer zamówienia
-    th Opis
-    th Twórca
-    th Zamawiający
-    th Status
-    th Data zlecenia
-    th Na kiedy ma być
-    th Ilość
-    th Cena
-    th Zdjęcia
-    th Autor zmiany
-    th Data zmiany
-
-  tbody
+- if @order.versions.empty?
+  | - Brak historii -
+- else
+  table.table.table-hover
     tr
-      - version = @order.versions.last
-      - version_author = User.find_by_id(@order.versions.last.version_author)
-      td = @order.number
-      td = @order.description
-      td = "#{@order.user.first_name} #{@order.user.last_name}"
-      td = @order.purchaser
-      td = status(@order)
-      td = date(@order.created_at)
-      td = date(@order.delivery_request_date)
-      td = @order.quantity
-      td = @order.price
-      td
-        - @order.resources.each_with_index do |resource, index|
-          - if resource.image.present?
-            = link_to image_tag(resource.image(:thumb)), resource.image.url
-          - else
-            = link_to "[#{index}]", resource.link, target: '_blank'
-      td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
-      td = version.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
+      th.id Numer zamówienia
+      th
+        table.inner-table
+          tr
+            th.description Opis
+            th.quantity Ilość
+            th.price Cena
+      th Twórca
+      th Zamawiający
+      th Data utworzenia
+      th Na kiedy ma być
+      th Gotowe do wysyłki
+      th Zrealizowane
+      th Numer faktury
+      th Numer seryjny
+      th Adres wysyłki
+      th Status
+      th Autor zmiany
+      th Data zmiany
 
-    - @order.versions.reverse.each_with_index do |version, index|
+    tbody
       tr
-        - order = version.reify
-        - if order.present?
-          - version_author = User.find_by_id(version.originator)
-          - version_after = @order.versions.reverse[index+1]
-          td = order.number
-          td = order.description
-          td = "#{order.user.first_name} #{order.user.last_name}"
-          td = status(order)
-          td = date(order.created_at)
-          td = date(order.delivery_request_date)
-          td = order.quantity
-          td = order.price
-          td
-            - order.resources.each_with_index do |resource, index|
-              = link_to "[#{index}]", resource.image.present? ? resource.image.url : resource.link, target: '_blank'
-          td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
-          td = version_after.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S') if version_after.present?
+        - version = @order.versions.last
+        - version_author = User.find_by_id(@order.versions.last.version_author)
+        td.id = @order.number
+        td.inner
+          table.inner-table
+            - @order.items.visible.each_with_index do |item, index|
+              - if item.present? && !item.hidden
+                tr
+                  td.description = item.description
+                  td.quantity = item.quantity
+                  td.price = item.price
+        td.user = "#{@order.user.first_name} #{@order.user.last_name}"
+        td.purchaser = @order.purchaser.name
+        td.created_at = date(@order.created_at)
+        td.delivery_request_date = date(@order.delivery_request_date)
+        td.ready_to_delivery = date(@order.ready_to_delivery_at)
+        td.delivered = date(@order.delivered_at)
+        td.invoice_number = @order.invoice_number
+        td.serial_number = @order.serial_number
+        td.shipping_address = @order.shipping_address
+        td.status = status(@order)
+        td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
+        td = version.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
+
+      - @order.versions.reverse.each_with_index do |version, index|
+        tr
+          - order_version = version.reify
+          - if order_version.present?
+            - version_author = User.find_by_id(version.originator)
+            - version_after = @order.versions.reverse[index+1]
+            td.id = order_version.number
+            td.inner
+              table.inner-table
+                - order_version.items.where('created_at < ?', version.created_at - 1.second).each do |item|
+                  - item_version = item.version_at(version.created_at - 1.second)
+                  - if item_version.present? && !item_version.hidden
+                    tr
+                      td.description = item_version.description
+                      td.quantity = item_version.quantity
+                      td.price = item_version.price
+            td.user = "#{order_version.user.first_name} #{order_version.user.last_name}"
+            td.purchaser = order_version.purchaser.name
+            td.created_at = date(order_version.created_at)
+            td.delivery_request_date = date(order_version.delivery_request_date)
+            td.ready_to_delivery = date(order_version.ready_to_delivery_at)
+            td.delivered = date(order_version.delivered_at)
+            td.invoice_number = order_version.invoice_number
+            td.serial_number = order_version.serial_number
+            td.shipping_address = order_version.shipping_address
+            td.status = status(order_version)
+            td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
+            td = version_after.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')

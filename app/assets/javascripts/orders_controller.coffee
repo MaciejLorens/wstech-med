@@ -35,13 +35,13 @@ $ ->
     html =
       '<div class="row">' +
         '<div class="form-group col-md-8">' +
-          '<textarea class="form-control" rows="1" placeholder="Opis zlecenia" name="order[items_attributes][' + current_item_index + '][description]" id="order_items_attributes_0_description"></textarea>' +
+          '<textarea class="form-control" rows="1" placeholder="Opis zlecenia" name="order[items_attributes][' + current_item_index + '][description]" id="order_items_attributes_' + current_item_index + '_description"></textarea>' +
         '</div>' +
         '<div class="form-group col-md-1">' +
-          '<input class="form-control" placeholder="1" required="required" type="text" name="order[items_attributes][' + current_item_index + '][quantity]" id="order_items_attributes_0_quantity">' +
+          '<input class="form-control" placeholder="1" required="required" type="text" name="order[items_attributes][' + current_item_index + '][quantity]" id="order_items_attributes_' + current_item_index + '_quantity">' +
         '</div>' +
         '<div class="form-group col-md-2">' +
-          '<input class="form-control" placeholder="100.00" required="required" type="text" name="order[items_attributes][' + current_item_index + '][price]" id="order_items_attributes_0_price">' +
+          '<input class="form-control" placeholder="100.00" required="required" type="text" name="order[items_attributes][' + current_item_index + '][price]" id="order_items_attributes_' + current_item_index + '_price">' +
         '</div>' +
         '<div class="form-group col-md-1">' +
           '<div class="btn btn-default remove-item form-control">' +

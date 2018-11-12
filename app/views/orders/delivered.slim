@@ -37,7 +37,7 @@ h3
           td.id = order.number
           td.inner
             table.inner-table
-              - order.items.each_with_index do |item, index|
+              - order.items.visible.each_with_index do |item, index|
                 tr
                   td.description = item.description
                   td.quantity = item.quantity

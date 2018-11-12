@@ -5,6 +5,8 @@ class CreateItems < ActiveRecord::Migration
       t.integer  :quantity,    null: false
       t.decimal  :price,       null: false, precision: 8, scale: 2
       t.integer  :order_id,    null: false
+      t.boolean  :hidden,      null: false, default: false
+      t.datetime :hidden_at,   null: true
 
       t.timestamps
     end

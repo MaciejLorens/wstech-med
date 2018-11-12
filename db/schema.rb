@@ -17,10 +17,12 @@ ActiveRecord::Schema.define(version: 20181107163100) do
   enable_extension "plpgsql"
 
   create_table "items", force: :cascade do |t|
-    t.string   "description",                         null: false
-    t.integer  "quantity",                            null: false
-    t.decimal  "price",       precision: 8, scale: 2, null: false
-    t.integer  "order_id",                            null: false
+    t.string   "description",                                         null: false
+    t.integer  "quantity",                                            null: false
+    t.decimal  "price",       precision: 8, scale: 2,                 null: false
+    t.integer  "order_id",                                            null: false
+    t.boolean  "hidden",                              default: false, null: false
+    t.datetime "hidden_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -48,17 +50,6 @@ ActiveRecord::Schema.define(version: 20181107163100) do
 
   create_table "purchasers", force: :cascade do |t|
     t.string "name", null: false
-  end
-
-  create_table "resources", force: :cascade do |t|
-    t.integer  "order_id"
-    t.string   "link"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
   end
 
   create_table "users", force: :cascade do |t|

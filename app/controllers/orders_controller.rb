@@ -3,24 +3,24 @@ class OrdersController < ApplicationController
 
   def ordered
     @orders = Order
-               .includes(:purchaser, :user, :items)
-               .where(status: 'ordered')
-               .order(created_at: :desc)
+                .includes(:purchaser, :user, :items)
+                .where(status: 'ordered')
+                .order(created_at: :desc)
   end
 
   def ready_to_delivery
     @orders = Order
-               .includes(:purchaser, :user, :items)
-               .where(status: 'ready_to_delivery')
-               .order(created_at: :desc)
+                .includes(:purchaser, :user, :items)
+                .where(status: 'ready_to_delivery')
+                .order(created_at: :desc)
   end
 
   def delivered
     @orders = Order
-               .includes(:purchaser, :user, :items)
-               .where(status: 'delivered')
-               .at_year_at_month(params[:year], params[:month])
-               .order(created_at: :desc)
+                .includes(:purchaser, :user, :items)
+                .where(status: 'delivered')
+                .at_year_at_month(params[:year], params[:month])
+                .order(created_at: :desc)
   end
 
   def deleted
@@ -55,6 +55,15 @@ class OrdersController < ApplicationController
 
   def update
     if @order.update(order_params)
+
+      if order_params['items_attributes']
+        order_params['items_attributes'].each do |index, item|
+          if item['id'].present? && item['description'].blank? && item['quantity'].blank? && item['price'].blank?
+            @order.items.find(item['id'].to_i).hide
+          end
+        end
+      end
+
       redirect_to params[:referer], notice: 'Zamówienie zostało uaktualnione.'
     else
       render :edit

@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get 'search' => 'home#search'
 
   resources :orders do
-    resources :resources
     get :proposition, on: :collection
     get :ordered, on: :collection
     get :ready_to_delivery, on: :collection
