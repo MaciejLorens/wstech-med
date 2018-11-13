@@ -50,6 +50,8 @@ GEM
     builder (3.2.2)
     byebug (4.0.5)
       columnize (= 0.9.0)
+    chartjs-ror (3.6.2)
+      rails (>= 3.1)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.7)
@@ -217,6 +219,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap3-datetimepicker-rails (~> 4.0.0)
   byebug
+  chartjs-ror
   coffee-rails (~> 4.1.0)
   devise
   flickraw
@@ -244,4 +247,4 @@ RUBY VERSION
    ruby 2.1.4p265
 
 BUNDLED WITH
-   1.13.2
+   1.16.6

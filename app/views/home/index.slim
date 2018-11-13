@@ -1,5 +1,6 @@
-h3 Strona główna
-
-p
-  | Strona ta powstała z zamierzeniem usprawnienia komunikacji związanej z zamówieniami w firmie WS-TECH.
-
+- if current_user.admin?
+  = render partial: 'dashboard'
+- else
+  h3 Strona główna
+  p
+    | Strona ta powstała z zamierzeniem usprawnienia komunikacji związanej z zamówieniami w firmie WS-TECH.

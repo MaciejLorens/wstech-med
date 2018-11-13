@@ -18,7 +18,8 @@ class Order < ActiveRecord::Base
   before_create :set_number
 
   scope :at_date, ->(date) { where('created_at >= ? AND created_at < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
-  # scope :delivered_at, ->(date) { where('delivery_date >= ? AND delivery_date < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
+  scope :from_to, ->(from, to) { where('created_at >= ? AND created_at < ?', from, to) }
+  scope :delivered, ->() { where('status = ?', 'delivered') }
   scope :at_status, ->(status) { where('status = ?', status) }
   scope :at_year_at_month, ->(year, month) { where('orders.created_at >= ? AND orders.created_at < ?', "#{year}/#{month}/01".to_datetime, "#{year}/#{month}/01".to_datetime.end_of_month) }
 
@@ -30,6 +31,17 @@ class Order < ActiveRecord::Base
         csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.price]
       end
     end
+  end
+
+  def self.price_sum(from, to)
+    order_ids = Order.delivered.from_to(from, to).map(&:id)
+    items = Item.where(order_id: order_ids)
+    items.map(&:price).sum
+  end
+
+  def self.count_sum(from, to)
+    orders = Order.delivered.from_to(from, to)
+    orders.count
   end
 
   private
