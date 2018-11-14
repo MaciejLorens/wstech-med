@@ -1,7 +1,6 @@
 h3
   | Zamówione
   .pull-right
-    = link_to 'Pobierz', download_orders_path(status: 'ordered', format: 'csv'), class: 'btn btn-default'
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
 
 - if @orders.empty?

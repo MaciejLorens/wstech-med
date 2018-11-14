@@ -2,10 +2,9 @@ h3
   | Zrealizowane z&nbsp;
   = select_tag('order-select-month', options_for_select(name_of_months, params[:month]), class: 'order-select')
   | &nbsp;
-  = select_tag('order-select-year', options_for_select((2014..Time.now.year).to_a.reverse, params[:year]), class: 'order-select')
+  = select_tag('order-select-year', options_for_select((2018..Time.now.year).to_a.reverse, params[:year]), class: 'order-select')
   | &nbsp;
   .pull-right
-    = link_to 'Pobierz', download_orders_path(status: 'ordered', format: 'csv'), class: 'btn btn-default'
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
 
 - if @orders.empty?
