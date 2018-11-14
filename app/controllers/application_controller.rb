@@ -5,9 +5,11 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
-  before_filter :update_sanitized_params, if: :devise_controller?
+  before_filter :configure_permitted_parameters, if: :devise_controller?
 
-  def update_sanitized_params
-    devise_parameter_sanitizer.for(:sign_up) {|u| u.permit(:first_name, :last_name, :email, :password, :password_confirmation)}
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :email, :password, :password_confirmation])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :email, :password, :password_confirmation])
   end
 end

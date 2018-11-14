@@ -25,7 +25,7 @@ h3 Statystyki
             br
             | zrealizowanych
         tbody
-          - @not_admins.each do |user|
+          - @users.each do |user|
             tr
               td = "#{user.first_name} #{user.last_name}"
               td = user.orders_count_sum(from, to)

@@ -18,7 +18,7 @@ class Order < ActiveRecord::Base
   before_create :set_number
 
   scope :at_date, ->(date) { where('created_at >= ? AND created_at < ?', date.beginning_of_day, date.beginning_of_day + 1.day) }
-  scope :from_to, ->(from, to) { where('created_at >= ? AND created_at < ?', from, to) }
+  scope :from_to, ->(from, to) { where('created_at >= ? AND created_at < ?', from.to_datetime.beginning_of_day, to.to_datetime.end_of_day) }
   scope :delivered, ->() { where('status = ?', 'delivered') }
   scope :at_status, ->(status) { where('status = ?', status) }
   scope :at_year_at_month, ->(year, month) { where('orders.created_at >= ? AND orders.created_at < ?', "#{year}/#{month}/01".to_datetime, "#{year}/#{month}/01".to_datetime.end_of_month) }

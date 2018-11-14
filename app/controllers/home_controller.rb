@@ -1,19 +1,19 @@
 class HomeController < ApplicationController
 
   def index
-    @not_admins = User.where(admin: false).includes(orders: :items)
+    @users = User.includes(orders: :items)
 
     from = params[:from] || DateTime.now.beginning_of_month
     to = params[:to] || DateTime.now
 
     @data = {
-      labels: @not_admins.map{|u| "#{u.first_name} #{u.last_name}"},
+      labels: @users.map{|u| "#{u.first_name} #{u.last_name}"},
       datasets: [
         {
           label: "My First dataset",
-          backgroundColor: color_list.first(@not_admins.count),
+          backgroundColor: color_list.first(@users.count),
           borderColor: "rgba(0,0,0,1)",
-          data: @not_admins.map do |u|
+          data: @users.map do |u|
             u.orders_price_sum(from, to)
           end
         }
