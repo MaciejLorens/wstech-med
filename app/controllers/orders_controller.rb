@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
       refactored_params.merge!(purchaser_id: purchaser.id)
     end
 
-    refactored_params.merge!(user_id: current_user.id)
+    refactored_params.merge!(user_id: current_user.id, updated_at: Time.now)
     refactored_params
   end
 
