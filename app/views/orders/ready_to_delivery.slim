@@ -8,21 +8,21 @@ h3
 - else
   table.table.table-hover
     tr
-      th.id Numer zamówienia
+      th.id = ready_to_delivery_sort_link('Numer zamówienia', 'id')
       th
         table.inner-table
           tr
-            th.description Opis
-            th.quantity Ilość
-            th.price Cena
-      th Twórca
-      th Zamawiający
-      th Data utworzenia
-      th Na kiedy ma być
-      th Gotowe do wysyłki
-      th Numer faktury
-      th Numer seryjny
-      th Adres wysyłki
+            th.description = ready_to_delivery_sort_link('Opis', 'description')
+            th.quantity = ready_to_delivery_sort_link('Ilość', 'quantity')
+            th.price = ready_to_delivery_sort_link('Cena', 'price')
+      th = ready_to_delivery_sort_link('Twórca', 'user')
+      th = ready_to_delivery_sort_link('Zamawiający', 'purchaser')
+      th = ready_to_delivery_sort_link('Data utworzenia', 'created_at')
+      th = ready_to_delivery_sort_link('Na kiedy ma być', 'delivery_request_date')
+      th = ready_to_delivery_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
+      th = ready_to_delivery_sort_link('Numer faktury', 'invoice_number')
+      th = ready_to_delivery_sort_link('Numer seryjny', 'delivery_request_date')
+      th = ready_to_delivery_sort_link('Adres wysyłki', 'shipping_address')
       th
 
     tbody

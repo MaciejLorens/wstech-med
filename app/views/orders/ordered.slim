@@ -8,17 +8,17 @@ h3
 - else
   table.table.table-hover
     tr
-      th.id Numer zamówienia
+      th.id = ordered_sort_link('Numer zamówienia', 'id')
       th
         table.inner-table
           tr
-            th.description Opis
-            th.quantity Ilość
-            th.price Cena
-      th Twórca
-      th Zamawiający
-      th Data utworzenia
-      th Na kiedy ma być
+            th.description = ordered_sort_link('Opis', 'description')
+            th.quantity = ordered_sort_link('Ilość', 'quantity')
+            th.price = ordered_sort_link('Cena', 'price')
+      th = ordered_sort_link('Twórca', 'user')
+      th = ordered_sort_link('Zamawiający', 'purchaser')
+      th = ordered_sort_link('Data utworzenia', 'created_at')
+      th = ordered_sort_link('Na kiedy ma być', 'delivery_request_date')
       th
 
     tbody

@@ -5,7 +5,7 @@ $ ->
 
   setTimeout ->
     $(".alert").fadeOut(500)
-  , 1500
+  , 1200
 
   $('.datepicker').datepicker({
     format: 'dd-mm-yyyy',

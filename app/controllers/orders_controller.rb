@@ -1,18 +1,19 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
+  before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
   def ordered
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'ordered')
-                .order(created_at: :desc)
+                .order(@sorting)
   end
 
   def ready_to_delivery
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'ready_to_delivery')
-                .order(created_at: :desc)
+                .order(@sorting)
   end
 
   def delivered
@@ -20,14 +21,14 @@ class OrdersController < ApplicationController
                 .includes(:purchaser, :user, :items)
                 .where(status: 'delivered')
                 .at_year_at_month(params[:year], params[:month])
-                .order(created_at: :desc)
+                .order(@sorting)
   end
 
   def deleted
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'deleted')
-                .order(created_at: :desc)
+                .order(@sorting)
   end
 
   def history
@@ -90,6 +91,28 @@ class OrdersController < ApplicationController
 
   def set_order
     @order = Order.find(params[:id])
+  end
+
+  def set_sorting
+    @sorting = case params[:sort]
+               when 'id' then 'id'
+               when 'description' then 'items.description'
+               when 'quantity' then 'items.quantity'
+               when 'price' then 'items.price'
+               when 'user' then 'users.last_name'
+               when 'purchaser' then 'purchasers.name'
+               when 'created_at' then 'created_at'
+               when 'delivery_request_date' then 'delivery_request_date'
+               when 'ready_to_delivery_at' then 'ready_to_delivery_at'
+               when 'delivered_at' then 'delivered_at'
+               when 'invoice_number' then 'invoice_number'
+               when 'serial_number' then 'serial_number'
+               when 'shipping_address' then 'shipping_address'
+               else
+                 'created_at'
+               end
+
+    @sorting += " #{params[:order] || 'desc'}"
   end
 
   def order_params

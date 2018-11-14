@@ -83,3 +83,13 @@ a:visited {
   right: 450px;
   margin-top: 10px;
 }
+
+.sorting-btn {
+  width: 16px;
+  height: 16px;
+
+  &:hover {
+    background-color: transparent;
+    color: black;
+  }
+}
