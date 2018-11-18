@@ -17,11 +17,11 @@ module OrdersControllerHelper
   end
 
   def ordered_sort_link(text, param)
-    img = '<img src="/assets/sort_none"></img>'
+    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
     asc_param = 'asc'
 
     if params[:sort] == param && params[:order].present?
-      img = "<img src='/assets/sort_#{params[:order]}'></img>"
+      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:order]}.png'></img>"
       asc_param = params[:order] == 'asc' ? 'desc' : 'asc'
     end
 
@@ -29,11 +29,11 @@ module OrdersControllerHelper
   end
 
   def ready_to_delivery_sort_link(text, param)
-    img = '<img src="/assets/sort_none"></img>'
+    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
     asc_param = 'asc'
 
     if params[:sort] == param && params[:order].present?
-      img = "<img src='/assets/sort_#{params[:order]}'></img>"
+      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:order]}.png'></img>"
       asc_param = params[:order] == 'asc' ? 'desc' : 'asc'
     end
 
@@ -41,15 +41,15 @@ module OrdersControllerHelper
   end
 
   def delivered_sort_link(text, param)
-    img = '<img src="/assets/sort_none"></img>'
+    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
     asc_param = 'asc'
 
     if param == 'created_at' && params[:sort].blank?
-      img = '<img src="/assets/sort_desc"></img>'
+      img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_desc.png"></img>'
     end
 
     if params[:sort] == param && params[:order].present?
-      img = "<img src='/assets/sort_#{params[:order]}'></img>"
+      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:order]}.png'></img>"
       asc_param = params[:order] == 'asc' ? 'desc' : 'asc'
     end
 
@@ -57,15 +57,15 @@ module OrdersControllerHelper
   end
 
   def deleted_sort_link(text, param)
-    img = '<img src="/assets/sort_none"></img>'
+    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
     asc_param = 'asc'
 
     if param == 'created_at' && params[:sort].blank?
-      img = '<img src="/assets/sort_desc"></img>'
+      img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_desc.png"></img>'
     end
 
     if params[:sort] == param && params[:order].present?
-      img = "<img src='/assets/sort_#{params[:order]}'></img>"
+      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:order]}.png'></img>"
       asc_param = params[:order] == 'asc' ? 'desc' : 'asc'
     end
 
