@@ -28,6 +28,7 @@ class OrdersController < ApplicationController
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'deleted')
+                .at_year_at_month(params[:year], params[:month])
                 .order(@sorting)
   end
 

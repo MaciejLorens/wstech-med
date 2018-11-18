@@ -56,4 +56,20 @@ module OrdersControllerHelper
     link_to "#{text} #{img}".html_safe, delivered_orders_path(sort: param, order: asc_param, year: params[:year], month: params[:month]), class: 'sorting-btn'
   end
 
+  def deleted_sort_link(text, param)
+    img = '<img src="/assets/sort_none"></img>'
+    asc_param = 'asc'
+
+    if param == 'created_at' && params[:sort].blank?
+      img = '<img src="/assets/sort_desc"></img>'
+    end
+
+    if params[:sort] == param && params[:order].present?
+      img = "<img src='/assets/sort_#{params[:order]}'></img>"
+      asc_param = params[:order] == 'asc' ? 'desc' : 'asc'
+    end
+
+    link_to "#{text} #{img}".html_safe, deleted_orders_path(sort: param, order: asc_param, year: params[:year], month: params[:month]), class: 'sorting-btn'
+  end
+
 end

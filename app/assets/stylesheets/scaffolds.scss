@@ -87,7 +87,7 @@ footer {
 
 .table-hover {
   th {
-    text-align: center;
+    text-align: left;
   }
 
   tr {
@@ -126,12 +126,16 @@ footer {
     padding: 0px;
   }
 
+  .lp {
+    width: 30px;
+  }
+
   .description {
-    min-width: 125px;
+    min-width: 200px;
   }
 
   .quantity {
-    width: 70px;
+    width: 65px;
   }
 
   .price {
@@ -139,39 +143,39 @@ footer {
   }
 
   .user {
-    width: 70px;
-  }
-
-  .purchaser {
     width: 110px;
   }
 
+  .purchaser {
+    width: 135px;
+  }
+
   .created_at {
-    width: 95px;
+    width: 120px;
   }
 
   .delivery_request_date {
-    width: 95px;
+    width: 100px;
   }
 
   .ready_to_delivery {
-    width: 95px;
+    width: 100px;
   }
 
   .delivered {
-    width: 95px;
+    width: 100px;
   }
 
   .invoice_number {
-    width: 70px;
+    width: 100px;
   }
 
   .serial_number {
-    width: 70px;
+    width: 100px;
   }
 
   .shipping_address {
-    width: 90px;
+    width: 100px;
   }
 
   .actions {
@@ -180,7 +184,7 @@ footer {
 }
 
 .container {
-  width: 1300px;
+  width: 90%;
 }
 
 .content {

@@ -8,16 +8,17 @@ h3
 - else
   table.table.table-hover
     tr
-      th.id = ready_to_delivery_sort_link('Numer zamówienia', 'id')
+      th.id = ready_to_delivery_sort_link('Numer', 'id')
       th
         table.inner-table
           tr
+            th.lp Lp
             th.description = ready_to_delivery_sort_link('Opis', 'description')
             th.quantity = ready_to_delivery_sort_link('Ilość', 'quantity')
             th.price = ready_to_delivery_sort_link('Cena', 'price')
       th = ready_to_delivery_sort_link('Twórca', 'user')
       th = ready_to_delivery_sort_link('Zamawiający', 'purchaser')
-      th = ready_to_delivery_sort_link('Data utworzenia', 'created_at')
+      th = ready_to_delivery_sort_link('Utworzenie', 'created_at')
       th = ready_to_delivery_sort_link('Na kiedy ma być', 'delivery_request_date')
       th = ready_to_delivery_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
       th = ready_to_delivery_sort_link('Numer faktury', 'invoice_number')
@@ -33,6 +34,7 @@ h3
             table.inner-table
               - order.items.visible.each_with_index do |item, index|
                 tr
+                  td.lp = "#{index + 1}."
                   td.description = item.description
                   td.quantity = item.quantity
                   td.price = item.price

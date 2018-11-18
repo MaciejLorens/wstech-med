@@ -36,7 +36,7 @@ html lang="en"
             li.divider
             li= link_to 'Zrealizowane', delivered_orders_path(year: Time.now.year, month: Time.now.month)
             li.divider
-            li= link_to 'Usunięte', deleted_orders_path
+            li= link_to 'Usunięte', deleted_orders_path(year: Time.now.year, month: Time.now.month)
 
           ul.nav.navbar-nav.pull-right
             = text_field_tag :search_tag, '', placeholder: 'Szukaj w opisie', class: 'search_tag'

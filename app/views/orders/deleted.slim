@@ -1,5 +1,9 @@
 h3
-  | Usunięte
+  | Usunięte z&nbsp;
+  = select_tag('deleted-order-select-month', options_for_select(name_of_months, params[:month]), class: 'deleted-order-select')
+  | &nbsp;
+  = select_tag('deleted-order-select-year', options_for_select((2018..Time.now.year).to_a.reverse, params[:year]), class: 'deleted-order-select')
+  | &nbsp;
   .pull-right
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
 
@@ -8,17 +12,23 @@ h3
 - else
   table.table.table-hover
     tr
-      th.id Numer zamówienia
+      th.id = deleted_sort_link('Numer' , 'id')
       th
         table.inner-table
           tr
-            th.description Opis
-            th.quantity Ilość
-            th.price Cena
-      th Twórca
-      th Zamawiający
-      th Data utworzenia
-      th Na kiedy ma być
+            th.lp Lp
+            th.description = deleted_sort_link('Opis', 'description')
+            th.quantity = deleted_sort_link('Ilość', 'quantity')
+            th.price = deleted_sort_link('Cena', 'price')
+      th = deleted_sort_link('Twórca', 'user')
+      th = deleted_sort_link('Zamawiający', 'purchaser')
+      th = deleted_sort_link('Utworzenie', 'created_at')
+      th = deleted_sort_link('Na kiedy ma być', 'delivery_request_date')
+      th = deleted_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
+      th = deleted_sort_link('Zrealizo- wane', 'delivered_at')
+      th = deleted_sort_link('Numer faktury', 'invoice_number')
+      th = deleted_sort_link('Numer seryjny', 'serial_number')
+      th = deleted_sort_link('Adres wysyłki', 'shipping_address')
       th
 
     tbody
@@ -29,6 +39,7 @@ h3
             table.inner-table
               - order.items.visible.each_with_index do |item, index|
                 tr
+                  td.lp = "#{index + 1}."
                   td.description = item.description
                   td.quantity = item.quantity
                   td.price = item.price
@@ -36,6 +47,11 @@ h3
           td.purchaser = order.purchaser.name
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
+          td.ready_to_delivery = date(order.ready_to_delivery_at)
+          td.delivered = date(order.delivered_at)
+          td.invoice_number = order.invoice_number
+          td.serial_number = order.serial_number
+          td.shipping_address = order.shipping_address
           td.actions
             - if current_user.admin?
               = link_to 'Historia',

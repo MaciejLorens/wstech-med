@@ -5,7 +5,7 @@ $ ->
 
   setTimeout ->
     $(".alert").fadeOut(500)
-  , 1200
+  , 1500
 
   $('.datepicker').datepicker({
     format: 'dd-mm-yyyy',
@@ -13,10 +13,15 @@ $ ->
     language: 'pl'
   });
 
-  $('.order-select').change ->
-    year = $('#order-select-year').val()
-    month = $('#order-select-month').val()
+  $('.delivered-order-select').change ->
+    year = $('#delivered-order-select-year').val()
+    month = $('#delivered-order-select-month').val()
     window.location.href = '/orders/delivered?year=' + year + '&month=' + month
+
+  $('.deleted-order-select').change ->
+    year = $('#deleted-order-select-year').val()
+    month = $('#deleted-order-select-month').val()
+    window.location.href = '/orders/deleted?year=' + year + '&month=' + month
 
   $('.search_tag').keyup ->
     query = $(@).val()

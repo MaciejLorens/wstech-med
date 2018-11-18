@@ -23,18 +23,18 @@ h3
           - Purchaser.all.each do |purchaser|
             li.purchaser_name = purchaser.name
 
-  - if @order.status == 'ready_to_delivery'
+  - if @order.status == 'ready_to_delivery' || @order.status == 'delivered'
     .row
       .form-group.col-md-3
         = f.label 'Numer faktury'
-        = f.text_field :invoice_number, class: 'form-control', required: true
+        = f.text_field :invoice_number, class: 'form-control'
       .form-group.col-md-3
         = f.label 'Numer seryjny'
-        = f.text_field :serial_number, class: 'form-control', required: true
+        = f.text_field :serial_number, class: 'form-control'
     .row
       .form-group.col-md-6
         = f.label 'Adres wysyłki'
-        = f.text_field :shipping_address, class: 'form-control', required: true
+        = f.text_field :shipping_address, class: 'form-control'
 
   br
   h4 Przedmioty zamówienia

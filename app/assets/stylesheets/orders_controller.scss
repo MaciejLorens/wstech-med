@@ -80,7 +80,7 @@ a:visited {
 .alert {
   position: absolute;
   width: 400px;
-  right: 450px;
+  right: calc(50% - 200px);
   margin-top: 10px;
 }
 

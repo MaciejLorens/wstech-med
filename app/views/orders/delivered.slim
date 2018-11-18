@@ -1,8 +1,8 @@
 h3
   | Zrealizowane z&nbsp;
-  = select_tag('order-select-month', options_for_select(name_of_months, params[:month]), class: 'order-select')
+  = select_tag('delivered-order-select-month', options_for_select(name_of_months, params[:month]), class: 'delivered-order-select')
   | &nbsp;
-  = select_tag('order-select-year', options_for_select((2018..Time.now.year).to_a.reverse, params[:year]), class: 'order-select')
+  = select_tag('delivered-order-select-year', options_for_select((2018..Time.now.year).to_a.reverse, params[:year]), class: 'delivered-order-select')
   | &nbsp;
   .pull-right
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
@@ -12,19 +12,20 @@ h3
 - else
   table.table.table-hover
     tr
-      th.id = delivered_sort_link('Numer zamówienia' , 'id')
+      th.id = delivered_sort_link('Numer' , 'id')
       th
         table.inner-table
           tr
+            th.lp Lp
             th.description = delivered_sort_link('Opis', 'description')
             th.quantity = delivered_sort_link('Ilość', 'quantity')
             th.price = delivered_sort_link('Cena', 'price')
       th = delivered_sort_link('Twórca', 'user')
       th = delivered_sort_link('Zamawiający', 'purchaser')
-      th = delivered_sort_link('Data utworzenia', 'created_at')
+      th = delivered_sort_link('Utworzenie', 'created_at')
       th = delivered_sort_link('Na kiedy ma być', 'delivery_request_date')
       th = delivered_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
-      th = delivered_sort_link('Zrealizowane', 'delivered_at')
+      th = delivered_sort_link('Zrealizo- wane', 'delivered_at')
       th = delivered_sort_link('Numer faktury', 'invoice_number')
       th = delivered_sort_link('Numer seryjny', 'serial_number')
       th = delivered_sort_link('Adres wysyłki', 'shipping_address')
@@ -38,6 +39,7 @@ h3
             table.inner-table
               - order.items.visible.each_with_index do |item, index|
                 tr
+                  td.lp = "#{index + 1}."
                   td.description = item.description
                   td.quantity = item.quantity
                   td.price = item.price
