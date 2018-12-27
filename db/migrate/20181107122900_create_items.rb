@@ -3,7 +3,7 @@ class CreateItems < ActiveRecord::Migration
     create_table :items do |t|
       t.string   :description, null: false
       t.integer  :quantity,    null: false
-      t.decimal  :price,       null: false, precision: 8, scale: 2
+      t.string   :color,       null: false
       t.integer  :order_id,    null: false
       t.boolean  :hidden,      null: false, default: false
       t.datetime :hidden_at,   null: true

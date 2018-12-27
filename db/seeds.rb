@@ -1,12 +1,13 @@
-maciej = User.create(first_name: 'Maciej', last_name: 'Lorens', email: 'mckl@poczta.fm', password: 'wstechmaciej', admin: true)
+maciej = User.create(first_name: 'Maciej', last_name: 'Lorens', email: 'maciej.lorens@gmail.com', password: '1234567890', admin: true)
 jacek = User.create(first_name: 'Jacek', last_name: 'Mazur', email: 'jmazur@pro.onet.pl', password: 'wstechjacek', admin: true)
 robert = User.create(first_name: 'Robert', last_name: 'Lorens', email: 'robertlo@op.pl', password: 'wstechrobert', admin: true)
 
 
-paulina = User.create(first_name: 'Paulina', last_name: '', email: 'paulina@wstech.eu', password: 'wstechpaulina', admin: false)
-klaudia = User.create(first_name: 'Klaudia', last_name: '', email: 'klaudia@wstech.eu', password: 'wstechklaudia', admin: false)
-ilona = User.create(first_name: 'Ilona', last_name: '', email: 'ilona@wstech.eu', password: 'wstechilona', admin: false)
+paulina = User.create(first_name: 'Paulina', last_name: '', email: 'paulina@wstech.eu', password: 'wstechpaulina', admin: true)
+klaudia = User.create(first_name: 'Klaudia', last_name: '', email: 'klaudia@wstech.eu', password: 'wstechklaudia', admin: true)
+ilona = User.create(first_name: 'Ilona', last_name: '', email: 'ilona@wstech.eu', password: 'wstechilona', admin: true)
 bartek = User.create(first_name: 'Bartek', last_name: '', email: 'bartek@wstech.eu', password: 'wstechbartek', admin: false)
+
 
 purchaser_1 = Purchaser.create(name: 'Stomil')
 purchaser_2 = Purchaser.create(name: 'Autosan')
@@ -18,7 +19,7 @@ lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
 
 150.times do |i|
   order = Order.create(
-    user_id: [paulina, weronika, justyna, natalia].sample.id,
+    user_id: [paulina, klaudia, ilona, bartek].sample.id,
     purchaser_id: [purchaser_1, purchaser_2, purchaser_3].sample.id,
     delivery_request_date: Time.now - rand(10).days,
     status: %w(ordered ready_to_delivery delivered deleted).sample,
@@ -29,7 +30,7 @@ lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
     order.items.create(
       description: "start-#{Array.new(rand(30)).map{lorem.sample}.join(' ')}-end",
       quantity: rand(100),
-      price: rand * 200
+      color: %w(Niebieski Czerwony Fioletowy Żółty Czarny Biały).sample
     )
   end
 end

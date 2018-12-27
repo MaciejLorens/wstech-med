@@ -48,18 +48,18 @@ h3
       .form-group.col-md-1
         = label_tag 'Ilość'
       .form-group.col-md-2
-        = label_tag 'Cena'
+        = label_tag 'Kolor'
       .form-group.col-md-1
-        = label_tag 'akcje'
+        = label_tag 'Akcje'
 
-    = f.fields_for :items, @order.items.visible do |i|
+    = f.fields_for :items, @order.items.select(&:visible?) do |i|
       .row
         .form-group.col-md-8
           = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
         .form-group.col-md-1
           = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
         .form-group.col-md-2
-          = i.text_field :price, class: 'form-control', placeholder: '100.00', required: true
+          = i.text_field :color, class: 'form-control', placeholder: 'Kolor', required: true
         .form-group.col-md-1
           .btn.btn-default.remove-item.form-control
             | Usuń

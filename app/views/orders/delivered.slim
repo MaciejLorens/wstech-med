@@ -19,7 +19,7 @@ h3
             th.lp Lp
             th.description = delivered_sort_link('Opis', 'description')
             th.quantity = delivered_sort_link('Ilość', 'quantity')
-            th.price = delivered_sort_link('Cena', 'price')
+            th.color = delivered_sort_link('Kolor', 'color')
       th = delivered_sort_link('Twórca', 'user')
       th = delivered_sort_link('Zamawiający', 'purchaser')
       th = delivered_sort_link('Utworzenie', 'created_at')
@@ -37,12 +37,12 @@ h3
           td.id = order.number
           td.inner
             table.inner-table
-              - order.items.visible.each_with_index do |item, index|
+              - order.items.select(&:visible?).each_with_index do |item, index|
                 tr
                   td.lp = "#{index + 1}."
                   td.description = item.description
                   td.quantity = item.quantity
-                  td.price = item.price
+                  td.color = item.color
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order.purchaser.name
           td.created_at = date(order.created_at)
@@ -56,10 +56,9 @@ h3
             = link_to 'Edycja',
                 edit_order_path(order),
                 class: 'btn btn-default btn-sm'
-            - if current_user.admin?
-              = link_to 'Historia',
-                  history_order_path(order),
-                  class: 'btn btn-default btn-sm'
+            = link_to 'Historia',
+                history_order_path(order),
+                class: 'btn btn-default btn-sm'
             = link_to 'Usuń',
                 order_path(order, referer: delivered_orders_path(year: params[:year], month: params[:month])),
                 data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},

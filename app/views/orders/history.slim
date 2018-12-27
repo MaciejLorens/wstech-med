@@ -13,7 +13,7 @@ h3
             th.lp Lp
             th.description Opis
             th.quantity Ilość
-            th.price Cena
+            th.color Kolor
       th Twórca
       th Zamawiający
       th Utworzenie
@@ -34,13 +34,13 @@ h3
         td.id = @order.number
         td.inner
           table.inner-table
-            - @order.items.visible.each_with_index do |item, index|
+            - @order.items.select(&:visible?).each_with_index do |item, index|
               - if item.present? && !item.hidden
                 tr
                   td.lp = "#{index + 1}."
                   td.description = item.description
                   td.quantity = item.quantity
-                  td.price = item.price
+                  td.color = item.color
         td.user = "#{@order.user.first_name} #{@order.user.last_name}"
         td.purchaser = @order.purchaser.name
         td.created_at = date(@order.created_at)
@@ -70,7 +70,7 @@ h3
                       td.lp = "#{index + 1}."
                       td.description = item_version.description
                       td.quantity = item_version.quantity
-                      td.price = item_version.price
+                      td.color = item_version.color
             td.user = "#{order_version.user.first_name} #{order_version.user.last_name}"
             td.purchaser = order_version.purchaser.name
             td.created_at = date(order_version.created_at)

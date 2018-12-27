@@ -28,15 +28,17 @@ html lang="en"
         = link_to 'WS-TECH MED', root_path, class: 'navbar-brand'
         .navbar-collapse.collapse.navbar-responsive-collapse
           ul.nav.navbar-nav
-            li= link_to 'Nowe', new_order_path
-            li.divider
+            - if current_user&.admin?
+              li= link_to 'Nowe', new_order_path
+              li.divider
             li= link_to 'Zamówione', ordered_orders_path
             li.divider
-            li= link_to 'Gotowe do wysyłki', ready_to_delivery_orders_path
-            li.divider
-            li= link_to 'Zrealizowane', delivered_orders_path(year: Time.now.year, month: Time.now.month)
-            li.divider
-            li= link_to 'Usunięte', deleted_orders_path(year: Time.now.year, month: Time.now.month)
+            - if current_user&.admin?
+              li= link_to 'Gotowe do wysyłki', ready_to_delivery_orders_path
+              li.divider
+              li= link_to 'Zrealizowane', delivered_orders_path(year: Time.now.year, month: Time.now.month)
+              li.divider
+              li= link_to 'Usunięte', deleted_orders_path(year: Time.now.year, month: Time.now.month)
 
           ul.nav.navbar-nav.pull-right
             = text_field_tag :search_tag, '', placeholder: 'Szukaj w opisie', class: 'search_tag'

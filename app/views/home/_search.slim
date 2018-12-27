@@ -16,7 +16,7 @@ h3
           tr
             th.description Opis
             th.quantity Ilość
-            th.price Cena
+            th.color Kolor
       th Twórca
       th Zamawiający
       th Utworzenie
@@ -38,7 +38,7 @@ h3
                 tr
                   td.description = item.description
                   td.quantity = item.quantity
-                  td.price = item.price
+                  td.color = item.color
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order.purchaser.name
           td.created_at = date(order.created_at)

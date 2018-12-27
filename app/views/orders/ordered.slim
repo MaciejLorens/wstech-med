@@ -15,7 +15,7 @@ h3
             th.lp Lp
             th.description = ordered_sort_link('Opis', 'description')
             th.quantity = ordered_sort_link('Ilość', 'quantity')
-            th.price = ordered_sort_link('Cena', 'price')
+            th.color = ordered_sort_link('Kolor', 'color')
       th = ordered_sort_link('Twórca', 'user')
       th = ordered_sort_link('Zamawiający', 'purchaser')
       th = ordered_sort_link('Utworzenie', 'created_at')
@@ -28,12 +28,12 @@ h3
           td.id = order.number
           td.inner
             table.inner-table
-              - order.items.visible.each_with_index do |item, index|
+              - order.items.select(&:visible?).each_with_index do |item, index|
                 tr
                   td.lp = "#{index + 1}."
                   td.description = item.description
                   td.quantity = item.quantity
-                  td.price = item.price
+                  td.color = item.color
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order.purchaser.name
           td.created_at = date(order.created_at)
@@ -44,15 +44,15 @@ h3
                 data: { confirm: 'Czy zamówienie jest zmontowane, spakowane i gotowe do wysyłki?' },
                 method: :patch,
                 class: 'btn btn-default btn-sm'
-            = link_to 'Edycja',
-                edit_order_path(order),
-                class: 'btn btn-default btn-sm'
             - if current_user.admin?
+              = link_to 'Edycja',
+                  edit_order_path(order),
+                  class: 'btn btn-default btn-sm'
               = link_to 'Historia',
                   history_order_path(order),
                   class: 'btn btn-default btn-sm'
-            = link_to 'Usuń',
-                order_path(order),
-                data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},
-                method: :delete,
-                class: 'btn btn-default btn-sm'
+              = link_to 'Usuń',
+                  order_path(order),
+                  data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},
+                  method: :delete,
+                  class: 'btn btn-default btn-sm'

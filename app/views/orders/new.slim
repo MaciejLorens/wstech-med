@@ -35,9 +35,9 @@ h3 Nowe zamówienie
       .form-group.col-md-1
         = label_tag 'Ilość'
       .form-group.col-md-2
-        = label_tag 'Cena'
+        = label_tag 'Kolor'
       .form-group.col-md-1
-        = label_tag 'akcje'
+        = label_tag 'Akcje'
 
     = f.fields_for :items, @order.items.build do |i|
       .row
@@ -46,7 +46,7 @@ h3 Nowe zamówienie
         .form-group.col-md-1
           = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
         .form-group.col-md-2
-          = i.text_field :price, class: 'form-control', placeholder: '100.00', required: true
+          = i.text_field :color, class: 'form-control', placeholder: 'Kolor', required: true
         .form-group.col-md-1
 
   .row

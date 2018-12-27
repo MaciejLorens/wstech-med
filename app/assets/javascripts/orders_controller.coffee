@@ -46,7 +46,7 @@ $ ->
           '<input class="form-control" placeholder="1" required="required" type="text" name="order[items_attributes][' + current_item_index + '][quantity]" id="order_items_attributes_' + current_item_index + '_quantity">' +
         '</div>' +
         '<div class="form-group col-md-2">' +
-          '<input class="form-control" placeholder="100.00" required="required" type="text" name="order[items_attributes][' + current_item_index + '][price]" id="order_items_attributes_' + current_item_index + '_price">' +
+          '<input class="form-control" placeholder="Kolor" required="required" type="text" name="order[items_attributes][' + current_item_index + '][color]" id="order_items_attributes_' + current_item_index + '_color">' +
         '</div>' +
         '<div class="form-group col-md-1">' +
           '<div class="btn btn-default remove-item form-control">' +

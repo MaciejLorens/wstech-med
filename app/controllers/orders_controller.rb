@@ -1,10 +1,11 @@
 class OrdersController < ApplicationController
+  before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :update, :destroy, :download]
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
   def ordered
     @orders = Order
-                .includes(:purchaser, :user, :items)
+                .includes(:purchaser, :items, :user)
                 .where(status: 'ordered')
                 .order(@sorting)
   end
@@ -60,7 +61,7 @@ class OrdersController < ApplicationController
 
       if order_params['items_attributes']
         order_params['items_attributes'].each do |index, item|
-          if item['id'].present? && item['description'].blank? && item['quantity'].blank? && item['price'].blank?
+          if item['id'].present? && item['description'].blank? && item['quantity'].blank? && item['color'].blank?
             @order.items.find(item['id'].to_i).hide
           end
         end
@@ -99,7 +100,7 @@ class OrdersController < ApplicationController
                when 'id' then 'id'
                when 'description' then 'items.description'
                when 'quantity' then 'items.quantity'
-               when 'price' then 'items.price'
+               when 'color' then 'items.color'
                when 'user' then 'users.last_name'
                when 'purchaser' then 'purchasers.name'
                when 'created_at' then 'created_at'

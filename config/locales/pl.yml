@@ -10,7 +10,7 @@ pl:
       items:
         description: Opis przedmiotu
         quantity: Ilość przedmiotu
-        price: Cena przedmiotu
+        color: Kolor przedmiotu
 
     errors:
       models:
@@ -26,8 +26,8 @@ pl:
               blank: nie może być pusty
             quantity:
               blank: nie może być pusta
-            price:
-              blank: nie może być pusta
+            color:
+              blank: nie może być pusty
 
   January: Styczeń
   February: Luty

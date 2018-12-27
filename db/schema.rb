@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 20181107163100) do
   enable_extension "plpgsql"
 
   create_table "items", force: :cascade do |t|
-    t.string   "description",                                         null: false
-    t.integer  "quantity",                                            null: false
-    t.decimal  "price",       precision: 8, scale: 2,                 null: false
-    t.integer  "order_id",                                            null: false
-    t.boolean  "hidden",                              default: false, null: false
+    t.string   "description",                 null: false
+    t.integer  "quantity",                    null: false
+    t.string   "color",                       null: false
+    t.integer  "order_id",                    null: false
+    t.boolean  "hidden",      default: false, null: false
     t.datetime "hidden_at"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -26,22 +26,11 @@ class Order < ActiveRecord::Base
   def self.to_csv(status)
     @orders = self.where(status: status).order(created_at:   :asc)
     CSV.generate do |csv|
-      csv << ['Id', 'Opis', 'Twórca', 'Zamawiający', 'Data zlecenia', 'Na kiedy ma być', 'Ilość', 'Cena']
+      csv << ['Id', 'Opis', 'Twórca', 'Zamawiający', 'Data zlecenia', 'Na kiedy ma być', 'Ilość', 'Kolor']
       @orders.each do |order|
-        csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.price]
+        csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.color]
       end
     end
-  end
-
-  def self.price_sum(from, to)
-    order_ids = Order.delivered.from_to(from, to).map(&:id)
-    items = Item.where(order_id: order_ids)
-    items.map(&:price).sum
-  end
-
-  def self.count_sum(from, to)
-    orders = Order.delivered.from_to(from, to)
-    orders.count
   end
 
   private
