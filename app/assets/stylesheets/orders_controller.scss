@@ -121,10 +121,15 @@ textarea.form-control {
   }
 }
 
+.main-content {
+  margin-top: 60px;
+}
+
 
 .navbar-default {
   background-color: #86bda8;
   border-bottom: 2px solid #6a9686;
+  padding: 0 15px;
 
   .navbar-nav > li > a {
     color: white;
