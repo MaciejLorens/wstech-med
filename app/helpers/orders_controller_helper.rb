@@ -72,4 +72,16 @@ module OrdersControllerHelper
     link_to "#{text} #{img}".html_safe, deleted_orders_path(sort: param, order: asc_param, year: params[:year], month: params[:month]), class: 'sorting-btn'
   end
 
+  def options_for_users
+    User.all.map do |user|
+      [user.first_name, user.id]
+    end
+  end
+
+  def options_for_purchasers
+    Purchaser.all.map do |purchaser|
+      [purchaser.name, purchaser.id]
+    end
+  end
+
 end

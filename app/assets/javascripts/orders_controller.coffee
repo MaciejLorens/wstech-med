@@ -13,28 +13,6 @@ $ ->
     language: 'pl'
   });
 
-  $('.delivered-order-select').change ->
-    year = $('#delivered-order-select-year').val()
-    month = $('#delivered-order-select-month').val()
-    window.location.href = '/orders/delivered?year=' + year + '&month=' + month
-
-  $('.deleted-order-select').change ->
-    year = $('#deleted-order-select-year').val()
-    month = $('#deleted-order-select-month').val()
-    window.location.href = '/orders/deleted?year=' + year + '&month=' + month
-
-  $('.search_tag').keyup ->
-    query = $(@).val()
-    if query.length > 2
-      $(".main-body").hide()
-      $.get('/search', {query: query}, () ->
-      ).success (result) ->
-        $(".search-results").html(result['content'])
-        $(".search-results").show()
-    else if query.length == 0
-      $(".search-results").hide()
-      $(".main-body").show()
-
   $(".add-item").click ->
     current_item_index = parseInt($("#current_item_index").val())
     html =

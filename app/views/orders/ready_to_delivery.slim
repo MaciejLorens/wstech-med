@@ -3,6 +3,19 @@ h3
   .pull-right
     = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
 
+.well
+  = form_tag ready_to_delivery_orders_path, method: :get, class: 'filter-form'
+  .form-group.col-md-10
+    = text_field_tag :f_number, params[:f_number], placeholder: 'Numer', class: 'form-control f_number'
+    = text_field_tag :f_description, params[:f_description], placeholder: 'Opis', class: 'form-control f_description'
+    = select_tag :f_user_id, options_for_select(options_for_users, params[:f_user_id]), include_blank: 'Twórca', class: 'form-control f_user_id'
+    = select_tag :f_purchaser_id, options_for_select(options_for_purchasers, params[:f_purchaser_id]), include_blank: 'Zamawiający', class: 'form-control f_purchaser_id'
+    = text_field_tag :f_created_at_from, params[:f_created_at_from], placeholder: 'Utworzenie od', class: 'form-control datepicker f_created_at_from'
+    = text_field_tag :f_created_at_to, params[:f_created_at_to], placeholder: 'Utworzenie do', class: 'form-control datepicker f_created_at_to'
+  .form-group.col-md-2
+    = submit_tag 'Filtruj', class: 'btn btn-default pull-right'
+    = link_to 'Czyść', ready_to_delivery_orders_path, class: 'btn btn-default pull-right', style: 'margin-right: 10px;'
+
 - if @orders.empty?
   | - Brak zamówień -
 - else

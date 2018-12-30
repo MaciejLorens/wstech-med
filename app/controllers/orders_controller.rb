@@ -6,7 +6,9 @@ class OrdersController < ApplicationController
   def ordered
     @orders = Order
                 .includes(:purchaser, :items, :user)
+                .joins(:items)
                 .where(status: 'ordered')
+                .where(filter_query)
                 .order(@sorting)
   end
 
@@ -14,6 +16,7 @@ class OrdersController < ApplicationController
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'ready_to_delivery')
+                .where(filter_query)
                 .order(@sorting)
   end
 
@@ -21,7 +24,7 @@ class OrdersController < ApplicationController
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'delivered')
-                .at_year_at_month(params[:year], params[:month])
+                .where(filter_query)
                 .order(@sorting)
   end
 
@@ -29,7 +32,6 @@ class OrdersController < ApplicationController
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'deleted')
-                .at_year_at_month(params[:year], params[:month])
                 .order(@sorting)
   end
 
@@ -97,21 +99,21 @@ class OrdersController < ApplicationController
 
   def set_sorting
     @sorting = case params[:sort]
-               when 'id' then 'id'
+               when 'id' then 'orders.id'
                when 'description' then 'items.description'
                when 'quantity' then 'items.quantity'
                when 'color' then 'items.color'
-               when 'user' then 'users.last_name'
-               when 'purchaser' then 'purchasers.name'
-               when 'created_at' then 'created_at'
-               when 'delivery_request_date' then 'delivery_request_date'
-               when 'ready_to_delivery_at' then 'ready_to_delivery_at'
-               when 'delivered_at' then 'delivered_at'
-               when 'invoice_number' then 'invoice_number'
-               when 'serial_number' then 'serial_number'
-               when 'shipping_address' then 'shipping_address'
+               when 'user' then 'orders.user_id'
+               when 'purchaser' then 'orders.purchaser_id'
+               when 'created_at' then 'orders.created_at'
+               when 'delivery_request_date' then 'orders.delivery_request_date'
+               when 'ready_to_delivery_at' then 'orders.ready_to_delivery_at'
+               when 'delivered_at' then 'orders.delivered_at'
+               when 'invoice_number' then 'orders.invoice_number'
+               when 'serial_number' then 'orders.serial_number'
+               when 'shipping_address' then 'orders.shipping_address'
                else
-                 'created_at'
+                 'orders.created_at'
                end
 
     @sorting += " #{params[:order] || 'desc'}"

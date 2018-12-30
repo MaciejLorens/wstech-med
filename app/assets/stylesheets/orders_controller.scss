@@ -14,12 +14,6 @@ a[href]:after {
   display: none;
 }
 
-.search_tag {
-  padding: 5px 10px;
-  margin: 0 20px 0 0;
-  width: 225px;
-}
-
 h2 span {
   margin-left: 10px;
   color: red;
@@ -73,10 +67,6 @@ textarea.form-control {
   padding: 2px 8px !important;
 }
 
-a:visited {
-  color: #333333 !important;
-}
-
 .alert {
   position: absolute;
   width: 400px;
@@ -92,4 +82,70 @@ a:visited {
     background-color: transparent;
     color: black;
   }
+}
+
+.well {
+  height: 76px;
+
+  .form-group {
+    padding: 0;
+  }
+
+  .form-control {
+    float: left;
+    margin-right: 20px;
+  }
+
+  .f_number {
+    width: 125px;
+  }
+
+  .f_description {
+    width: 400px;
+  }
+
+  .f_user_id {
+    width: 150px;
+  }
+
+  .f_purchaser_id {
+    width: 150px;
+  }
+
+  .f_created_at_from {
+    width: 150px;
+  }
+
+  .f_created_at_to {
+    width: 150px;
+  }
+}
+
+
+.navbar-default {
+  background-color: #86bda8;
+  border-bottom: 2px solid #6a9686;
+
+  .navbar-nav > li > a {
+    color: white;
+    font-weight: 600;
+  }
+
+  .navbar-brand {
+    color: white;
+    font-weight: 600;
+
+    &:hover {
+      color: #333333;
+    }
+  }
+}
+
+.nav.navbar-nav {
+  color: white;
+  font-weight: 600;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+  border-color: #6a9686;
 }
