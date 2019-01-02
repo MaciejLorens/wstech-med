@@ -67,9 +67,14 @@ h3
             = link_to 'Edycja',
                 edit_order_path(order),
                 class: 'btn btn-default btn-sm'
-            = link_to 'Historia',
-                history_order_path(order),
-                class: 'btn btn-default btn-sm'
+            - if order.unseen_for(current_user).present?
+              = link_to 'Nowa</br>Zmiana'.html_safe,
+                  history_order_path(order),
+                  class: "btn btn-default btn-sm unseen"
+            - else
+              = link_to 'Historia',
+                  history_order_path(order),
+                  class: 'btn btn-default btn-sm'
             = link_to 'Usuń',
                 order_path(order, referer: delivered_orders_path(year: params[:year], month: params[:month])),
                 data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},

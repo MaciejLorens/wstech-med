@@ -170,7 +170,7 @@ textarea.form-control {
   border-color: #6a9686;
 }
 
-a:visited {
+.actions a:visited {
   color: black;
 }
 
@@ -184,7 +184,7 @@ a:visited {
   }
 
   &:visited {
-    color: #be0000;
-    border: 1px solid #be0000;
+    color: red;
+    border: 1px solid red;
   }
 }

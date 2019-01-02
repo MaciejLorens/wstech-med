@@ -39,7 +39,8 @@ class OrdersController < ApplicationController
   end
 
   def history
-    @order.unseen_for(current_user).destroy
+    unseen = @order.unseen_for(current_user)
+    unseen.destroy if unseen.present?
   end
 
   def show
