@@ -32,6 +32,7 @@ class OrdersController < ApplicationController
     @orders = Order
                 .includes(:purchaser, :user, :items)
                 .where(status: 'deleted')
+                .where(filter_query)
                 .order(@sorting)
   end
 

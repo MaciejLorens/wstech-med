@@ -1,11 +1,18 @@
 h3
-  | Usunięte z&nbsp;
-  = select_tag('deleted-order-select-month', options_for_select(name_of_months, params[:month]), class: 'deleted-order-select')
-  | &nbsp;
-  = select_tag('deleted-order-select-year', options_for_select((2018..Time.now.year).to_a.reverse, params[:year]), class: 'deleted-order-select')
-  | &nbsp;
-  .pull-right
-    = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
+  | Usunięte
+
+.well
+  = form_tag deleted_orders_path, method: :get, class: 'filter-form'
+  .form-group.col-md-10
+    = text_field_tag :f_number, params[:f_number], placeholder: 'Numer', class: 'form-control f_number'
+    = text_field_tag :f_description, params[:f_description], placeholder: 'Opis', class: 'form-control f_description'
+    = select_tag :f_user_id, options_for_select(options_for_users, params[:f_user_id]), include_blank: 'Twórca', class: 'form-control f_user_id'
+    = select_tag :f_purchaser_id, options_for_select(options_for_purchasers, params[:f_purchaser_id]), include_blank: 'Zamawiający', class: 'form-control f_purchaser_id'
+    = text_field_tag :f_created_at_from, params[:f_created_at_from] || DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), placeholder: 'Utworzenie od', class: 'form-control datepicker f_created_at_from'
+    = text_field_tag :f_created_at_to, params[:f_created_at_to] || DateTime.now.strftime('%d-%m-%Y'), placeholder: 'Utworzenie do', class: 'form-control datepicker f_created_at_to'
+  .form-group.col-md-2
+    = submit_tag 'Filtruj', class: 'btn btn-default pull-right'
+    = link_to 'Czyść', deleted_orders_path(f_created_at_from: DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), f_created_at_to: DateTime.now.strftime('%d-%m-%Y')), class: 'btn btn-default pull-right', style: 'margin-right: 10px;'
 
 - if @orders.empty?
   | - Brak zamówień -

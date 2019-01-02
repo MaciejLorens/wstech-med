@@ -1,7 +1,5 @@
 h3
   | Gotowe do wysyłki
-  .pull-right
-    = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
 
 .well
   = form_tag ready_to_delivery_orders_path, method: :get, class: 'filter-form'

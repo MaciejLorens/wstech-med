@@ -34,7 +34,7 @@ tbody.clickable tr {
   padding: 10px;
   border: 1px solid #cccccc;
   position: absolute;
-  width: 403px;
+  width: 276px;
   z-index: 1;
   display: none;
 
@@ -82,10 +82,15 @@ textarea.form-control {
     background-color: transparent;
     color: black;
   }
+
+  &:visited {
+    color: black;
+  }
 }
 
 .well {
   height: 76px;
+  margin-bottom: 30px;
 
   .form-group {
     padding: 0;
@@ -134,11 +139,13 @@ textarea.form-control {
   .navbar-nav > li > a {
     color: white;
     font-weight: 600;
+    font-size: 15px;
   }
 
   .navbar-brand {
     color: white;
     font-weight: 600;
+    font-size: 20px;
 
     &:hover {
       color: #333333;

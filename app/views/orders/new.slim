@@ -12,10 +12,10 @@ h3 Nowe zamówienie
   .row
     .form-group.col-md-12
       = f.hidden_field :status, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
-    .form-group.col-md-3
+    .form-group.col-md-2
       = f.label 'Na kiedy ma być zrobione'
       = f.text_field :delivery_request_date, class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
-    .form-group.col-md-4
+    .form-group.col-md-2
       = f.label 'Zamawiający'
       = text_field_tag 'order[purchaser_name]', nil, class: 'form-control', id: 'order_purchaser', placeholder: 'firma xyz', required: true
       - if Purchaser.all.present?
@@ -30,22 +30,22 @@ h3 Nowe zamówienie
   .items
     = hidden_field_tag :current_item_index, 1
     .row
-      .form-group.col-md-8
+      .form-group.col-md-9
         = label_tag 'Opis'
       .form-group.col-md-1
         = label_tag 'Ilość'
-      .form-group.col-md-2
+      .form-group.col-md-1
         = label_tag 'Kolor'
       .form-group.col-md-1
         = label_tag 'Akcje'
 
     = f.fields_for :items, @order.items.build do |i|
       .row
-        .form-group.col-md-8
-          = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
+        .form-group.col-md-9
+          = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia', required: true
         .form-group.col-md-1
           = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
-        .form-group.col-md-2
+        .form-group.col-md-1
           = i.text_field :color, class: 'form-control', placeholder: 'Kolor', required: true
         .form-group.col-md-1
 
