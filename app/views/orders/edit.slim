@@ -43,22 +43,22 @@ h3
   .items
     = hidden_field_tag :current_item_index, @order.items.count
     .row
-      .form-group.col-md-8
+      .form-group.col-md-9
         = label_tag 'Opis'
       .form-group.col-md-1
         = label_tag 'Ilość'
-      .form-group.col-md-2
+      .form-group.col-md-1
         = label_tag 'Kolor'
       .form-group.col-md-1
         = label_tag 'Akcje'
 
     = f.fields_for :items, @order.items.select(&:visible?) do |i|
       .row
-        .form-group.col-md-8
+        .form-group.col-md-9
           = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
         .form-group.col-md-1
           = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
-        .form-group.col-md-2
+        .form-group.col-md-1
           = i.text_field :color, class: 'form-control', placeholder: 'Kolor', required: true
         .form-group.col-md-1
           .btn.btn-default.remove-item.form-control
