@@ -59,3 +59,22 @@ $ ->
     container = $(".purchasers_list")
     if (!container.is(e.target) && container.has(e.target).length == 0)
       container.hide()
+
+  $("body").on 'click', ".sorting-btn", (e) ->
+    e.preventDefault()
+
+    $(".sorting-btn").not(@).removeClass('asc')
+    $(".sorting-btn").not(@).removeClass('desc')
+
+    $("#s_field").val($(@).data('field'))
+
+    if $(@).hasClass('asc')
+      $(@).removeClass('asc')
+      $(@).addClass('desc')
+      $("#s_order").val('desc')
+    else
+      $(@).removeClass('desc')
+      $(@).addClass('asc')
+      $("#s_order").val('asc')
+
+    $(".filter-form").submit()

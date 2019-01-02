@@ -3,6 +3,8 @@ h3
 
 .well
   = form_tag ordered_orders_path, method: :get, class: 'filter-form'
+    = hidden_field_tag :s_field, params[:s_field]
+    = hidden_field_tag :s_order, params[:s_order]
     .form-group.col-md-10
       = text_field_tag :f_number, params[:f_number], placeholder: 'Numer', class: 'form-control f_number'
       = text_field_tag :f_description, params[:f_description], placeholder: 'Opis', class: 'form-control f_description'

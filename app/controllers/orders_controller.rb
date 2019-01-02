@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :update, :destroy, :download]
+  before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download]
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
@@ -99,7 +99,7 @@ class OrdersController < ApplicationController
   end
 
   def set_sorting
-    @sorting = case params[:sort]
+    @sorting = case params[:s_field]
                when 'id' then 'orders.id'
                when 'description' then 'items.description'
                when 'quantity' then 'items.quantity'
@@ -117,7 +117,7 @@ class OrdersController < ApplicationController
                  'orders.created_at'
                end
 
-    @sorting += " #{params[:order] || 'desc'}"
+    @sorting += " #{params[:s_order] || 'desc'}"
   end
 
   def order_params

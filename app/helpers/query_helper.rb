@@ -21,6 +21,14 @@ module QueryHelper
       query += " AND items.description LIKE '%#{params[:f_description]}%'"
     end
 
+    if params[:f_invoice_number].present?
+      query += " AND orders.invoice_number LIKE '%#{params[:f_invoice_number]}%'"
+    end
+
+    if params[:f_serial_number].present?
+      query += " AND orders.serial_number LIKE '%#{params[:f_serial_number]}%'"
+    end
+
     if params[:f_user_id].present?
       query += " AND orders.user_id = #{params[:f_user_id]}"
     end
