@@ -17,6 +17,12 @@ class CreateOrders < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :orders, :number
     add_index :orders, :user_id
+    add_index :orders, :purchaser_id
+    add_index :orders, :invoice_number
+    add_index :orders, :serial_number
+    add_index :orders, :status
+
   end
 end

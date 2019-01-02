@@ -169,3 +169,22 @@ textarea.form-control {
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
   border-color: #6a9686;
 }
+
+a:visited {
+  color: black;
+}
+
+.unseen {
+  color: red;
+  border: 1px solid red;
+
+  &:hover {
+    color: #be0000;
+    border: 1px solid #be0000;
+  }
+
+  &:visited {
+    color: #be0000;
+    border: 1px solid #be0000;
+  }
+}

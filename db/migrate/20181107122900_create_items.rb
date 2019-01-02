@@ -12,5 +12,7 @@ class CreateItems < ActiveRecord::Migration
     end
 
     add_index :items, :order_id
+    add_index :items, :hidden
+
   end
 end

@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+
   before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download]
   before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
@@ -7,6 +8,7 @@ class OrdersController < ApplicationController
     @orders = Order
                 .includes(:purchaser, :items, :user)
                 .joins(:items)
+                .joins('LEFT OUTER JOIN unseens ON orders.id = unseens.order_id')
                 .where(status: 'ordered')
                 .where(filter_query)
                 .order(@sorting)
@@ -37,6 +39,7 @@ class OrdersController < ApplicationController
   end
 
   def history
+    @order.unseen_for(current_user).destroy
   end
 
   def show
@@ -53,6 +56,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
+      @order.create_unseens(current_user)
       redirect_to root_path, notice: 'Zamówienie zostało stworzone.'
     else
       render :new
@@ -61,6 +65,7 @@ class OrdersController < ApplicationController
 
   def update
     if @order.update(order_params)
+      @order.create_unseens(current_user)
 
       if order_params['items_attributes']
         order_params['items_attributes'].each do |index, item|
@@ -79,6 +84,8 @@ class OrdersController < ApplicationController
   def destroy
     status = @order.status.to_sym
     @order.update(status: 'deleted', deleted_at: Time.now, deleted_by_id: current_user.id)
+    @order.create_unseens(current_user)
+
     if status == :delivered
       redirect_to params[:referer]
     else

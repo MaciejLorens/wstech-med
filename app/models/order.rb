@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
 
   has_many :items
+  has_many :unseens
 
   belongs_to :purchaser
   belongs_to :user
@@ -31,6 +32,16 @@ class Order < ActiveRecord::Base
         csv << [order.number, order.description, "#{order.user.first_name} #{order.user.last_name}", order.purchaser, date(order.created_at), date(order.delivery_request_date), order.quantity, order.color]
       end
     end
+  end
+
+  def create_unseens(current_user)
+    User.where('id != ?', current_user.id).each do |user|
+      unseens.find_or_create_by(user_id: user.id)
+    end
+  end
+
+  def unseen_for(user)
+    unseens.where('user_id = ?', user.id).first
   end
 
   private

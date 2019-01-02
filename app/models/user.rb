@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :trackable, :validatable
 
   has_many :orders
+  has_many :unseens
 
   has_many :deleted_orders,
            class_name: Order,

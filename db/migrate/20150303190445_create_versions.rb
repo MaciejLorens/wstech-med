@@ -8,6 +8,8 @@ class CreateVersions < ActiveRecord::Migration
       t.text     :object
       t.datetime :created_at
     end
+
     add_index :versions, [:item_type, :item_id]
+
   end
 end
