@@ -170,21 +170,25 @@ textarea.form-control {
   border-color: #6a9686;
 }
 
-.actions a:visited {
-  color: black;
-}
-
-.unseen {
-  color: red;
-  border: 1px solid red;
-
-  &:hover {
-    color: #be0000;
-    border: 1px solid #be0000;
+.actions {
+  a:visited {
+    color: black;
   }
 
-  &:visited {
+  .unseen {
     color: red;
     border: 1px solid red;
+
+    &:hover {
+      color: #be0000;
+      border: 1px solid #be0000;
+    }
+
+    &:visited {
+      color: red;
+      border: 1px solid red;
+    }
   }
+
 }
+
