@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20190107152644) do
     t.string   "status",                default: "ordered", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "delivered_by"
+    t.integer  "ready_to_delivery_by"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree

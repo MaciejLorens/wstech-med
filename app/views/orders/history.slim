@@ -19,12 +19,12 @@ h3
       th Utworzenie
       th Na kiedy ma być
       th Gotowe do wysyłki
+      th Zwolnione przez
       th Zrealizo- wane
       th Numer faktury
       th Numer seryjny
       th Adres wysyłki
       th Status
-      th Zwolnione przez
       th Autor zmiany
       th Data zmiany
 
@@ -35,7 +35,7 @@ h3
         td.id = @order.number
         td.inner
           table.inner-table
-            - @order.items.select(&:visible?).each_with_index do |item, index|
+            - @order.items.order(id: :asc).select(&:visible?).each_with_index do |item, index|
               - if item.present? && !item.hidden
                 tr
                   td.lp = "#{index + 1}."
@@ -47,12 +47,12 @@ h3
         td.created_at = date(@order.created_at)
         td.delivery_request_date = date(@order.delivery_request_date)
         td.ready_to_delivery = date(@order.ready_to_delivery_at)
+        td.ready_to_delivery_by = "#{@order.ready_to_delivery_by_user.try(:first_name)} #{@order.ready_to_delivery_by_user.try(:last_name)}"
         td.delivered = date(@order.delivered_at)
         td.invoice_number = @order.invoice_number
         td.serial_number = @order.serial_number
         td.shipping_address = @order.shipping_address
         td.status = status(@order)
-        td = "#{@order.delivered_by_user.try(:first_name)} #{@order.delivered_by_user.try(:last_name)}"
         td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
         td = version.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
 
@@ -65,7 +65,7 @@ h3
             td.id = order_version.number
             td.inner
               table.inner-table
-                - order_version.items.where('created_at < ?', version.created_at - 1.second).each_with_index do |item, index|
+                - order_version.items.where('created_at < ?', version.created_at - 1.second).order(id: :asc).each_with_index do |item, index|
                   - item_version = item.version_at(version.created_at - 1.second)
                   - if item_version.present? && !item_version.hidden
                     tr
@@ -78,11 +78,11 @@ h3
             td.created_at = date(order_version.created_at)
             td.delivery_request_date = date(order_version.delivery_request_date)
             td.ready_to_delivery = date(order_version.ready_to_delivery_at)
+            td.ready_to_delivery_by = "#{order_version.ready_to_delivery_by_user.try(:first_name)} #{order_version.ready_to_delivery_by_user.try(:last_name)}"
             td.delivered = date(order_version.delivered_at)
             td.invoice_number = order_version.invoice_number
             td.serial_number = order_version.serial_number
             td.shipping_address = order_version.shipping_address
             td.status = status(order_version)
-            td = "#{order_version.delivered_by_user.try(:first_name)} #{order_version.delivered_by_user.try(:last_name)}"
             td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
             td = version_after.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')

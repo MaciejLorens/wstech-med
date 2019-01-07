@@ -7,6 +7,10 @@ paulina = User.create(first_name: 'Paulina', last_name: '', email: 'paulina@wste
 klaudia = User.create(first_name: 'Klaudia', last_name: '', email: 'klaudia@wstech.eu', password: 'wstechklaudia', admin: true)
 ilona = User.create(first_name: 'Ilona', last_name: '', email: 'ilona@wstech.eu', password: 'wstechilona', admin: true)
 bartek = User.create(first_name: 'Bartek', last_name: '', email: 'bartek@wstech.eu', password: 'wstechbartek', admin: false)
+monter1 = User.create(first_name: 'Monter1', last_name: '', email: 'monter1@wstech.eu', password: 'wstechmonter1', admin: false)
+monter2 = User.create(first_name: 'Monter2', last_name: '', email: 'monter2@wstech.eu', password: 'wstechmonter2', admin: false)
+monter3 = User.create(first_name: 'Monter3', last_name: '', email: 'monter3@wstech.eu', password: 'wstechmonter3', admin: false)
+monter4 = User.create(first_name: 'Monter4', last_name: '', email: 'monter4@wstech.eu', password: 'wstechmonter4', admin: false)
 
 
 purchaser_1 = Purchaser.create(name: 'Stomil')

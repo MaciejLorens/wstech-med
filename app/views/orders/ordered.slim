@@ -53,7 +53,7 @@ h3
           td.delivery_request_date = date(order.delivery_request_date)
           td.actions
             = link_to 'Zwolnij',
-                order_path(order, referer: ordered_orders_path, order: { status: 'ready_to_delivery' }),
+                release_order_path(order),
                 class: 'btn btn-default btn-sm ready-to-delivery'
             - if current_user.admin?
               = link_to 'Edycja',

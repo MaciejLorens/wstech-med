@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
   before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download]
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :history]
+  before_action :set_order, only: [:show, :edit, :update, :release, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
   def ordered
@@ -82,6 +82,20 @@ class OrdersController < ApplicationController
     end
   end
 
+  def release
+    worker = User.where(code: params[:code]).first
+
+    return redirect_to root_path, notice: 'Błędny kod pracownika' unless worker.present?
+
+    @order.update(
+      status: 'ready_to_delivery',
+      ready_to_delivery_at: Time.now,
+      ready_to_delivery_by: worker.id
+    )
+
+    redirect_to action: :ordered
+  end
+
   def destroy
     status = @order.status.to_sym
     @order.update(status: 'deleted', deleted_at: Time.now, deleted_by_id: current_user.id)
@@ -136,15 +150,6 @@ class OrdersController < ApplicationController
       purchaser = Purchaser.find_or_create_by(name: purchaser_name)
       refactored_params.delete(:purchaser_name)
       refactored_params.merge!(purchaser_id: purchaser.id)
-    end
-
-    if params[:code].present?
-      worker = User.where(code: params[:code]).first
-      if worker.present?
-        refactored_params[:delivered_by] = worker.id
-      else
-        return
-      end
     end
 
     refactored_params.merge!(user_id: current_user.id, updated_at: Time.now)

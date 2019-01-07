@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
            class_name: Order,
            foreign_key: :deleted_by_id
 
-  has_many :delivered_orders,
+  has_many :ready_to_delivery_orders,
            class_name: Order,
-           foreign_key: :delivered_by
+           foreign_key: :ready_to_delivery_by
 
 
   def generate_code

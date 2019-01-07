@@ -52,7 +52,7 @@ h3
       .form-group.col-md-1
         = label_tag 'Akcje'
 
-    = f.fields_for :items, @order.items.select(&:visible?) do |i|
+    = f.fields_for :items, @order.items.order(id: :asc).select(&:visible?) do |i|
       .row
         .form-group.col-md-9
           = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
