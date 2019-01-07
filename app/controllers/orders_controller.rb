@@ -138,6 +138,15 @@ class OrdersController < ApplicationController
       refactored_params.merge!(purchaser_id: purchaser.id)
     end
 
+    if params[:code].present?
+      worker = User.where(code: params[:code]).first
+      if worker.present?
+        refactored_params[:delivered_by] = worker.id
+      else
+        return
+      end
+    end
+
     refactored_params.merge!(user_id: current_user.id, updated_at: Time.now)
     refactored_params
   end

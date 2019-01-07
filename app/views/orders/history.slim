@@ -24,6 +24,7 @@ h3
       th Numer seryjny
       th Adres wysyłki
       th Status
+      th Zwolnione przez
       th Autor zmiany
       th Data zmiany
 
@@ -51,6 +52,7 @@ h3
         td.serial_number = @order.serial_number
         td.shipping_address = @order.shipping_address
         td.status = status(@order)
+        td = "#{@order.delivered_by_user.try(:first_name)} #{@order.delivered_by_user.try(:last_name)}"
         td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
         td = version.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
 
@@ -81,5 +83,6 @@ h3
             td.serial_number = order_version.serial_number
             td.shipping_address = order_version.shipping_address
             td.status = status(order_version)
+            td = "#{order_version.delivered_by_user.try(:first_name)} #{order_version.delivered_by_user.try(:last_name)}"
             td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
             td = version_after.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')

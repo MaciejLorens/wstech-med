@@ -1,0 +1,10 @@
+#ready-to-delivery.modal
+  .modal-content
+    span.close-modal &times
+    h4 Jeżeli zamówienie jest zmontowane, spakowane i gotowe do wysyłki podaj kod pracownika:
+    = form_tag root_path, method: 'put', id: 'ready-to-delivery-form'
+    = hidden_field_tag :ready_to_delivery_at, Time.now
+    .col-md-2.code
+      = text_field_tag :code, nil, class: 'form-control', required: true
+    .col-md-2.code
+      = submit_tag 'Zwolnij', class: 'btn btn-default'

@@ -13,6 +13,22 @@ $ ->
     language: 'pl'
   });
 
+  modal = $("#ready-to-delivery")
+
+  window.onclick = (e) ->
+    if e.target == modal[0]
+      modal.css('display', 'none')
+
+  $('.close-modal').click (e) ->
+    e.preventDefault()
+    modal.css('display', 'none')
+
+  $(".ready-to-delivery").click (e) ->
+    e.preventDefault()
+    modal.css('display', 'block')
+    $("#ready-to-delivery-form").prop('action', $(@).prop('href'))
+
+
   $(".add-item").click ->
     current_item_index = parseInt($("#current_item_index").val())
     html =

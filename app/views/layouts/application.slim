@@ -19,7 +19,9 @@ html lang="en"
     = javascript_include_tag 'application'
 
   body
+    = render partial: 'shared/modal'
     = render partial: 'shared/navbar'
+
     .main-content.container-fluid
       .row
         .col-sm-12
