@@ -16,6 +16,7 @@ table.table.table-hover
     th Numer zamówienia klienta
     th Utworzenie
     th Na kiedy ma być
+    th Adres wysyłki
 
   tbody
     tr
@@ -32,3 +33,4 @@ table.table.table-hover
       td.client_order_number = @order.client_order_number
       td.created_at = date(@order.created_at)
       td.delivery_request_date = date(@order.delivery_request_date)
+      td.shipping_address = @order.shipping_address
