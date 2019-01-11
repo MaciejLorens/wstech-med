@@ -6,7 +6,7 @@ robert = User.create(first_name: 'Robert', last_name: 'Lorens', email: 'robertlo
 paulina = User.create(first_name: 'Paulina', last_name: '', email: 'paulina@wstech.eu', password: 'wstechpaulina', admin: true)
 klaudia = User.create(first_name: 'Klaudia', last_name: '', email: 'klaudia@wstech.eu', password: 'wstechklaudia', admin: true)
 ilona = User.create(first_name: 'Ilona', last_name: '', email: 'ilona@wstech.eu', password: 'wstechilona', admin: true)
-bartek = User.create(first_name: 'Bartek', last_name: '', email: 'bartek@wstech.eu', password: 'wstechbartek', admin: false)
+bartek = User.create(first_name: 'Monter', last_name: '', email: 'monter@wstech.eu', password: 'wstechmonter', admin: false)
 monter1 = User.create(first_name: 'Monter1', last_name: '', email: 'monter1@wstech.eu', password: 'wstechmonter1', admin: false)
 monter2 = User.create(first_name: 'Monter2', last_name: '', email: 'monter2@wstech.eu', password: 'wstechmonter2', admin: false)
 monter3 = User.create(first_name: 'Monter3', last_name: '', email: 'monter3@wstech.eu', password: 'wstechmonter3', admin: false)
@@ -27,6 +27,7 @@ lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
     purchaser_id: [purchaser_1, purchaser_2, purchaser_3].sample.id,
     delivery_request_date: Time.now - rand(10).days,
     status: %w(ordered ready_to_delivery delivered deleted).sample,
+    client_order_number: SecureRandom.hex(3),
     created_at: rand(150).days.ago
   )
 

@@ -1,4 +1,5 @@
-h3 Nowe zamówienie
+h3
+  | Nowe zamówienie
 
 = form_for @order, url: orders_path do |f|
   = hidden_field_tag :referer, request.referer
@@ -10,18 +11,31 @@ h3 Nowe zamówienie
           li = message
 
   .row
-    .form-group.col-md-12
-      = f.hidden_field :status, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
-    .form-group.col-md-2
+    = f.hidden_field :status, class: 'form-control', rows: '3', placeholder: 'Opis zlecenia'
+    .form-group.col-md-3
       = f.label 'Na kiedy ma być zrobione'
       = f.text_field :delivery_request_date, class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
-    .form-group.col-md-2
+    .form-group.col-md-3
       = f.label 'Zamawiający'
       = text_field_tag 'order[purchaser_name]', nil, class: 'form-control', id: 'order_purchaser', placeholder: 'firma xyz', required: true
       - if Purchaser.all.present?
         ul.purchasers_list
           - Purchaser.all.each do |purchaser|
             li.purchaser_name = purchaser.name
+    .form-group.col-md-3
+      = f.label 'Numer zamówienia klienta'
+      = f.text_field :client_order_number, class: 'form-control'
+
+  .row
+    .form-group.col-md-3
+      = f.label 'Numer faktury'
+      = f.text_field :invoice_number, class: 'form-control'
+    .form-group.col-md-3
+      = f.label 'Numer seryjny'
+      = f.text_field :serial_number, class: 'form-control'
+    .form-group.col-md-3
+      = f.label 'Adres wysyłki'
+      = f.text_field :shipping_address, class: 'form-control'
 
   br
   h4 Przedmioty zamówienia

@@ -33,6 +33,7 @@ h3
             th.color = ready_to_delivery_sort_link('Kolor', 'color')
       th = ready_to_delivery_sort_link('Twórca', 'user')
       th = ready_to_delivery_sort_link('Zamawiający', 'purchaser')
+      th = ready_to_delivery_sort_link('Numer zamówienia klienta', 'client_order_number')
       th = ready_to_delivery_sort_link('Utworzenie', 'created_at')
       th = ready_to_delivery_sort_link('Na kiedy ma być', 'delivery_request_date')
       th = ready_to_delivery_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
@@ -55,6 +56,7 @@ h3
                   td.color = item.color
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order.purchaser.name
+          td.client_order_number = order.client_order_number
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
           td.ready_to_delivery = date(order.ready_to_delivery_at)

@@ -128,6 +128,7 @@ class OrdersController < ApplicationController
                when 'color' then 'items.color'
                when 'user' then 'orders.user_id'
                when 'purchaser' then 'orders.purchaser_id'
+               when 'client_order_number' then 'orders.client_order_number'
                when 'created_at' then 'orders.created_at'
                when 'delivery_request_date' then 'orders.delivery_request_date'
                when 'ready_to_delivery_at' then 'orders.ready_to_delivery_at'

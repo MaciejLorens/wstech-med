@@ -22,19 +22,20 @@ h3
         ul.purchasers_list
           - Purchaser.all.each do |purchaser|
             li.purchaser_name = purchaser.name
+    .form-group.col-md-3
+      = f.label 'Numer zamówienia klienta'
+      = f.text_field :client_order_number, class: 'form-control'
 
-  - if @order.status == 'ready_to_delivery' || @order.status == 'delivered'
-    .row
-      .form-group.col-md-3
-        = f.label 'Numer faktury'
-        = f.text_field :invoice_number, class: 'form-control'
-      .form-group.col-md-3
-        = f.label 'Numer seryjny'
-        = f.text_field :serial_number, class: 'form-control'
-    .row
-      .form-group.col-md-6
-        = f.label 'Adres wysyłki'
-        = f.text_field :shipping_address, class: 'form-control'
+  .row
+    .form-group.col-md-3
+      = f.label 'Numer faktury'
+      = f.text_field :invoice_number, class: 'form-control'
+    .form-group.col-md-3
+      = f.label 'Numer seryjny'
+      = f.text_field :serial_number, class: 'form-control'
+    .form-group.col-md-3
+      = f.label 'Adres wysyłki'
+      = f.text_field :shipping_address, class: 'form-control'
 
   br
   h4 Przedmioty zamówienia

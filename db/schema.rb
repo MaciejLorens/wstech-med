@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190107152644) do
+ActiveRecord::Schema.define(version: 20190110234627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20190107152644) do
     t.datetime "updated_at"
   end
 
+  add_index "items", ["hidden"], name: "index_items_on_hidden", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
@@ -45,13 +46,21 @@ ActiveRecord::Schema.define(version: 20190107152644) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ready_to_delivery_by"
+    t.string   "client_order_number"
   end
 
+  add_index "orders", ["invoice_number"], name: "index_orders_on_invoice_number", using: :btree
+  add_index "orders", ["number"], name: "index_orders_on_number", using: :btree
+  add_index "orders", ["purchaser_id"], name: "index_orders_on_purchaser_id", using: :btree
+  add_index "orders", ["serial_number"], name: "index_orders_on_serial_number", using: :btree
+  add_index "orders", ["status"], name: "index_orders_on_status", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "purchasers", force: :cascade do |t|
     t.string "name", null: false
   end
+
+  add_index "purchasers", ["name"], name: "index_purchasers_on_name", using: :btree
 
   create_table "unseens", force: :cascade do |t|
     t.integer  "user_id"
