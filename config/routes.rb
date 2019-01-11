@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get :deleted, on: :collection
     get :download, on: :collection
     get :history, on: :member
+    get :pdf, on: :member
     put :release, on: :member
   end
 

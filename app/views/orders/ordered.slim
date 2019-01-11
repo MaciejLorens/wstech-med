@@ -57,6 +57,9 @@ h3
             = link_to 'Zwolnij',
                 release_order_path(order),
                 class: 'btn btn-default btn-sm ready-to-delivery'
+            = link_to 'PDF',
+                pdf_order_path(order),
+                class: 'btn btn-default btn-sm'
             - if current_user.admin?
               = link_to 'Edycja',
                   edit_order_path(order),

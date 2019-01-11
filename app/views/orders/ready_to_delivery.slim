@@ -69,6 +69,9 @@ h3
                 data: { confirm: 'Czy zamówienie zostało wysłane?' },
                 method: :patch,
                 class: 'btn btn-default btn-sm'
+            = link_to 'PDF',
+                pdf_order_path(order),
+                class: 'btn btn-default btn-sm'
             = link_to 'Edycja',
                 edit_order_path(order),
                 class: 'btn btn-default btn-sm'

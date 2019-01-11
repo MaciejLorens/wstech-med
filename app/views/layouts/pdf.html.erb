@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WS-TECH MED Management</title>
+    <style>
+
+      body {
+        font-size: 14px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      .table {
+        border: 1px solid black;
+        padding: 5px;
+      }
+
+      th, td {
+        padding: 3px;
+      }
+
+      a {
+        color: black;
+      }
+
+      .lp {
+        width: 30px;
+      }
+
+      .description {
+        width: 400px;
+      }
+
+      .quantity {
+        width: 65px;
+      }
+
+      .color {
+        width: 70px;
+      }
+
+      .user {
+        width: 100px;
+      }
+
+      .purchaser {
+        width: 100px;
+      }
+
+      .client_order_number {
+        width: 100px;
+      }
+
+      .created_at {
+        width: 100px;
+      }
+
+      .delivery_request_date {
+        width: 100px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="main-content container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="content">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
   before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download]
-  before_action :set_order, only: [:show, :edit, :update, :release, :destroy, :history]
+  before_action :set_order, only: [:show, :pdf, :edit, :update, :release, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
   def ordered
@@ -44,6 +44,14 @@ class OrdersController < ApplicationController
   end
 
   def show
+  end
+
+  def pdf
+    html = render_to_string template: 'orders/pdf', layout: 'pdf', locals: { order: @order }
+    kit = PDFKit.new(html, orientation: 'Landscape')
+
+    file = kit.to_file("tmp/#{@order.number.gsub('/', '_')}.pdf")
+    send_file file
   end
 
   def new

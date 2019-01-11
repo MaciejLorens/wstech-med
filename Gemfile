@@ -21,6 +21,8 @@ gem 'flickraw'
 gem 'bootstrap-datepicker-rails'
 gem 'aws-sdk-v1'
 gem 'chartjs-ror'
+gem 'pdfkit'
+gem 'wkhtmltopdf-binary'
 
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'

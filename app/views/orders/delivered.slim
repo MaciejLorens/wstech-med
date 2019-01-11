@@ -69,6 +69,9 @@ h3
             = link_to 'Edycja',
                 edit_order_path(order),
                 class: 'btn btn-default btn-sm'
+            = link_to 'PDF',
+                pdf_order_path(order),
+                class: 'btn btn-default btn-sm'
             - if order.unseen_for(current_user).present?
               = link_to 'Nowa</br>Zmiana'.html_safe,
                   history_order_path(order),
