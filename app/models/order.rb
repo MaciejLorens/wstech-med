@@ -10,10 +10,6 @@ class Order < ActiveRecord::Base
              class_name: User,
              foreign_key: :deleted_by_id
 
-  belongs_to :ready_to_delivery_by_user,
-             class_name: User,
-             foreign_key: :ready_to_delivery_by
-
   accepts_nested_attributes_for :items
 
   has_paper_trail

@@ -26,13 +26,9 @@ class OrdersController < ApplicationController
                           .joins(:items)
                           .where(status: 'suspended')
 
-    @assembly_orders = Order
-                      .includes(:purchaser, :items, :user)
-                      .joins(:items)
-                      .where(status: 'assembly')
-                      .where.not(assembly_date: nil)
+    @assembly_orders = Order.includes(:purchaser, :items, :user).joins(:items).where(status: 'assembly').where.not(assembly_date: nil)
 
-    @assembly_dates = @assembly_orders.pluck(:assembly_date).sort
+    @assembly_dates = @assembly_orders.pluck(:assembly_date).uniq.sort
   end
 
   def ready_to_delivery
@@ -113,6 +109,7 @@ class OrdersController < ApplicationController
 
   def queue
     @order.update(status: 'assembly')
+    @order.create_unseens(current_user)
     redirect_to action: :assembled
   end
 
@@ -123,9 +120,10 @@ class OrdersController < ApplicationController
 
     @order.update(
       status: 'ready_to_delivery',
-      ready_to_delivery_at: Time.now,
-      ready_to_delivery_by: worker.id
+      ready_to_delivery_at: Time.now
     )
+    @order.versions.last.update(whodunnit: worker.id)
+    @order.create_unseens(current_user)
 
     redirect_to action: :assembled
   end
@@ -141,6 +139,7 @@ class OrdersController < ApplicationController
     )
 
     @order.versions.last.update(whodunnit: worker.id)
+    @order.create_unseens(current_user)
 
     redirect_to action: :assembled
   end
@@ -157,6 +156,7 @@ class OrdersController < ApplicationController
     )
 
     @order.versions.last.update(whodunnit: worker.id)
+    @order.create_unseens(current_user)
 
     redirect_to action: :assembled
   end

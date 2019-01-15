@@ -19,8 +19,8 @@ h3
       th Numer zamówienia klienta
       th Utworzenie
       th Na kiedy ma być
+      th Data montażu
       th Gotowe do wysyłki
-      th Zwolnione przez
       th Zrealizo- wane
       th Numer faktury
       th Numer seryjny
@@ -36,12 +36,12 @@ h3
         td.id = @order.number
         td.inner
           table.inner-table
+            - if @order.suspend_message.present?
+              tr.suspended
+                td colspan='4'
+                  | Zawieszone z powodu:
+                  = @order.suspend_message
             - @order.items.order(id: :asc).select(&:visible?).each_with_index do |item, index|
-              - if @order.suspend_message.present?
-                tr.suspended
-                  td colspan='3'
-                    | Zawieszone z powodu:
-                    = @order.suspend_message
               - if item.present? && !item.hidden
                 tr
                   td.lp = "#{index + 1}."
@@ -53,8 +53,8 @@ h3
         td.client_order_number = @order.client_order_number
         td.created_at = date(@order.created_at)
         td.delivery_request_date = date(@order.delivery_request_date)
+        td.assembly_date = date(@order.assembly_date)
         td.ready_to_delivery = date(@order.ready_to_delivery_at)
-        td.ready_to_delivery_by = "#{@order.ready_to_delivery_by_user.try(:first_name)} #{@order.ready_to_delivery_by_user.try(:last_name)}"
         td.delivered = date(@order.delivered_at)
         td.invoice_number = @order.invoice_number
         td.serial_number = @order.serial_number
@@ -74,7 +74,7 @@ h3
               table.inner-table
                 - if order_version.suspend_message.present?
                   tr.suspended
-                    td colspan='3'
+                    td colspan='4'
                       | Zawieszone z powodu:
                       = order_version.suspend_message
                 - order_version.items.where('created_at < ?', version.created_at - 1.second).order(id: :asc).each_with_index do |item, index|
@@ -90,8 +90,8 @@ h3
             td.client_order_number = order_version.client_order_number
             td.created_at = date(order_version.created_at)
             td.delivery_request_date = date(order_version.delivery_request_date)
+            td.assembly_date = date(order_version.assembly_date)
             td.ready_to_delivery = date(order_version.ready_to_delivery_at)
-            td.ready_to_delivery_by = "#{order_version.ready_to_delivery_by_user.try(:first_name)} #{order_version.ready_to_delivery_by_user.try(:last_name)}"
             td.delivered = date(order_version.delivered_at)
             td.invoice_number = order_version.invoice_number
             td.serial_number = order_version.serial_number

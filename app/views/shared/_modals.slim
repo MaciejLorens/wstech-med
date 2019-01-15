@@ -5,7 +5,7 @@
       .row
         .col-md-12
           h4 Zamówienie powinno być zmontowane, spakowane i gotowe do wysyłki
-      - if current_user.admin?
+      - if current_user&.admin?
         = hidden_field_tag :code, current_user.code
       - else
         br
@@ -33,7 +33,7 @@
           label Podaj powód zawieszenia:
           br
           = text_area_tag :suspend_message, nil, class: 'form-control', required: true
-      - if current_user.admin?
+      - if current_user&.admin?
         = hidden_field_tag :code, current_user.code
       - else
         br
@@ -55,7 +55,7 @@
       .row
         .col-md-12
           h4 Przywrócenie zamówienia
-      - if current_user.admin?
+      - if current_user&.admin?
         = hidden_field_tag :code, current_user.code
       - else
         br

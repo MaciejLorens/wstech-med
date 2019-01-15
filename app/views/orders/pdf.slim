@@ -24,7 +24,7 @@ table.table.table-hover
         table.inner-table
           - if order.suspend_message.present?
             tr.suspended
-              td colspan='3'
+              td colspan='4'
                 | Zawieszone z powodu:
                 = order.suspend_message
           - @order.items.select(&:visible?).each_with_index do |item, index|
