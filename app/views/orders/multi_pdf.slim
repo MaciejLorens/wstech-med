@@ -1,0 +1,44 @@
+h3
+  | Montaż na dzień: #{date}
+
+table.table.table-hover
+  tr
+    th Numer
+    th.inner
+      table.inner-table
+        tr
+          th.lp Lp
+          th.description Opis
+          th.quantity Ilość
+          th.color Kolor
+    th Twórca
+    th Zamawiający
+    th Numer zamówienia klienta
+    th Utworzenie
+    th Na kiedy ma być
+    th Adres wysyłki
+
+- orders.each do |order|
+  table.table.table-hover
+    tbody
+      tr
+        td.number = order.number
+        td.inner
+          table.inner-table
+            - if order.suspend_message.present?
+              tr.suspended
+                td colspan='4'
+                  | Zawieszone z powodu:
+                  = order.suspend_message
+            - order.items.select(&:visible?).each_with_index do |item, index|
+              tr
+                td.lp = "#{index + 1}."
+                td.description = item.description
+                td.quantity = item.quantity
+                td.color = item.color
+        td.user = "#{order.user.first_name} #{order.user.last_name}"
+        td.purchaser = order.purchaser.name
+        td.client_order_number = order.client_order_number
+        td.created_at = date(order.created_at)
+        td.delivery_request_date = date(order.delivery_request_date)
+        td.shipping_address = order.shipping_address

@@ -148,10 +148,12 @@ br
   - assembly_orders = @assembly_orders.on_assembly(date)
 
   br
-  h4
-    | Montaż na dzień: #{date}
+  .col-md-11.no-padding
+    h4
+      | Montaż na dzień: #{date}
+  .col-md-1.no-padding
+    = link_to 'PDF całego dnia', multi_pdf_orders_path(date: date), class: 'btn btn-default pull-right'
   br
-
   table.table.table-hover
     tr
       th.id Numer

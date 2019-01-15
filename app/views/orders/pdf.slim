@@ -1,7 +1,6 @@
 h3
   | Zamówienie #{@order.number}
 
-
 table.table.table-hover
   tr
     th.inner
@@ -22,7 +21,7 @@ table.table.table-hover
     tr
       td.inner
         table.inner-table
-          - if order.suspend_message.present?
+          - if @order.suspend_message.present?
             tr.suspended
               td colspan='4'
                 | Zawieszone z powodu:

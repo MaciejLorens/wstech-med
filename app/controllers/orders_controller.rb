@@ -69,9 +69,43 @@ class OrdersController < ApplicationController
 
   def pdf
     html = render_to_string template: 'orders/pdf', layout: 'pdf', locals: { order: @order }
-    kit = PDFKit.new(html, orientation: 'Landscape')
+
+    options = {
+      margin_top: '0.5in',
+      margin_right: '0.3in',
+      margin_bottom: '0.5in',
+      margin_left: '0.3in',
+      orientation: 'Landscape'
+    }
+
+    kit = PDFKit.new(html, options)
+
 
     file = kit.to_file("tmp/#{@order.number.gsub('/', '_')}.pdf")
+    send_file file
+  end
+
+  def multi_pdf
+    orders = Order
+               .includes(:purchaser, :items, :user)
+               .joins(:items)
+               .where(status: 'assembly')
+               .where.not(assembly_at: nil)
+               .on_assembly(params[:date])
+
+    html = render_to_string template: 'orders/multi_pdf', layout: 'pdf', locals: { orders: orders, date: params[:date] }
+
+    options = {
+      margin_top: '0.5in',
+      margin_right: '0.3in',
+      margin_bottom: '0.5in',
+      margin_left: '0.3in',
+      orientation: 'Landscape'
+    }
+
+    kit = PDFKit.new(html, options)
+
+    file = kit.to_file("tmp/Montaz_#{params[:date].gsub('-', '_')}.pdf")
     send_file file
   end
 
