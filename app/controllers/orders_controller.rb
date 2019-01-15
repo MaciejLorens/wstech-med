@@ -19,16 +19,20 @@ class OrdersController < ApplicationController
                       .includes(:purchaser, :items, :user)
                       .joins(:items)
                       .where(status: 'assembly')
-                      .where(assembly_date: nil)
+                      .where(assembly_at: nil)
 
     @suspended_orders = Order
                           .includes(:purchaser, :items, :user)
                           .joins(:items)
                           .where(status: 'suspended')
 
-    @assembly_orders = Order.includes(:purchaser, :items, :user).joins(:items).where(status: 'assembly').where.not(assembly_date: nil)
+    @assembly_orders = Order
+                         .includes(:purchaser, :items, :user)
+                         .joins(:items)
+                         .where(status: 'assembly')
+                         .where.not(assembly_at: nil)
 
-    @assembly_dates = @assembly_orders.pluck(:assembly_date).uniq.sort
+    @assembly_dates = @assembly_orders.map { |o| o.assembly_at.strftime('%d-%m-%Y') }.uniq.sort
   end
 
   def ready_to_delivery
@@ -152,7 +156,7 @@ class OrdersController < ApplicationController
     @order.update(
       status: 'assembly',
       suspend_message: nil,
-      assembly_date: nil
+      assembly_at: nil
     )
 
     @order.versions.last.update(whodunnit: worker.id)

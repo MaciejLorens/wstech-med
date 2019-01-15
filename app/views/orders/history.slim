@@ -53,7 +53,7 @@ h3
         td.client_order_number = @order.client_order_number
         td.created_at = date(@order.created_at)
         td.delivery_request_date = date(@order.delivery_request_date)
-        td.assembly_date = date(@order.assembly_date)
+        td.assembly_at = date(@order.assembly_at)
         td.ready_to_delivery = date(@order.ready_to_delivery_at)
         td.delivered = date(@order.delivered_at)
         td.invoice_number = @order.invoice_number
@@ -90,7 +90,7 @@ h3
             td.client_order_number = order_version.client_order_number
             td.created_at = date(order_version.created_at)
             td.delivery_request_date = date(order_version.delivery_request_date)
-            td.assembly_date = date(order_version.assembly_date)
+            td.assembly_at = date(order_version.assembly_at)
             td.ready_to_delivery = date(order_version.ready_to_delivery_at)
             td.delivered = date(order_version.delivered_at)
             td.invoice_number = order_version.invoice_number

@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20190115171327) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "client_order_number"
-    t.datetime "assembly_date"
+    t.datetime "assembly_at"
     t.string   "suspend_message"
   end
 

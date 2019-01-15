@@ -17,7 +17,7 @@ h3
       = text_field_tag 'order[delivery_request_date]', @order.delivery_request_date.strftime('%d-%m-%Y'), class: 'datepicker form-control', required: true
     .form-group.col-md-3
       = f.label 'Data montażu'
-      = text_field_tag 'order[assembly_date]', @order&.assembly_date&.strftime('%d-%m-%Y'), class: 'datepicker form-control'
+      = text_field_tag 'order[assembly_at]', @order&.assembly_at&.strftime('%d-%m-%Y'), class: 'datepicker form-control'
 
   .row
     .form-group.col-md-3

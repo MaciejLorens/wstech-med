@@ -144,12 +144,12 @@ br
 
 br
 
-- @assembly_dates.each do |assembly_date|
-  - assembly_orders = @assembly_orders.where(assembly_date: assembly_date)
+- @assembly_dates.each do |date|
+  - assembly_orders = @assembly_orders.on_assembly(date)
 
   br
   h4
-    | Montaż na dzień: #{assembly_date.strftime('%d-%m-%Y')}
+    | Montaż na dzień: #{date}
   br
 
   table.table.table-hover

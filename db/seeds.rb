@@ -28,7 +28,7 @@ lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
     delivery_request_date: Time.now - rand(10).days,
     status: %w(ordered queue assembly suspended ready_to_delivery delivered deleted).sample,
     client_order_number: SecureRandom.hex(3),
-    assembly_date: rand(10).days.from_now,
+    assembly_at: rand(10).days.from_now,
     created_at: rand(150).days.ago
   )
 

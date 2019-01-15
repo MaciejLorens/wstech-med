@@ -1,16 +1,16 @@
 module OrdersControllerHelper
   def date(date)
-    "#{date.localtime.strftime('%Y')}<br>#{date.localtime.strftime('%m')}/#{date.localtime.strftime('%d')}".html_safe if date.present?
+    "#{date.localtime.strftime('%d')}/#{date.localtime.strftime('%m')}<br>#{date.localtime.strftime('%Y')}".html_safe if date.present?
   end
 
   def date_time(date)
     dl = date.localtime
-    "#{dl.strftime('%Y')}<br>#{dl.strftime('%m')}/#{dl.strftime('%d')}<br>#{dl.strftime('%H')}:#{dl.strftime('%M')}".html_safe if date.present?
+    "#{dl.strftime('%H')}:#{dl.strftime('%M')}<br>#{dl.strftime('%d')}/#{dl.strftime('%m')}<br>#{dl.strftime('%Y')}".html_safe if date.present?
   end
 
   def date_time_sec(date)
     dl = date.localtime
-    "#{dl.strftime('%Y')}<br>#{dl.strftime('%m')}/#{dl.strftime('%d')}<br>#{dl.strftime('%H')}:#{dl.strftime('%M')}:#{dl.strftime('%S')}".html_safe if date.present?
+    "#{dl.strftime('%H')}:#{dl.strftime('%M')}:#{dl.strftime('%S')}<br>#{dl.strftime('%d')}/#{dl.strftime('%m')}<br>#{dl.strftime('%Y')}".html_safe if date.present?
   end
 
   def status(order)
