@@ -13,20 +13,38 @@ $ ->
     language: 'pl'
   });
 
-  modal = $("#ready-to-delivery")
+  ready_to_delivery_modal = $("#ready-to-delivery")
+  suspend_order_modal = $("#suspend-order")
+  restore_order_modal = $("#restore-order")
 
   window.onclick = (e) ->
-    if e.target == modal[0]
-      modal.css('display', 'none')
+    if e.target == ready_to_delivery_modal[0]
+      ready_to_delivery_modal.css('display', 'none')
+    if e.target == suspend_order_modal[0]
+      suspend_order_modal.css('display', 'none')
+    if e.target == restore_order_modal[0]
+      restore_order_modal.css('display', 'none')
 
   $('.close-modal').click (e) ->
     e.preventDefault()
-    modal.css('display', 'none')
+    ready_to_delivery_modal.css('display', 'none')
+    suspend_order_modal.css('display', 'none')
+    restore_order_modal.css('display', 'none')
 
   $(".ready-to-delivery").click (e) ->
     e.preventDefault()
-    modal.css('display', 'block')
+    ready_to_delivery_modal.css('display', 'block')
     $("#ready-to-delivery-form").prop('action', $(@).prop('href'))
+
+  $(".suspend-order").click (e) ->
+    e.preventDefault()
+    suspend_order_modal.css('display', 'block')
+    $("#suspend-order-form").prop('action', $(@).prop('href'))
+
+  $(".restore-order").click (e) ->
+    e.preventDefault()
+    restore_order_modal.css('display', 'block')
+    $("#restore-order-form").prop('action', $(@).prop('href'))
 
 
   $(".add-item").click ->

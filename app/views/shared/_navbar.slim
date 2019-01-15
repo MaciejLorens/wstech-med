@@ -4,7 +4,8 @@
   ul.nav.navbar-nav
     - if current_user&.admin?
       li= link_to 'Nowe', new_order_path
-    li= link_to 'Zamówione', ordered_orders_path
+      li= link_to 'Zamówione', ordered_orders_path
+    li= link_to 'Zlecenie montażu', assembled_orders_path
     - if current_user&.admin?
       li= link_to 'Gotowe do wysyłki', ready_to_delivery_orders_path
       li= link_to 'Zrealizowane', delivered_orders_path(f_created_at_from: DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), f_created_at_to: DateTime.now.strftime('%d-%m-%Y'))

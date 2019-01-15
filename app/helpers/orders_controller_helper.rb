@@ -1,15 +1,23 @@
 module OrdersControllerHelper
   def date(date)
-    date.localtime.strftime('%d-%m-%Y') if date.present?
+    "#{date.localtime.strftime('%Y')}<br>#{date.localtime.strftime('%m')}/#{date.localtime.strftime('%d')}".html_safe if date.present?
   end
 
   def date_time(date)
-    date.localtime.strftime('%d-%m-%Y %H:%M') if date.present?
+    dl = date.localtime
+    "#{dl.strftime('%Y')}<br>#{dl.strftime('%m')}/#{dl.strftime('%d')}<br>#{dl.strftime('%H')}:#{dl.strftime('%M')}".html_safe if date.present?
+  end
+
+  def date_time_sec(date)
+    dl = date.localtime
+    "#{dl.strftime('%Y')}<br>#{dl.strftime('%m')}/#{dl.strftime('%d')}<br>#{dl.strftime('%H')}:#{dl.strftime('%M')}:#{dl.strftime('%S')}".html_safe if date.present?
   end
 
   def status(order)
     case order.status
       when 'ordered' then 'Zamówione'
+      when 'assembly' then 'Zlecenie montażu'
+      when 'suspended' then 'Zawieszone'
       when 'ready_to_delivery' then 'Gotowe do wysyłki'
       when 'delivered' then 'Zrealizowane'
       when 'deleted' then 'Usunięte'

@@ -16,6 +16,11 @@ h3
       = f.label 'Na kiedy ma być zrobione'
       = text_field_tag 'order[delivery_request_date]', @order.delivery_request_date.strftime('%d-%m-%Y'), class: 'datepicker form-control', required: true
     .form-group.col-md-3
+      = f.label 'Data montażu'
+      = text_field_tag 'order[assembly_date]', @order&.assembly_date&.strftime('%d-%m-%Y'), class: 'datepicker form-control'
+
+  .row
+    .form-group.col-md-3
       = f.label 'Zamawiający'
       = text_field_tag 'order[purchaser_name]', @order.purchaser.name, class: 'form-control', id: 'order_purchaser', required: true
       - if Purchaser.all.present?

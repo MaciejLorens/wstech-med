@@ -54,9 +54,11 @@ h3
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
           td.actions
-            = link_to 'Zwolnij',
-                release_order_path(order),
-                class: 'btn btn-default btn-sm ready-to-delivery'
+            = link_to 'Kolejkuj',
+                queue_order_path(order),
+                data: { confirm: 'Czy na pewno chcesz zakolejkować zlecenie?' },
+                method: :put,
+                class: 'btn btn-default btn-sm'
             = link_to 'PDF',
                 pdf_order_path(order),
                 class: 'btn btn-default btn-sm'

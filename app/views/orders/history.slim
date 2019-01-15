@@ -37,6 +37,11 @@ h3
         td.inner
           table.inner-table
             - @order.items.order(id: :asc).select(&:visible?).each_with_index do |item, index|
+              - if @order.suspend_message.present?
+                tr.suspended
+                  td colspan='3'
+                    | Zawieszone z powodu:
+                    = @order.suspend_message
               - if item.present? && !item.hidden
                 tr
                   td.lp = "#{index + 1}."
@@ -56,7 +61,7 @@ h3
         td.shipping_address = @order.shipping_address
         td.status = status(@order)
         td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
-        td = version.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
+        td = date_time_sec(version.created_at.localtime.to_datetime)
 
       - @order.versions.reverse.each_with_index do |version, index|
         tr
@@ -67,6 +72,11 @@ h3
             td.id = order_version.number
             td.inner
               table.inner-table
+                - if order_version.suspend_message.present?
+                  tr.suspended
+                    td colspan='3'
+                      | Zawieszone z powodu:
+                      = order_version.suspend_message
                 - order_version.items.where('created_at < ?', version.created_at - 1.second).order(id: :asc).each_with_index do |item, index|
                   - item_version = item.version_at(version.created_at - 1.second)
                   - if item_version.present? && !item_version.hidden
@@ -88,4 +98,4 @@ h3
             td.shipping_address = order_version.shipping_address
             td.status = status(order_version)
             td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
-            td = version_after.created_at.localtime.to_datetime.strftime('%d-%m-%Y %H:%M:%S')
+            td = date_time_sec(version_after.created_at.localtime.to_datetime)
