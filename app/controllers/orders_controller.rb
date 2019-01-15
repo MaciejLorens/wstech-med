@@ -8,7 +8,6 @@ class OrdersController < ApplicationController
     @orders = Order
                 .includes(:purchaser, :items, :user)
                 .joins(:items)
-                .joins('LEFT OUTER JOIN unseens ON orders.id = unseens.order_id')
                 .where(status: 'ordered')
                 .where(filter_query)
                 .order(@sorting)
@@ -17,18 +16,15 @@ class OrdersController < ApplicationController
   def assembled
     @queue_orders = Order
                       .includes(:purchaser, :items, :user)
-                      .joins(:items)
                       .where(status: 'assembly')
                       .where(assembly_at: nil)
 
     @suspended_orders = Order
                           .includes(:purchaser, :items, :user)
-                          .joins(:items)
                           .where(status: 'suspended')
 
     @assembly_orders = Order
                          .includes(:purchaser, :items, :user)
-                         .joins(:items)
                          .where(status: 'assembly')
                          .where.not(assembly_at: nil)
 
@@ -38,6 +34,7 @@ class OrdersController < ApplicationController
   def ready_to_delivery
     @orders = Order
                 .includes(:purchaser, :user, :items)
+                .joins(:items)
                 .where(status: 'ready_to_delivery')
                 .where(filter_query)
                 .order(@sorting)
@@ -46,6 +43,7 @@ class OrdersController < ApplicationController
   def delivered
     @orders = Order
                 .includes(:purchaser, :user, :items)
+                .joins(:items)
                 .where(status: 'delivered')
                 .where(filter_query)
                 .order(@sorting)
