@@ -25,7 +25,7 @@ h3
       = text_field_tag 'order[purchaser_name]', @order&.purchaser&.name, class: 'form-control', id: 'order_purchaser', required: true
       - if Purchaser.all.present?
         ul.purchasers_list
-          - Purchaser.all.each do |purchaser|
+          - Purchaser.order(name: :asc).each do |purchaser|
             li
               .purchaser_name
                 = purchaser.name

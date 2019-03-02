@@ -112,3 +112,25 @@ $ ->
       $("#s_order").val('asc')
 
     $(".filter-form").submit()
+
+  $("#order_purchaser.form-control").keyup ->
+    console.log($(@).val())
+
+    regexp = new RegExp($(@).val(), "ig");
+
+    if $(@).val() == ''
+      $("ul.purchasers_list li").show()
+    else
+      $("ul.purchasers_list").show()
+      $("ul.purchasers_list li").hide()
+
+      hide = true;
+
+      $(".purchaser_name").each (index) ->
+        content = $(@).html()
+        if content.match(regexp)
+          hide = false
+          $(@).parent().show()
+
+      if hide == true
+        $("ul.purchasers_list").hide()
