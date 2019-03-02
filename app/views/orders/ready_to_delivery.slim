@@ -51,7 +51,7 @@ h3
                   td.quantity = item.quantity
                   td.color = item.color
           td.user = "#{order.user.first_name} #{order.user.last_name}"
-          td.purchaser = order.purchaser.name
+          td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
           td.ready_to_delivery = date(order.ready_to_delivery_at)
           td.shipping_address = order.shipping_address

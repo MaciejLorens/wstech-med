@@ -22,11 +22,14 @@ h3
   .row
     .form-group.col-md-3
       = f.label 'Zamawiający'
-      = text_field_tag 'order[purchaser_name]', @order.purchaser.name, class: 'form-control', id: 'order_purchaser', required: true
+      = text_field_tag 'order[purchaser_name]', @order&.purchaser&.name, class: 'form-control', id: 'order_purchaser', required: true
       - if Purchaser.all.present?
         ul.purchasers_list
           - Purchaser.all.each do |purchaser|
-            li.purchaser_name = purchaser.name
+            li
+              .purchaser_name
+                = purchaser.name
+
     .form-group.col-md-3
       = f.label 'Numer zamówienia klienta'
       = f.text_field :client_order_number, class: 'form-control'

@@ -26,7 +26,15 @@ h3
       - if Purchaser.all.present?
         ul.purchasers_list
           - Purchaser.all.each do |purchaser|
-            li.purchaser_name = purchaser.name
+            li
+              .purchaser_name
+                = purchaser.name
+              = link_to 'usuń',
+                purchaser_path(purchaser),
+                data: { confirm: 'Czy na pewno chcesz usunąć zamawiającego?' },
+                method: :delete,
+                class: 'btn-default btn-sm purchaser-delete'
+
     .form-group.col-md-3
       = f.label 'Numer zamówienia klienta'
       = f.text_field :client_order_number, class: 'form-control'

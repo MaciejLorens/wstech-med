@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
 
   has_paper_trail
 
-  validates_presence_of :purchaser_id, :user_id, :delivery_request_date, :status
+  validates_presence_of :user_id, :delivery_request_date, :status
 
   before_create :set_number
 

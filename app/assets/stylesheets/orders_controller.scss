@@ -38,20 +38,35 @@ tbody.clickable tr {
   padding: 10px;
   border: 1px solid #cccccc;
   position: absolute;
-  width: 276px;
+  width: 430px;
   z-index: 1;
   display: none;
 
-  li.purchaser_name {
+  li {
     list-style: none;
-    padding: 5px 10px;
-    color: black;
 
-    &:hover {
-      background-color: #bfbfbf;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
+    .purchaser_name {
+      padding: 5px 10px;
+      color: black;
+      width: 355px;
+      display: inline-block;
+      margin-right: 10px;
+
+      &:hover {
+        background-color: #bfbfbf;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+
+    .purchaser-delete {
+      border: 1px solid grey;
+      padding: 2px 5px;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }

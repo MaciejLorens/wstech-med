@@ -20,5 +20,6 @@ Rails.application.routes.draw do
     put :release, on: :member
   end
 
+  resources :purchasers, only: [:destroy]
 
 end

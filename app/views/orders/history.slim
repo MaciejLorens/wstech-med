@@ -49,7 +49,7 @@ h3
                   td.quantity = item.quantity
                   td.color = item.color
         td.user = "#{@order.user.first_name} #{@order.user.last_name}"
-        td.purchaser = @order.purchaser.name
+        td.purchaser = @order&.purchaser&.name
         td.client_order_number = @order.client_order_number
         td.created_at = date(@order.created_at)
         td.delivery_request_date = date(@order.delivery_request_date)
@@ -86,7 +86,7 @@ h3
                       td.quantity = item_version.quantity
                       td.color = item_version.color
             td.user = "#{order_version.user.first_name} #{order_version.user.last_name}"
-            td.purchaser = order_version.purchaser.name
+            td.purchaser = order_version&.purchaser&.name
             td.client_order_number = order_version.client_order_number
             td.created_at = date(order_version.created_at)
             td.delivery_request_date = date(order_version.delivery_request_date)
