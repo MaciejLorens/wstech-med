@@ -146,7 +146,7 @@ class OrdersController < ApplicationController
   def queue
     @order.update(status: 'assembly')
     @order.create_unseens(current_user)
-    redirect_to action: :assembled
+    redirect_to action: :ordered
   end
 
   def release

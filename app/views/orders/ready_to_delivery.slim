@@ -34,11 +34,7 @@ h3
       th = ready_to_delivery_sort_link('Twórca', 'user')
       th = ready_to_delivery_sort_link('Zamawiający', 'purchaser')
       th = ready_to_delivery_sort_link('Numer zamówienia klienta', 'client_order_number')
-      th = ready_to_delivery_sort_link('Utworzenie', 'created_at')
-      th = ready_to_delivery_sort_link('Na kiedy ma być', 'delivery_request_date')
       th = ready_to_delivery_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
-      th = ready_to_delivery_sort_link('Numer faktury', 'invoice_number')
-      th = ready_to_delivery_sort_link('Numer seryjny', 'serial_number')
       th = ready_to_delivery_sort_link('Adres wysyłki', 'shipping_address')
       th
 
@@ -57,11 +53,7 @@ h3
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order.purchaser.name
           td.client_order_number = order.client_order_number
-          td.created_at = date(order.created_at)
-          td.delivery_request_date = date(order.delivery_request_date)
           td.ready_to_delivery = date(order.ready_to_delivery_at)
-          td.invoice_number = order.invoice_number
-          td.serial_number = order.serial_number
           td.shipping_address = order.shipping_address
           td.actions
             = link_to 'Wyślij',
@@ -75,14 +67,9 @@ h3
             = link_to 'Edycja',
                 edit_order_path(order),
                 class: 'btn btn-default btn-sm'
-            - if order.unseen_for(current_user).present?
-              = link_to 'Nowa</br>Zmiana'.html_safe,
-                  history_order_path(order),
-                  class: "btn btn-default btn-sm unseen"
-            - else
-              = link_to 'Historia',
-                  history_order_path(order),
-                  class: 'btn btn-default btn-sm'
+            = link_to 'Historia',
+                history_order_path(order),
+                class: 'btn btn-default btn-sm'
             = link_to 'Usuń',
                 order_path(order, referer: ready_to_delivery_orders_path),
                 data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},
