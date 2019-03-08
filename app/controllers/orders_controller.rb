@@ -69,11 +69,10 @@ class OrdersController < ApplicationController
     html = render_to_string template: 'orders/pdf', layout: 'pdf', locals: { order: @order }
 
     options = {
-      margin_top: '0.5in',
-      margin_right: '0.3in',
-      margin_bottom: '0.5in',
-      margin_left: '0.3in',
-      orientation: 'Landscape'
+      margin_top: '0.8in',
+      margin_right: '0.5in',
+      margin_bottom: '0.8in',
+      margin_left: '0.5in'
     }
 
     kit = PDFKit.new(html, options)
@@ -94,11 +93,10 @@ class OrdersController < ApplicationController
     html = render_to_string template: 'orders/multi_pdf', layout: 'pdf', locals: { orders: orders, date: params[:date] }
 
     options = {
-      margin_top: '0.5in',
-      margin_right: '0.3in',
-      margin_bottom: '0.5in',
-      margin_left: '0.3in',
-      orientation: 'Landscape'
+      margin_top: '0.8in',
+      margin_right: '0.5in',
+      margin_bottom: '0.8in',
+      margin_left: '0.5in'
     }
 
     kit = PDFKit.new(html, options)

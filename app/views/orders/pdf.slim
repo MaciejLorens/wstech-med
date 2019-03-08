@@ -1,40 +1,62 @@
 h3
-  | Zamówienie #{@order.number}
+  | Zamówienie: #{@order.number}
 
 table.table.table-hover
   tr
-    th.inner
-      table.inner-table
-        tr
-          th.lp Lp
-          th.product Produkt
-          th.model Model
-          th.options Options
-          th.color Kolor
-          th.quantity Ilość
-    th Twórca
-    th Zamawiający
-    th Numer zamówienia klienta
-    th Adres wysyłki
+    th.lp Lp
+    th.product Produkt
+    th.model Model
+    th.options Opcje
+    th.color Kolor
+    th.quantity Ilość
 
   tbody
-    tr
-      td.inner
-        table.inner-table
-          - if @order.suspend_message.present?
-            tr.suspended
-              td colspan='6'
-                | Zawieszone z powodu:
-                = order.suspend_message
-          - @order.items.select(&:visible?).each_with_index do |item, index|
-            tr
-              td.lp = "#{index + 1}."
-              td.product = item.product
-              td.model = item.model
-              td.options = item.options
-              td.color = item.color
-              td.quantity = item.quantity
-      td.user = "#{@order.user.first_name} #{@order.user.last_name}"
-      td.purchaser = @order&.purchaser&.name
-      td.client_order_number = @order.client_order_number
-      td.shipping_address = @order.shipping_address
+    - if @order.suspend_message.present?
+      tr.suspended
+        td colspan='6' = "Zawieszone z powodu: #{order.suspend_message}"
+    - @order.items.select(&:visible?).each_with_index do |item, index|
+      tr
+        td.lp = "#{index + 1}."
+        td.product = item.product
+        td.model = item.model
+        td.options = item.options
+        td.color = item.color
+        td.quantity = item.quantity
+    - if @order.comment.present?
+      tr
+        td.comment colspan='6' = "Uwagi: #{order.comment}"
+
+br
+br
+
+h3 Zamawiający:
+
+- if  @order&.purchaser&.name.present?
+  p = @order&.purchaser&.name
+  br
+- else
+  br
+  br
+  br
+
+
+h3 Adres wysyłki:
+
+- if @order.shipping_address.present?
+  p = @order.shipping_address
+  br
+- else
+  br
+  br
+  br
+
+
+h3 Termin realizacji:
+
+- if @order.ready_to_delivery_at.present?
+  p = @order.ready_to_delivery_at
+  br
+- else
+  br
+  br
+  br
