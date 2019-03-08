@@ -56,23 +56,31 @@ h3
   .items
     = hidden_field_tag :current_item_index, @order.items.count
     .row
-      .form-group.col-md-9
-        = label_tag 'Opis'
-      .form-group.col-md-1
-        = label_tag 'Ilość'
+      .form-group.col-md-2
+        = label_tag 'Produkt'
+      .form-group.col-md-2
+        = label_tag 'Model'
+      .form-group.col-md-2
+        = label_tag 'Opcje'
       .form-group.col-md-1
         = label_tag 'Kolor'
+      .form-group.col-md-1
+        = label_tag 'Ilość'
       .form-group.col-md-1
         = label_tag 'Akcje'
 
     = f.fields_for :items, @order.items.order(id: :asc).select(&:visible?) do |i|
       .row
-        .form-group.col-md-9
-          = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis przedmiotu'
-        .form-group.col-md-1
-          = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
+        .form-group.col-md-2
+          = i.text_area :product, class: 'form-control', rows: '1', placeholder: 'Produkt', require: true
+        .form-group.col-md-2
+          = i.text_area :model, class: 'form-control', rows: '1', placeholder: 'Model'
+        .form-group.col-md-2
+          = i.text_area :options, class: 'form-control', rows: '1', placeholder: 'Opcje'
         .form-group.col-md-1
           = i.text_field :color, class: 'form-control', placeholder: 'Kolor', required: true
+        .form-group.col-md-1
+          = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
         .form-group.col-md-1
           .btn.btn-default.remove-item.form-control
             | Usuń

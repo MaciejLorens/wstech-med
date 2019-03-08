@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
 
   belongs_to :order
 
-  validates_presence_of :description, :quantity, :color
+  validates_presence_of :product, :color, :quantity
 
   scope :visible, -> { where(hidden: false) }
   scope :hidden, -> { where(hidden: true) }

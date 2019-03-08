@@ -131,7 +131,7 @@ class OrdersController < ApplicationController
 
       if order_params['items_attributes']
         order_params['items_attributes'].each do |index, item|
-          if item['id'].present? && item['description'].blank? && item['quantity'].blank? && item['color'].blank?
+          if item['id'].present? && item['product'].blank? && item['model'].blank? && item['options'].blank? && item['color'].blank? && item['quantity'].blank?
             @order.items.find(item['id'].to_i).hide
           end
         end
@@ -225,12 +225,16 @@ class OrdersController < ApplicationController
     @sorting = case params[:s_field]
                when 'id' then
                  'orders.id'
-               when 'description' then
-                 'items.description'
-               when 'quantity' then
-                 'items.quantity'
+               when 'product' then
+                 'items.product'
+               when 'model' then
+                 'items.model'
+               when 'options' then
+                 'items.options'
                when 'color' then
                  'items.color'
+               when 'quantity' then
+                 'items.quantity'
                when 'user' then
                  'orders.user_id'
                when 'purchaser' then

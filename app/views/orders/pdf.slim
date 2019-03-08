@@ -7,9 +7,11 @@ table.table.table-hover
       table.inner-table
         tr
           th.lp Lp
-          th.description Opis
-          th.quantity Ilość
+          th.product Produkt
+          th.model Model
+          th.options Options
           th.color Kolor
+          th.quantity Ilość
     th Twórca
     th Zamawiający
     th Numer zamówienia klienta
@@ -21,15 +23,17 @@ table.table.table-hover
         table.inner-table
           - if @order.suspend_message.present?
             tr.suspended
-              td colspan='4'
+              td colspan='6'
                 | Zawieszone z powodu:
                 = order.suspend_message
           - @order.items.select(&:visible?).each_with_index do |item, index|
             tr
               td.lp = "#{index + 1}."
-              td.description = item.description
-              td.quantity = item.quantity
+              td.product = item.product
+              td.model = item.model
+              td.options = item.options
               td.color = item.color
+              td.quantity = item.quantity
       td.user = "#{@order.user.first_name} #{@order.user.last_name}"
       td.purchaser = @order&.purchaser&.name
       td.client_order_number = @order.client_order_number

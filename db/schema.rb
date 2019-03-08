@@ -11,20 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190308120020) do
+ActiveRecord::Schema.define(version: 20190308130604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "items", force: :cascade do |t|
-    t.string   "description",                 null: false
-    t.integer  "quantity",                    null: false
-    t.string   "color",                       null: false
-    t.integer  "order_id",                    null: false
-    t.boolean  "hidden",      default: false, null: false
+    t.integer  "quantity",                   null: false
+    t.string   "color",                      null: false
+    t.integer  "order_id",                   null: false
+    t.boolean  "hidden",     default: false, null: false
     t.datetime "hidden_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "product"
+    t.string   "model"
+    t.string   "options"
   end
 
   add_index "items", ["hidden"], name: "index_items_on_hidden", using: :btree

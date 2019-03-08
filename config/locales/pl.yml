@@ -8,9 +8,11 @@ pl:
         delivery_request_date: Na kiedy ma być zrobione
         purchaser: Zamawiający
       items:
-        description: Opis przedmiotu
-        quantity: Ilość przedmiotu
+        product: Produkt
+        model: Model
+        options: Opcje
         color: Kolor przedmiotu
+        quantity: Ilość przedmiotu
 
     errors:
       models:
@@ -22,12 +24,12 @@ pl:
               blank: nie może być pusty
         item:
           attributes:
-            description:
+            product:
+              blank: nie może być pusty
+            color:
               blank: nie może być pusty
             quantity:
               blank: nie może być pusta
-            color:
-              blank: nie może być pusty
 
   January: Styczeń
   February: Luty

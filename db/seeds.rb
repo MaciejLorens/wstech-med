@@ -34,9 +34,11 @@ lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
 
   (rand(5) + 1).times do |j|
     order.items.create(
-      description: "start-#{Array.new(rand(30)).map{lorem.sample}.join(' ')}-end",
-      quantity: rand(100),
-      color: %w(Niebieski Czerwony Fioletowy Żółty Czarny Biały).sample
+      product: "product-#{SecureRandom.hex(3)}",
+      model: "model-#{SecureRandom.hex(3)}",
+      options: "options-#{SecureRandom.hex(3)}",
+      color: %w(Niebieski Czerwony Fioletowy Żółty Czarny Biały).sample,
+      quantity: rand(100)
     )
   end
 end

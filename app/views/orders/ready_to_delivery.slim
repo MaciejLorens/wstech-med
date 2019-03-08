@@ -7,7 +7,9 @@ h3
   = hidden_field_tag :s_order, params[:s_order]
   .form-group.col-md-11
     = text_field_tag :f_number, params[:f_number], placeholder: 'Numer', class: 'form-control f_number'
-    = text_field_tag :f_description, params[:f_description], placeholder: 'Opis', class: 'form-control f_description'
+    = text_field_tag :f_product, params[:f_product], placeholder: 'Produkt', class: 'form-control f_product'
+    = text_field_tag :f_model, params[:f_model], placeholder: 'Model', class: 'form-control f_model'
+    = text_field_tag :f_options, params[:f_options], placeholder: 'Opcje', class: 'form-control f_options'
     = select_tag :f_user_id, options_for_select(options_for_users, params[:f_user_id]), include_blank: 'Twórca', class: 'form-control f_user_id'
     = select_tag :f_purchaser_id, options_for_select(options_for_purchasers, params[:f_purchaser_id]), include_blank: 'Zamawiający', class: 'form-control f_purchaser_id'
     = text_field_tag :f_created_at_from, params[:f_created_at_from], placeholder: 'Utworzenie od', class: 'form-control datepicker f_created_at_from'
@@ -28,9 +30,11 @@ h3
         table.inner-table
           tr
             th.lp Lp
-            th.description = ready_to_delivery_sort_link('Opis', 'description')
-            th.quantity = ready_to_delivery_sort_link('Ilość', 'quantity')
+            th.product = ready_to_delivery_sort_link('Produkt', 'product')
+            th.model = ready_to_delivery_sort_link('Model', 'model')
+            th.options = ready_to_delivery_sort_link('Opcje', 'options')
             th.color = ready_to_delivery_sort_link('Kolor', 'color')
+            th.quantity = ready_to_delivery_sort_link('Ilość', 'quantity')
       th = ready_to_delivery_sort_link('Twórca', 'user')
       th = ready_to_delivery_sort_link('Zamawiający', 'purchaser')
       th = ready_to_delivery_sort_link('Numer zamówienia klienta', 'client_order_number')
@@ -48,12 +52,14 @@ h3
               - order.items.select(&:visible?).each_with_index do |item, index|
                 tr
                   td.lp = "#{index + 1}."
-                  td.description = item.description
-                  td.quantity = item.quantity
+                  td.product = item.product
+                  td.model = item.model
+                  td.options = item.options
                   td.color = item.color
+                  td.quantity = item.quantity
               - if order.comment.present?
                 tr
-                  td.comment colspan='4' = "Uwagi: #{order.comment}"
+                  td.comment colspan='6' = "Uwagi: #{order.comment}"
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number

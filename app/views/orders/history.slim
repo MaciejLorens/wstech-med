@@ -11,9 +11,11 @@ h3
         table.inner-table
           tr
             th.lp Lp
-            th.description Opis
-            th.quantity Ilość
+            th.product Produkt
+            th.model Model
+            th.options Opcje
             th.color Kolor
+            th.quantity Ilość
       th Twórca
       th Zamawiający
       th Numer zamówienia klienta
@@ -38,19 +40,21 @@ h3
           table.inner-table
             - if @order.suspend_message.present?
               tr.suspended
-                td colspan='4'
+                td colspan='6'
                   | Zawieszone z powodu:
                   = @order.suspend_message
             - @order.items.order(id: :asc).select(&:visible?).each_with_index do |item, index|
               - if item.present? && !item.hidden
                 tr
                   td.lp = "#{index + 1}."
-                  td.description = item.description
-                  td.quantity = item.quantity
+                  td.product = item.product
+                  td.model = item.model
+                  td.options = item.options
                   td.color = item.color
+                  td.quantity = item.quantity
             - if @order.comment.present?
               tr
-                td.comment colspan='4' = "Uwagi: #{@order.comment}"
+                td.comment colspan='6' = "Uwagi: #{@order.comment}"
         td.user = "#{@order.user.first_name} #{@order.user.last_name}"
         td.purchaser = @order&.purchaser&.name
         td.client_order_number = @order.client_order_number
@@ -77,7 +81,7 @@ h3
               table.inner-table
                 - if order_version.suspend_message.present?
                   tr.suspended
-                    td colspan='4'
+                    td colspan='6'
                       | Zawieszone z powodu:
                       = order_version.suspend_message
                 - order_version.items.where('created_at < ?', version.created_at - 1.second).order(id: :asc).each_with_index do |item, index|
@@ -85,12 +89,14 @@ h3
                   - if item_version.present? && !item_version.hidden
                     tr
                       td.lp = "#{index + 1}."
-                      td.description = item_version.description
-                      td.quantity = item_version.quantity
+                      td.product = item_version.product
+                      td.model = item_version.model
+                      td.options = item_version.options
                       td.color = item_version.color
+                      td.quantity = item_version.quantity
                 - if order_version.comment.present?
                   tr
-                    td.comment colspan='4' = "Uwagi: #{order_version.comment}"
+                    td.comment colspan='6' = "Uwagi: #{order_version.comment}"
             td.user = "#{order_version.user.first_name} #{order_version.user.last_name}"
             td.purchaser = order_version&.purchaser&.name
             td.client_order_number = order_version.client_order_number

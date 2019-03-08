@@ -7,7 +7,7 @@ class HomeController < ApplicationController
   def search
     @orders = Order
                 .joins(:items)
-                .where('items.description LIKE ?', "%#{params[:query].downcase}%")
+                .where('items.product LIKE ?', "%#{params[:query].downcase}%")
                 .includes(:purchaser, :user, :items)
                 .order(created_at: :desc)
 
