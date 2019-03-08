@@ -55,6 +55,9 @@ h3
                   td.description = item.description
                   td.quantity = item.quantity
                   td.color = item.color
+              - if order.comment.present?
+                tr
+                  td.comment colspan='4' = "Uwagi: #{order.comment}"
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
@@ -72,14 +75,9 @@ h3
             = link_to 'PDF',
                 pdf_order_path(order),
                 class: 'btn btn-default btn-sm'
-            - if order.unseen_for(current_user).present?
-              = link_to 'Nowa</br>Zmiana'.html_safe,
-                  history_order_path(order),
-                  class: "btn btn-default btn-sm unseen"
-            - else
-              = link_to 'Historia',
-                  history_order_path(order),
-                  class: 'btn btn-default btn-sm'
+            = link_to 'Historia',
+                history_order_path(order),
+                class: 'btn btn-default btn-sm'
             = link_to 'Usuń',
                 order_path(order, referer: delivered_orders_path(year: params[:year], month: params[:month])),
                 data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},

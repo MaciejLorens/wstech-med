@@ -34,6 +34,7 @@ h3
       th = ready_to_delivery_sort_link('Twórca', 'user')
       th = ready_to_delivery_sort_link('Zamawiający', 'purchaser')
       th = ready_to_delivery_sort_link('Numer zamówienia klienta', 'client_order_number')
+      th = ready_to_delivery_sort_link('Na kiedy ma być', 'delivery_request_date')
       th = ready_to_delivery_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
       th = ready_to_delivery_sort_link('Adres wysyłki', 'shipping_address')
       th
@@ -50,9 +51,13 @@ h3
                   td.description = item.description
                   td.quantity = item.quantity
                   td.color = item.color
+              - if order.comment.present?
+                tr
+                  td.comment colspan='4' = "Uwagi: #{order.comment}"
           td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
+          td.delivery_request_date = date(order.delivery_request_date)
           td.ready_to_delivery = date(order.ready_to_delivery_at)
           td.shipping_address = order.shipping_address
           td.actions

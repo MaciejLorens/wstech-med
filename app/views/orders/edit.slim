@@ -11,7 +11,7 @@ h3
           li = message
 
   .row
-    = f.hidden_field :status, class: 'form-control', rows: '3'
+    = f.hidden_field :status, class: 'form-control'
     .form-group.col-md-3
       = f.label 'Na kiedy ma być zrobione'
       = text_field_tag 'order[delivery_request_date]', @order.delivery_request_date.strftime('%d-%m-%Y'), class: 'datepicker form-control', required: true
@@ -45,6 +45,10 @@ h3
       = f.label 'Adres wysyłki'
       = f.text_field :shipping_address, class: 'form-control'
 
+  .row
+    .form-group.col-md-9
+      = f.text_area :comment, class: 'form-control', rows: '2', placeholder: 'Uwagi'
+
   br
   h4 Przedmioty zamówienia
   br
@@ -64,7 +68,7 @@ h3
     = f.fields_for :items, @order.items.order(id: :asc).select(&:visible?) do |i|
       .row
         .form-group.col-md-9
-          = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis zlecenia'
+          = i.text_area :description, class: 'form-control', rows: '1', placeholder: 'Opis przedmiotu'
         .form-group.col-md-1
           = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
         .form-group.col-md-1
