@@ -68,4 +68,14 @@ module OrdersControllerHelper
     end
   end
 
+  def options_for_status
+    [
+      ['Zamówione', 'ordered'],
+      ['Kolejka', 'assembly'],
+      ['Gotowe do wysyłki', 'ready_to_delivery'],
+      ['Zrealizowane', 'delivered'],
+      ['Usunięte', 'deleted']
+    ]
+  end
+
 end

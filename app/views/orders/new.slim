@@ -46,13 +46,19 @@ h3
     .form-group.col-md-3
       = f.label 'Numer seryjny'
       = f.text_field :serial_number, class: 'form-control'
+
+  .row
     .form-group.col-md-3
       = f.label 'Adres wysyłki'
       = f.text_field :shipping_address, class: 'form-control'
+    .form-group.col-md-3
+      = f.label 'Status'
+      = f.select :status, options_for_select(options_for_status), {}, class: 'form-control'
 
   .row
-    .form-group.col-md-9
-      = f.text_area :comment, class: 'form-control', rows: '2', placeholder: 'Uwagi'
+    .form-group.col-md-6
+      = f.label 'Uwagi'
+      = f.text_area :comment, class: 'form-control', rows: '4'
 
   br
   h4 Przedmioty zamówienia
@@ -65,9 +71,9 @@ h3
         = label_tag 'Produkt'
       .form-group.col-md-2
         = label_tag 'Model'
-      .form-group.col-md-2
+      .form-group.col-md-3
         = label_tag 'Opcje'
-      .form-group.col-md-1
+      .form-group.col-md-2
         = label_tag 'Kolor'
       .form-group.col-md-1
         = label_tag 'Ilość'
@@ -77,13 +83,13 @@ h3
     = f.fields_for :items, @order.items.build do |i|
       .row
         .form-group.col-md-2
-          = i.text_area :product, class: 'form-control', rows: '1', placeholder: 'Produkt', require: true
+          = i.text_area :product, class: 'form-control', rows: '2', placeholder: 'Produkt', require: true
         .form-group.col-md-2
-          = i.text_area :model, class: 'form-control', rows: '1', placeholder: 'Model'
+          = i.text_area :model, class: 'form-control', rows: '2', placeholder: 'Model'
+        .form-group.col-md-3
+          = i.text_area :options, class: 'form-control', rows: '2', placeholder: 'Opcje'
         .form-group.col-md-2
-          = i.text_area :options, class: 'form-control', rows: '1', placeholder: 'Opcje'
-        .form-group.col-md-1
-          = i.text_field :color, class: 'form-control', placeholder: 'Kolor', required: true
+          = i.text_area :color, class: 'form-control', rows: '2', placeholder: 'Kolor', required: true
         .form-group.col-md-1
           = i.text_field :quantity, class: 'form-control', placeholder: '1', required: true
         .form-group.col-md-1

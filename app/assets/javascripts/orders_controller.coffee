@@ -52,16 +52,16 @@ $ ->
     html =
       '<div class="row">' +
         '<div class="form-group col-md-2">' +
-          '<textarea class="form-control" rows="1" placeholder="Produkt" name="order[items_attributes][' + current_item_index + '][product]" id="order_items_attributes_' + current_item_index + '_product"></textarea>' +
+          '<textarea class="form-control" rows="2" placeholder="Produkt" name="order[items_attributes][' + current_item_index + '][product]" id="order_items_attributes_' + current_item_index + '_product"></textarea>' +
         '</div>' +
         '<div class="form-group col-md-2">' +
-          '<textarea class="form-control" rows="1" placeholder="Model" name="order[items_attributes][' + current_item_index + '][model]" id="order_items_attributes_' + current_item_index + '_model"></textarea>' +
+          '<textarea class="form-control" rows="2" placeholder="Model" name="order[items_attributes][' + current_item_index + '][model]" id="order_items_attributes_' + current_item_index + '_model"></textarea>' +
+        '</div>' +
+        '<div class="form-group col-md-3">' +
+          '<textarea class="form-control" rows="2" placeholder="Opcje" name="order[items_attributes][' + current_item_index + '][options]" id="order_items_attributes_' + current_item_index + '_options"></textarea>' +
         '</div>' +
         '<div class="form-group col-md-2">' +
-          '<textarea class="form-control" rows="1" placeholder="Opcje" name="order[items_attributes][' + current_item_index + '][options]" id="order_items_attributes_' + current_item_index + '_options"></textarea>' +
-        '</div>' +
-        '<div class="form-group col-md-1">' +
-          '<input class="form-control" placeholder="Kolor" required="required" type="text" name="order[items_attributes][' + current_item_index + '][color]" id="order_items_attributes_' + current_item_index + '_color">' +
+        '<textarea class="form-control" rows="2" placeholder="Kolor" name="order[items_attributes][' + current_item_index + '][color]" id="order_items_attributes_' + current_item_index + '_color"></textarea>' +
         '</div>' +
         '<div class="form-group col-md-1">' +
         '<input class="form-control" placeholder="1" required="required" type="text" name="order[items_attributes][' + current_item_index + '][quantity]" id="order_items_attributes_' + current_item_index + '_quantity">' +
