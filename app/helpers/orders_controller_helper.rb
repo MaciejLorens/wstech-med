@@ -25,51 +25,35 @@ module OrdersControllerHelper
   end
 
   def ordered_sort_link(text, field)
-    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
-
     if params[:s_field] == field && params[:s_order].present?
-      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:s_order]}.png'></img>"
+      text = "<b>#{text}</b>"
     end
 
-    link_to "#{text} #{img}".html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
+    link_to text.html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
   end
 
   def ready_to_delivery_sort_link(text, field)
-    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
-
     if params[:s_field] == field && params[:s_order].present?
-      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:s_order]}.png'></img>"
+      text = "<b>#{text}</b>"
     end
 
-    link_to "#{text} #{img}".html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
+    link_to text.html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
   end
 
   def delivered_sort_link(text, field)
-    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
-
-    if field == 'created_at' && params[:s_field].blank?
-      img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_desc.png"></img>'
-    end
-
     if params[:s_field] == field && params[:s_order].present?
-      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:s_order]}.png'></img>"
+      text = "<b>#{text}</b>"
     end
 
-    link_to "#{text} #{img}".html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
+    link_to text.html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
   end
 
   def deleted_sort_link(text, field)
-    img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_none.png"></img>'
-
-    if field == 'created_at' && params[:s_field].blank?
-      img = '<img src="https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_desc.png"></img>'
-    end
-
     if params[:s_field] == field && params[:s_order].present?
-      img = "<img src='https://s3-eu-west-1.amazonaws.com/wstech-med-production/website/sort_#{params[:s_order]}.png'></img>"
+      text = "<b>#{text}</b>"
     end
 
-    link_to "#{text} #{img}".html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
+    link_to text.html_safe, '#', class: "sorting-btn #{params[:s_order]}", :'data-field' => field
   end
 
   def options_for_users

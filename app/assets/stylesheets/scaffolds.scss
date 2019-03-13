@@ -88,11 +88,18 @@ footer {
 .table-hover {
   th {
     text-align: left;
+    padding: 8px 2px !important;
+    font-size: 12px;
+    font-weight: normal !important;
   }
 
   tr {
     border-top: 2px solid grey;
     border-bottom: 2px solid grey;
+  }
+
+  th.inner {
+    padding: 8px 0;
   }
 
   .inner-table {
@@ -112,14 +119,14 @@ footer {
       padding: 8px;
       vertical-align: top;
     }
-  }
 
-  th.inner {
-    padding: 8px;
+    th {
+      padding: 0 2px !important;
+    }
   }
 
   .id {
-    width: 100px;
+    width: 90px;
   }
 
   .inner {
@@ -131,69 +138,71 @@ footer {
   }
 
   .product {
-    width: 100px;
+    width: 140px;
   }
 
   .model {
-    width: 100px;
+    width: 140px;
   }
 
   .options {
-    width: 100px;
+    //width: 110px;
   }
 
   .quantity {
-    width: 65px;
+    width: 60px;
   }
 
   .color {
-    width: 70px;
-  }
-
-  .user {
-    width: 110px;
+    width: 80px;
   }
 
   .purchaser {
-    width: 135px;
+    width: 100px;
   }
 
   .created_at {
-    width: 120px;
+    width: 90px;
   }
 
   .client_order_number {
-    width: 120px;
+    width: 100px;
   }
 
   .delivery_request_date {
-    width: 100px;
+    width: 90px;
   }
 
   .ready_to_delivery {
-    width: 100px;
+    width: 90px;
+  }
+
+  .package_dimensions {
+    width: 90px;
   }
 
   .delivered {
-    width: 100px;
+    width: 90px;
   }
 
   .invoice_number {
-    width: 100px;
+    width: 80px;
   }
 
   .serial_number {
-    width: 100px;
+    width: 80px;
   }
 
   .shipping_address {
-    width: 100px;
+    width: 120px;
   }
 
   .actions {
-    width: 70px;
+    width: 90px;
   }
 }
+
+//1742
 
 .container {
   width: 90%;

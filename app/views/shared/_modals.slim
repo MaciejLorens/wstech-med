@@ -16,6 +16,12 @@
             = text_field_tag :code, nil, class: 'form-control', required: true
       br
       .row
+        .col-md-3
+          label Wymiary paczki:
+          br
+          = text_field_tag :package_dimensions, nil, class: 'form-control', placeholder: '200 x 100 x 50'
+      br
+      .row
         .col-md-2
           = submit_tag 'Zwolnij', class: 'btn btn-default'
 

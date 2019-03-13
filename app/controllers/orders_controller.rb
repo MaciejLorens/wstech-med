@@ -154,7 +154,8 @@ class OrdersController < ApplicationController
 
     @order.update(
       status: 'ready_to_delivery',
-      ready_to_delivery_at: Time.now
+      ready_to_delivery_at: Time.now,
+      package_dimensions: params[:package_dimensions]
     )
     @order.versions.last.update(whodunnit: worker.id)
     @order.create_unseens(current_user)
