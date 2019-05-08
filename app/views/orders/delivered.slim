@@ -8,8 +8,6 @@ h3
   .form-group.col-md-11
     = text_field_tag :f_number, params[:f_number], placeholder: 'Numer', class: 'form-control f_number'
     = text_field_tag :f_product, params[:f_product], placeholder: 'Produkt', class: 'form-control f_product'
-    = text_field_tag :f_model, params[:f_model], placeholder: 'Model', class: 'form-control f_model'
-    = text_field_tag :f_options, params[:f_options], placeholder: 'Opcje', class: 'form-control f_options'
     = select_tag :f_purchaser_id, options_for_select(options_for_purchasers, params[:f_purchaser_id]), include_blank: 'Zamawiający', class: 'form-control f_purchaser_id'
     = text_field_tag :f_created_at_from, params[:f_created_at_from] || DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), placeholder: 'Utworzenie od', class: 'form-control datepicker f_created_at_from'
     = text_field_tag :f_created_at_to, params[:f_created_at_to] || DateTime.now.strftime('%d-%m-%Y'), placeholder: 'Utworzenie do', class: 'form-control datepicker f_created_at_to'
