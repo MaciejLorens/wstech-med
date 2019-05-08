@@ -13,6 +13,16 @@ module QueryHelper
       query += " AND orders.created_at <= '#{value.end_of_day}'"
     end
 
+    if params[:f_delivered_at_from].present?
+      value = params[:f_delivered_at_from].try(:to_date)
+      query += " AND orders.delivered_at >= '#{value.beginning_of_day}'"
+    end
+
+    if params[:f_delivered_at_to].present?
+      value = params[:f_delivered_at_to].try(:to_date)
+      query += " AND orders.delivered_at <= '#{value.end_of_day}'"
+    end
+
     if params[:f_number].present?
       query += " AND orders.number LIKE '%#{params[:f_number]}%'"
     end

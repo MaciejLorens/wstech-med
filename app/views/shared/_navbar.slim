@@ -8,7 +8,7 @@
     li= link_to 'Zlecenie montażu', assembled_orders_path
     - if current_user&.admin?
       li= link_to 'Gotowe do wysyłki', ready_to_delivery_orders_path
-      li= link_to 'Zrealizowane', delivered_orders_path(f_created_at_from: DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), f_created_at_to: DateTime.now.strftime('%d-%m-%Y'), s_field: 'delivered_at', s_order: 'desc')
+      li= link_to 'Zrealizowane', delivered_orders_path(f_delivered_at_from: 1.month.ago.strftime('%d-%m-%Y'), f_delivered_at_to: DateTime.now.strftime('%d-%m-%Y'), s_field: 'delivered_at', s_order: 'desc')
       li= link_to 'Usunięte', deleted_orders_path(f_created_at_from: DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), f_created_at_to: DateTime.now.strftime('%d-%m-%Y'))
       li= link_to 'Zamawiający', purchasers_path
 

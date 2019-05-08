@@ -9,10 +9,10 @@ h3
     = text_field_tag :f_number, params[:f_number], placeholder: 'Numer', class: 'form-control f_number'
     = text_field_tag :f_product, params[:f_product], placeholder: 'Produkt', class: 'form-control f_product'
     = select_tag :f_purchaser_id, options_for_select(options_for_purchasers, params[:f_purchaser_id]), include_blank: 'Zamawiający', class: 'form-control f_purchaser_id'
-    = text_field_tag :f_created_at_from, params[:f_created_at_from] || DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), placeholder: 'Utworzenie od', class: 'form-control datepicker f_created_at_from'
-    = text_field_tag :f_created_at_to, params[:f_created_at_to] || DateTime.now.strftime('%d-%m-%Y'), placeholder: 'Utworzenie do', class: 'form-control datepicker f_created_at_to'
     = text_field_tag :f_invoice_number, params[:f_invoice_number], placeholder: 'Numer faktury', class: 'form-control f_invoice_number'
     = text_field_tag :f_serial_number, params[:f_serial_number], placeholder: 'Numer seryjny', class: 'form-control f_serial_number'
+    = text_field_tag :f_delivered_at_from, params[:f_delivered_at_from] || 1.month.ago.strftime('%d-%m-%Y'), class: 'form-control datepicker f_created_at_from'
+    = text_field_tag :f_delivered_at_to, params[:f_delivered_at_to] || DateTime.now.strftime('%d-%m-%Y'), class: 'form-control datepicker f_created_at_to'
   .form-group.col-md-1
     = submit_tag 'Filtruj', class: 'btn btn-default pull-right'
     = link_to 'Czyść', delivered_orders_path(f_created_at_from: DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), f_created_at_to: DateTime.now.strftime('%d-%m-%Y')), class: 'btn btn-default pull-right', style: 'margin-right: 10px;'
