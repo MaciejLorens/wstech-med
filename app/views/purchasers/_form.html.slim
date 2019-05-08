@@ -1,0 +1,9 @@
+= form_for @purchaser do |f|
+  .row
+    .form-group.col-md-3
+      = f.label 'Nazwa'
+      = f.text_field :name, class: 'form-control', placeholder: 'Firma XYZ', required: true
+
+  .row
+    .form-group.col-md-12
+      = f.submit 'Zapisz', class: 'btn btn-default'

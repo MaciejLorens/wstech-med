@@ -107,11 +107,11 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new(user_id: current_user.id)
-    @purchasers = Purchaser.all.order('name asc')
+    @purchasers = Purchaser.all.visible.order('name asc')
   end
 
   def edit
-    @purchasers = Purchaser.all.order('name asc')
+    @purchasers = Purchaser.all.visible.order('name asc')
   end
 
   def create
@@ -264,17 +264,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    refactored_params = params.require(:order).permit!
-
-    purchaser_name = refactored_params[:purchaser_name]
-    if purchaser_name.present?
-      purchaser = Purchaser.find_or_create_by(name: purchaser_name)
-      refactored_params.delete(:purchaser_name)
-      refactored_params.merge!(purchaser_id: purchaser.id)
-    end
-
-    refactored_params.merge!(user_id: current_user.id, updated_at: Time.now)
-    refactored_params
+    params.require(:order).permit!
   end
 
 end

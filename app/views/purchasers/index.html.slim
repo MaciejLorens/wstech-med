@@ -1,0 +1,23 @@
+h3 Lista Zamawiających
+
+- if @purchasers.empty?
+  | - Brak zamawiających -
+- else
+  .row
+    .col-sm-4
+      table.table.table-hover
+        tr
+          th Nazwa
+          th
+          th
+        tbody
+          - @purchasers.each do |purchaser|
+            tr
+              td = purchaser.name
+              td = link_to 'Edytuj', edit_purchaser_path(purchaser)
+              td = link_to 'Usuń', purchaser, data: { confirm: 'Na pewno chcesz usunąć zamawiającego?' }, method: :delete
+
+
+br
+
+= link_to 'Nowy Zamawiający', new_purchaser_path, class: 'btn btn-default pull-left'

@@ -53,6 +53,8 @@ h3
   h4 Przedmioty zamówienia
   br
 
+  = f.hidden_field :user_id, value: current_user.id
+
   .items
     = hidden_field_tag :current_item_index, 1
     .row
