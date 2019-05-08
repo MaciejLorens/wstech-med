@@ -10,7 +10,6 @@ h3
     = text_field_tag :f_product, params[:f_product], placeholder: 'Produkt', class: 'form-control f_product'
     = text_field_tag :f_model, params[:f_model], placeholder: 'Model', class: 'form-control f_model'
     = text_field_tag :f_options, params[:f_options], placeholder: 'Opcje', class: 'form-control f_options'
-    = select_tag :f_user_id, options_for_select(options_for_users, params[:f_user_id]), include_blank: 'Twórca', class: 'form-control f_user_id'
     = select_tag :f_purchaser_id, options_for_select(options_for_purchasers, params[:f_purchaser_id]), include_blank: 'Zamawiający', class: 'form-control f_purchaser_id'
     = text_field_tag :f_created_at_from, params[:f_created_at_from], placeholder: 'Utworzenie od', class: 'form-control datepicker f_created_at_from'
     = text_field_tag :f_created_at_to, params[:f_created_at_to], placeholder: 'Utworzenie do', class: 'form-control datepicker f_created_at_to'
@@ -35,7 +34,6 @@ h3
             th.options = ready_to_delivery_sort_link('Opcje', 'options')
             th.color = ready_to_delivery_sort_link('Kolor', 'color')
             th.quantity = ready_to_delivery_sort_link('Ilość', 'quantity')
-      th = ready_to_delivery_sort_link('Twórca', 'user')
       th = ready_to_delivery_sort_link('Zamawiający', 'purchaser')
       th = ready_to_delivery_sort_link('Numer zamówienia klienta', 'client_order_number')
       th = ready_to_delivery_sort_link('Na kiedy ma być', 'delivery_request_date')
@@ -61,7 +59,6 @@ h3
               - if order.comment.present?
                 tr
                   td.comment colspan='6' = "Uwagi: #{order.comment}"
-          td.user = "#{order.user.first_name} #{order.user.last_name}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
           td.delivery_request_date = date(order.delivery_request_date)

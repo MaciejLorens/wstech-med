@@ -188,8 +188,7 @@ class OrdersController < ApplicationController
 
     @order.update(
       status: 'assembly',
-      suspend_message: nil,
-      assembly_at: nil
+      suspend_message: nil
     )
 
     @order.versions.last.update(whodunnit: worker.id)
