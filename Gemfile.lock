@@ -44,6 +44,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-datepicker-rails (1.8.0.1)
       railties (>= 3.0)
+    bootstrap-select-rails (1.13.8)
     bootstrap3-datetimepicker-rails (4.0.0)
       momentjs-rails (>= 2.8.1)
     builder (3.2.3)
@@ -230,6 +231,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-v1
   bootstrap-datepicker-rails
+  bootstrap-select-rails
   bootstrap3-datetimepicker-rails (~> 4.0.0)
   byebug
   chartjs-ror

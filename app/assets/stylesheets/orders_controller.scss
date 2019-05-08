@@ -31,46 +31,6 @@ tbody.clickable tr {
   }
 }
 
-.purchasers_list {
-  margin-top: 5px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  padding: 10px;
-  border: 1px solid #cccccc;
-  position: absolute;
-  width: 430px;
-  z-index: 1;
-  display: none;
-
-  li {
-    list-style: none;
-
-    .purchaser_name {
-      padding: 5px 10px;
-      color: black;
-      width: 355px;
-      display: inline-block;
-      margin-right: 10px;
-
-      &:hover {
-        background-color: #bfbfbf;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-    }
-
-    .purchaser-delete {
-      border: 1px solid grey;
-      padding: 2px 5px;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
-  }
-}
-
 textarea.form-control {
   resize: vertical;
   min-height: 34px;

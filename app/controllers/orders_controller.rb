@@ -107,9 +107,11 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new(user_id: current_user.id)
+    @purchasers = Purchaser.all.order('name asc')
   end
 
   def edit
+    @purchasers = Purchaser.all.order('name asc')
   end
 
   def create

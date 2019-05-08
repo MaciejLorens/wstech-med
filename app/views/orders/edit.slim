@@ -22,13 +22,7 @@ h3
   .row
     .form-group.col-md-3
       = f.label 'Zamawiający'
-      = text_field_tag 'order[purchaser_name]', @order&.purchaser&.name, class: 'form-control', id: 'order_purchaser', required: true
-      - if Purchaser.all.present?
-        ul.purchasers_list
-          - Purchaser.order(name: :asc).each do |purchaser|
-            li
-              .purchaser_name
-                = purchaser.name
+      = f.select :purchaser_id, options_for_select(@purchasers.map{|p| [p.name, p.id]}, @order.purchaser_id), {}, class: 'form-control selectpicker', 'data-live-search': true, require: true
 
     .form-group.col-md-3
       = f.label 'Numer zamówienia klienta'
@@ -48,7 +42,7 @@ h3
       = f.text_field :shipping_address, class: 'form-control'
     .form-group.col-md-3
       = f.label 'Status'
-      = f.select :status, options_for_select(options_for_status, @order.status), {}, class: 'form-control'
+      = f.select :status, options_for_select(options_for_status, @order.status), {}, class: 'form-control selectpicker'
 
   .row
     .form-group.col-md-6

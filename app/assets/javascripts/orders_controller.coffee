@@ -79,27 +79,6 @@ $ ->
   $("body").on 'click', '.remove-item', ->
     $(@).closest(".row").remove();
 
-  # show purchaser list
-  $("#order_purchaser").click ->
-    $(".purchasers_list").show()
-
-  $("#order_purchaser").keyup ->
-    if $(@).val() == ''
-      $(".purchasers_list").show()
-    else
-      $(".purchasers_list").hide()
-
-  $(".purchaser_name").click ->
-    purchaser = $(@).html().trim()
-    $("#order_purchaser").val(purchaser)
-    $(".purchasers_list").hide()
-
-  # hide purchaser list
-  $(document).mouseup (e)->
-    container = $(".purchasers_list")
-    if (!container.is(e.target) && container.has(e.target).length == 0)
-      container.hide()
-
   $("body").on 'click', ".sorting-btn", (e) ->
     e.preventDefault()
 
@@ -118,25 +97,3 @@ $ ->
       $("#s_order").val('asc')
 
     $(".filter-form").submit()
-
-  $("#order_purchaser.form-control").keyup ->
-    console.log($(@).val())
-
-    regexp = new RegExp($(@).val(), "ig");
-
-    if $(@).val() == ''
-      $("ul.purchasers_list li").show()
-    else
-      $("ul.purchasers_list").show()
-      $("ul.purchasers_list li").hide()
-
-      hide = true;
-
-      $(".purchaser_name").each (index) ->
-        content = $(@).html()
-        if content.match(regexp)
-          hide = false
-          $(@).parent().show()
-
-      if hide == true
-        $("ul.purchasers_list").hide()
