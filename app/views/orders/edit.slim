@@ -15,9 +15,6 @@ h3
     .form-group.col-md-3
       = f.label 'Na kiedy ma być zrobione'
       = text_field_tag 'order[delivery_request_date]', @order.delivery_request_date.strftime('%d-%m-%Y'), class: 'datepicker form-control', required: true
-    .form-group.col-md-3
-      = f.label 'Data montażu'
-      = text_field_tag 'order[assembly_at]', @order&.assembly_at&.strftime('%d-%m-%Y'), class: 'datepicker form-control'
 
   .row
     .form-group.col-md-3
@@ -67,7 +64,6 @@ h3
       .form-group.col-md-1
         = label_tag 'Ilość'
       .form-group.col-md-1
-        = label_tag 'Akcje'
 
     = f.fields_for :items, @order.items.order(id: :asc).select(&:visible?) do |i|
       .row

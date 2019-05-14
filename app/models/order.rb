@@ -18,7 +18,6 @@ class Order < ActiveRecord::Base
 
   before_create :set_number
 
-  scope :on_assembly, ->(date) { where('orders.assembly_at >= ? AND orders.assembly_at < ?', date.to_datetime.beginning_of_day, date.to_datetime.end_of_day) }
   scope :from_to, ->(from, to) { where('created_at >= ? AND created_at < ?', from.to_datetime.beginning_of_day, to.to_datetime.end_of_day) }
   scope :delivered, ->() { where('status = ?', 'delivered') }
   scope :at_status, ->(status) { where('status = ?', status) }

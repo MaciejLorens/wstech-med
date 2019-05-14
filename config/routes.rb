@@ -16,8 +16,8 @@ Rails.application.routes.draw do
     get :multi_pdf, on: :collection
     put :queue, on: :member
     put :suspend, on: :member
-    put :restore, on: :member
     put :release, on: :member
+    put :assembly, on: :member
   end
 
   resources :purchasers

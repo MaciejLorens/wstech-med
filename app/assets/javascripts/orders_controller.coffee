@@ -15,36 +15,36 @@ $ ->
 
   ready_to_delivery_modal = $("#ready-to-delivery")
   suspend_order_modal = $("#suspend-order")
-  restore_order_modal = $("#restore-order")
+  assembly_order_modal = $("#assembly-order")
 
   window.onclick = (e) ->
     if e.target == ready_to_delivery_modal[0]
       ready_to_delivery_modal.css('display', 'none')
     if e.target == suspend_order_modal[0]
       suspend_order_modal.css('display', 'none')
-    if e.target == restore_order_modal[0]
-      restore_order_modal.css('display', 'none')
+    if e.target == assembly_order_modal[0]
+      assembly_order_modal.css('display', 'none')
 
   $('.close-modal').click (e) ->
     e.preventDefault()
     ready_to_delivery_modal.css('display', 'none')
     suspend_order_modal.css('display', 'none')
-    restore_order_modal.css('display', 'none')
+    assembly_order_modal.css('display', 'none')
 
   $(".ready-to-delivery").click (e) ->
     e.preventDefault()
     ready_to_delivery_modal.css('display', 'block')
     $("#ready-to-delivery-form").prop('action', $(@).prop('href'))
 
+  $(".assembly-order").click (e) ->
+    e.preventDefault()
+    assembly_order_modal.css('display', 'block')
+    $("#assembly-order-form").prop('action', $(@).prop('href'))
+
   $(".suspend-order").click (e) ->
     e.preventDefault()
     suspend_order_modal.css('display', 'block')
     $("#suspend-order-form").prop('action', $(@).prop('href'))
-
-  $(".restore-order").click (e) ->
-    e.preventDefault()
-    restore_order_modal.css('display', 'block')
-    $("#restore-order-form").prop('action', $(@).prop('href'))
 
 
   $(".add-item").click ->

@@ -21,6 +21,10 @@ purchaser_5 = Purchaser.create(name: 'Spacex')
 
 lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua)
 
+User.all.each do |user|
+  user.generate_code
+end
+
 50.times do |i|
   order = Order.create(
     user_id: [paulina, klaudia, ilona, bartek].sample.id,
@@ -28,7 +32,6 @@ lorem = %w(Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
     delivery_request_date: Time.now - rand(10).days,
     status: %w(ordered queue assembly suspended ready_to_delivery delivered deleted).sample,
     client_order_number: SecureRandom.hex(3),
-    assembly_at: rand(10).days.from_now,
     created_at: rand(150).days.ago
   )
 

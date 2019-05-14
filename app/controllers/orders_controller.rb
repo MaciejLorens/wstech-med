@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
   before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download, :queue]
-  before_action :set_order, only: [:show, :pdf, :edit, :update, :queue, :release, :suspend, :restore, :destroy, :history]
+  before_action :set_order, only: [:show, :pdf, :edit, :update, :queue, :release, :assembly, :suspend, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
   def ordered
@@ -16,8 +16,7 @@ class OrdersController < ApplicationController
   def assembled
     @queue_orders = Order
                       .includes(:purchaser, :items, :user)
-                      .where(status: 'assembly')
-                      .where(assembly_at: nil)
+                      .where(status: 'queue')
 
     @suspended_orders = Order
                           .includes(:purchaser, :items, :user)
@@ -26,9 +25,7 @@ class OrdersController < ApplicationController
     @assembly_orders = Order
                          .includes(:purchaser, :items, :user)
                          .where(status: 'assembly')
-                         .where.not(assembly_at: nil)
-
-    @assembly_dates = @assembly_orders.map { |o| o.assembly_at.strftime('%d-%m-%Y') }.uniq.sort
+                         .order('orders.delivery_request_date asc')
   end
 
   def ready_to_delivery
@@ -87,8 +84,6 @@ class OrdersController < ApplicationController
                .includes(:purchaser, :items, :user)
                .joins(:items)
                .where(status: 'assembly')
-               .where.not(assembly_at: nil)
-               .on_assembly(params[:date])
 
     html = render_to_string template: 'orders/multi_pdf', layout: 'pdf', locals: { orders: orders, date: params[:date] }
 
@@ -144,21 +139,32 @@ class OrdersController < ApplicationController
   end
 
   def queue
-    @order.update(status: 'assembly')
+    @order.update(status: 'queue')
     @order.create_unseens(current_user)
     redirect_to action: :ordered
   end
 
   def release
     worker = User.where(code: params[:code]).first
-
     return redirect_to root_path, notice: 'Błędny kod pracownika' unless worker.present?
 
     @order.update(
       status: 'ready_to_delivery',
       ready_to_delivery_at: Time.now,
-      package_dimensions: params[:package_dimensions]
+      package_dimensions: params[:package_dimensions],
+      suspend_message: nil
     )
+    @order.versions.last.update(whodunnit: worker.id)
+    @order.create_unseens(current_user)
+
+    redirect_to action: :assembled
+  end
+
+  def assembly
+    worker = User.where(code: params[:code]).first
+    return redirect_to root_path, notice: 'Błędny kod pracownika' unless worker.present?
+
+    @order.update(status: 'assembly')
     @order.versions.last.update(whodunnit: worker.id)
     @order.create_unseens(current_user)
 
@@ -181,32 +187,11 @@ class OrdersController < ApplicationController
     redirect_to action: :assembled
   end
 
-  def restore
-    worker = User.where(code: params[:code]).first
-
-    return redirect_to root_path, notice: 'Błędny kod pracownika' unless worker.present?
-
-    @order.update(
-      status: 'assembly',
-      suspend_message: nil
-    )
-
-    @order.versions.last.update(whodunnit: worker.id)
-    @order.create_unseens(current_user)
-
-    redirect_to action: :assembled
-  end
-
   def destroy
-    status = @order.status.to_sym
     @order.update(status: 'deleted', deleted_at: Time.now, deleted_by_id: current_user.id)
     @order.create_unseens(current_user)
 
-    if status == :delivered
-      redirect_to params[:referer]
-    else
-      redirect_to action: status
-    end
+    redirect_to root_path
   end
 
   def download
