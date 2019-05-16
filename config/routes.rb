@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     get :download, on: :collection
     get :history, on: :member
     get :pdf, on: :member
-    get :multi_pdf, on: :collection
     put :queue, on: :member
     put :suspend, on: :member
     put :finish, on: :member

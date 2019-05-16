@@ -79,27 +79,6 @@ class OrdersController < ApplicationController
     send_file file
   end
 
-  def multi_pdf
-    orders = Order
-               .includes(:purchaser, :items, :user)
-               .joins(:items)
-               .where(status: 'assembly')
-
-    html = render_to_string template: 'orders/multi_pdf', layout: 'pdf', locals: { orders: orders, date: params[:date] }
-
-    options = {
-      margin_top: '0.8in',
-      margin_right: '0.5in',
-      margin_bottom: '0.8in',
-      margin_left: '0.5in'
-    }
-
-    kit = PDFKit.new(html, options)
-
-    file = kit.to_file("tmp/Montaz_#{params[:date].gsub('-', '_')}.pdf")
-    send_file file
-  end
-
   def new
     @order = Order.new(user_id: current_user.id)
     @purchasers = Purchaser.all.visible.order('name asc')
