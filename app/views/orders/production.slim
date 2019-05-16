@@ -1,5 +1,5 @@
 h3
-  | Zlecenie montażu
+  | Produkcja
 
 h4
   | Kolejka
@@ -48,9 +48,9 @@ br
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
           td.actions
-            = link_to 'Montuj',
+            = link_to 'Produkcja',
                 assembly_order_path(order),
-                class: 'btn btn-default btn-sm assembly-order'
+                class: 'btn btn-default btn-sm production-order'
             = link_to 'PDF',
                 pdf_order_path(order),
                 class: 'btn btn-default btn-sm'
@@ -125,9 +125,9 @@ br
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
           td.actions
-            = link_to 'Montuj',
+            = link_to 'Produkcja',
                 assembly_order_path(order),
-                class: 'btn btn-default btn-sm assembly-order'
+                class: 'btn btn-default btn-sm production-order'
             = link_to 'PDF',
                 pdf_order_path(order),
                 class: 'btn btn-default btn-sm'
@@ -153,11 +153,11 @@ br
 br
 
 h4
-  | Zawieszone
+  | W trakcie produkcji
   = link_to 'PDF całej produkcji', multi_pdf_orders_path, class: 'btn btn-default pull-right'
 br
 
-- if @assembly_orders.blank?
+- if @production_orders.blank?
   | - Brak zamówień -
 - else
     table.table.table-hover
@@ -177,10 +177,11 @@ br
         th Numer zamówienia klienta
         th Utworzenie
         th Na kiedy ma być
+        th Ukończone etapy
         th
 
       tbody
-        - @assembly_orders.each do |order|
+        - @production_orders.each do |order|
           tr
             td.id = order.number
             td.inner
@@ -201,13 +202,36 @@ br
             td.client_order_number = order.client_order_number
             td.created_at = date(order.created_at)
             td.delivery_request_date = date(order.delivery_request_date)
+            td.stages
+              ul
+                - if order.stages.include?('welding')
+                  li.stage Spawanie
+                - if order.stages.include?('cleaning')
+                  li.stage Czyszczenie
+                - if order.stages.include?('painting')
+                  li.stage Malowanie
+                - if order.stages.include?('upholstery')
+                  li.stage Tapicerowanie
+                - if order.stages.include?('woodwork')
+                  li.stage Stolarka
+                - if order.stages.include?('assembly')
+                  li.stage Montaż
             td.actions
-              = link_to 'Zwolnij',
-                  release_order_path(order),
+              = link_to 'Ukończ',
+                  finish_order_path(order),
                   class: 'btn btn-default btn-sm ready-to-delivery'
               = link_to 'Zawieś',
                   suspend_order_path(order),
                   class: 'btn btn-default btn-sm suspend-order'
+              = link_to 'Etapy',
+                  stages_order_path(order),
+                  class: 'btn btn-default btn-sm stages-order',
+                  'data-welding' => order.stages.include?('welding'),
+                  'data-cleaning' => order.stages.include?('cleaning'),
+                  'data-painting' => order.stages.include?('painting'),
+                  'data-upholstery' => order.stages.include?('upholstery'),
+                  'data-woodwork' => order.stages.include?('woodwork'),
+                  'data-assembly' => order.stages.include?('assembly')
               = link_to 'PDF',
                   pdf_order_path(order),
                   class: 'btn btn-default btn-sm'

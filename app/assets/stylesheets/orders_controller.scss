@@ -46,6 +46,10 @@ textarea.form-control {
   padding: 2px 8px !important;
 }
 
+.stages {
+  padding: 2px 8px !important;
+}
+
 .alert {
   position: absolute;
   width: 400px;
@@ -189,4 +193,33 @@ textarea.form-control {
 
 .no-padding {
   padding: 0;
+}
+
+ul.orders-stages {
+  li {
+    list-style-type: none;
+
+    input {
+      width: 18px;
+      height: 18px;
+      vertical-align: sub;
+    }
+
+    label {
+      font-weight: 400;
+      font-size: 16px;
+      padding: 5px;
+    }
+  }
+}
+
+li.stage {
+  list-style-type: none;
+  padding: 1px 4px;
+  border: 1px solid green;
+  color: green;
+  border-radius: 3px;
+  margin: 2px 0 4px;
+  width: 96px;
+  font-size: 12px;
 }

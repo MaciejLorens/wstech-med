@@ -15,36 +15,75 @@ $ ->
 
   ready_to_delivery_modal = $("#ready-to-delivery")
   suspend_order_modal = $("#suspend-order")
-  assembly_order_modal = $("#assembly-order")
+  production_order_modal = $("#production-order")
+  stages_order_modal = $("#stages-order")
 
   window.onclick = (e) ->
     if e.target == ready_to_delivery_modal[0]
       ready_to_delivery_modal.css('display', 'none')
     if e.target == suspend_order_modal[0]
       suspend_order_modal.css('display', 'none')
-    if e.target == assembly_order_modal[0]
-      assembly_order_modal.css('display', 'none')
+    if e.target == production_order_modal[0]
+      production_order_modal.css('display', 'none')
+    if e.target == stages_order_modal[0]
+      stages_order_modal.css('display', 'none')
 
   $('.close-modal').click (e) ->
     e.preventDefault()
     ready_to_delivery_modal.css('display', 'none')
     suspend_order_modal.css('display', 'none')
-    assembly_order_modal.css('display', 'none')
+    production_order_modal.css('display', 'none')
+    stages_order_modal.css('display', 'none')
 
   $(".ready-to-delivery").click (e) ->
     e.preventDefault()
     ready_to_delivery_modal.css('display', 'block')
     $("#ready-to-delivery-form").prop('action', $(@).prop('href'))
 
-  $(".assembly-order").click (e) ->
+  $(".production-order").click (e) ->
     e.preventDefault()
-    assembly_order_modal.css('display', 'block')
-    $("#assembly-order-form").prop('action', $(@).prop('href'))
+    production_order_modal.css('display', 'block')
+    $("#production-order-form").prop('action', $(@).prop('href'))
 
   $(".suspend-order").click (e) ->
     e.preventDefault()
     suspend_order_modal.css('display', 'block')
     $("#suspend-order-form").prop('action', $(@).prop('href'))
+
+  $(".stages-order").click (e) ->
+    e.preventDefault()
+    stages_order_modal.css('display', 'block')
+    $("#stages-order-form").prop('action', $(@).prop('href'))
+
+    if $(@).data('welding')
+      $("#stages_welding").prop('checked', 'checked')
+    else
+      $("#stages_welding").prop('checked', false)
+
+    if $(@).data('cleaning')
+      $("#stages_cleaning").prop('checked', 'checked')
+    else
+      $("#stages_cleaning").prop('checked', false)
+
+    if $(@).data('painting')
+      $("#stages_painting").prop('checked', 'checked')
+    else
+      $("#stages_painting").prop('checked', false)
+
+    if $(@).data('upholstery')
+      $("#stages_upholstery").prop('checked', 'checked')
+    else
+      $("#stages_upholstery").prop('checked', false)
+
+    if $(@).data('woodwork')
+      $("#stages_woodwork").prop('checked', 'checked')
+    else
+      $("#stages_woodwork").prop('checked', false)
+
+    if $(@).data('assembly')
+      $("#stages_assembly").prop('checked', 'checked')
+    else
+      $("#stages_assembly").prop('checked', false)
 
 
   $(".add-item").click ->

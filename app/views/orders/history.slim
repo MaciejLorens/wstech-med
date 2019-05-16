@@ -27,6 +27,7 @@ h3
       th Numer seryjny
       th Adres wysyłki
       th Status
+      th Etapy
       th Autor zmiany
       th Data zmiany
 
@@ -65,6 +66,20 @@ h3
         td.serial_number = @order.serial_number
         td.shipping_address = @order.shipping_address
         td.status = status(@order)
+        td.stages
+          ul
+            - if @order.stages.include?('welding')
+              li.stage Spawanie
+            - if @order.stages.include?('cleaning')
+              li.stage Czyszczenie
+            - if @order.stages.include?('painting')
+              li.stage Malowanie
+            - if @order.stages.include?('upholstery')
+              li.stage Tapicerowanie
+            - if @order.stages.include?('woodwork')
+              li.stage Stolarka
+            - if @order.stages.include?('assembly')
+              li.stage Montaż
         td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
         td = date_time_sec(version.created_at.localtime.to_datetime)
 
@@ -106,5 +121,19 @@ h3
             td.serial_number = order_version.serial_number
             td.shipping_address = order_version.shipping_address
             td.status = status(order_version)
+            td.stages
+              ul
+                - if order_version.stages&.include?('welding')
+                  li.stage Spawanie
+                - if order_version.stages&.include?('cleaning')
+                  li.stage Czyszczenie
+                - if order_version.stages&.include?('painting')
+                  li.stage Malowanie
+                - if order_version.stages&.include?('upholstery')
+                  li.stage Tapicerowanie
+                - if order_version.stages&.include?('woodwork')
+                  li.stage Stolarka
+                - if order_version.stages&.include?('assembly')
+                  li.stage Montaż
             td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
             td = date_time_sec(version_after.created_at.localtime.to_datetime)

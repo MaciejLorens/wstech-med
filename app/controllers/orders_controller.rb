@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
   before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download, :queue]
-  before_action :set_order, only: [:show, :pdf, :edit, :update, :queue, :release, :assembly, :suspend, :destroy, :history]
+  before_action :set_order, only: [:show, :pdf, :edit, :update, :queue, :stages, :finish, :assembly, :suspend, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
   def ordered
@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
                 .order(@sorting)
   end
 
-  def assembled
+  def production
     @queue_orders = Order
                       .includes(:purchaser, :items, :user)
                       .where(status: 'queue')
@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
                           .includes(:purchaser, :items, :user)
                           .where(status: 'suspended')
 
-    @assembly_orders = Order
+    @production_orders = Order
                          .includes(:purchaser, :items, :user)
                          .where(status: 'assembly')
                          .order('orders.delivery_request_date asc')
@@ -144,7 +144,18 @@ class OrdersController < ApplicationController
     redirect_to action: :ordered
   end
 
-  def release
+  def stages
+    worker = User.where(code: params[:code]).first
+    return redirect_to root_path, notice: 'Błędny kod pracownika' unless worker.present?
+
+    @order.update(stages: params[:stages].keys)
+    @order.versions.last.update(whodunnit: worker.id)
+    @order.create_unseens(current_user)
+
+    redirect_to action: :production
+  end
+
+  def finish
     worker = User.where(code: params[:code]).first
     return redirect_to root_path, notice: 'Błędny kod pracownika' unless worker.present?
 
@@ -157,7 +168,7 @@ class OrdersController < ApplicationController
     @order.versions.last.update(whodunnit: worker.id)
     @order.create_unseens(current_user)
 
-    redirect_to action: :assembled
+    redirect_to action: :production
   end
 
   def assembly
@@ -168,7 +179,7 @@ class OrdersController < ApplicationController
     @order.versions.last.update(whodunnit: worker.id)
     @order.create_unseens(current_user)
 
-    redirect_to action: :assembled
+    redirect_to action: :production
   end
 
   def suspend
@@ -184,7 +195,7 @@ class OrdersController < ApplicationController
     @order.versions.last.update(whodunnit: worker.id)
     @order.create_unseens(current_user)
 
-    redirect_to action: :assembled
+    redirect_to action: :production
   end
 
   def destroy

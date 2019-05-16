@@ -24,7 +24,7 @@
         br
         .row
           .col-md-2
-            = submit_tag 'Zwolnij', class: 'btn btn-default'
+            = submit_tag 'Ukończ', class: 'btn btn-default'
 
 
   #suspend-order.modal
@@ -54,13 +54,13 @@
           .col-md-2
             = submit_tag 'Zawieś', class: 'btn btn-default'
 
-  #assembly-order.modal
+  #production-order.modal
     .modal-content
       span.close-modal &times
-      = form_tag root_path, method: 'put', id: 'assembly-order-form'
+      = form_tag root_path, method: 'put', id: 'production-order-form'
         .row
           .col-md-12
-            h4 Montaż zamówienia
+            h4 Zacznij produkcje zamówienia
         br
         - if current_user.admin?
           = hidden_field_tag :code, current_user.code
@@ -74,4 +74,49 @@
         br
         .row
           .col-md-2
-            = submit_tag 'Montuj', class: 'btn btn-default'
+            = submit_tag 'Produkuj', class: 'btn btn-default'
+
+  #stages-order.modal
+    .modal-content
+      span.close-modal &times
+      = form_tag root_path, method: 'put', id: 'stages-order-form'
+        .row
+          .col-md-12
+            h4 Etapy zamówienia
+        br
+        .row
+          ul.orders-stages
+            li
+              = check_box_tag 'stages[welding]'
+              = label_tag 'spawanie'
+            li
+              = check_box_tag 'stages[cleaning]'
+              = label_tag 'czyszczenie'
+            li
+              = check_box_tag 'stages[painting]'
+              = label_tag 'malowanie'
+            li
+              = check_box_tag 'stages[upholstery]'
+              = label_tag 'tapicerowanie'
+            li
+              = check_box_tag 'stages[woodwork]'
+              = label_tag 'stolarka / frezowanie'
+            li
+              = check_box_tag 'stages[assembly]'
+              = label_tag 'montaż i pakowanie'
+
+
+        br
+        - if current_user.admin?
+          = hidden_field_tag :code, current_user.code
+        - else
+          br
+          .row
+            .col-md-2
+              label Kod pracownika:
+              br
+              = text_field_tag :code, nil, class: 'form-control', required: true
+        br
+        .row
+          .col-md-2
+            = submit_tag 'Uakutalnij etapy', class: 'btn btn-default'

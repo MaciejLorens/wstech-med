@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190514160613) do
+ActiveRecord::Schema.define(version: 20190516100414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20190514160613) do
     t.string   "suspend_message"
     t.string   "comment"
     t.string   "package_dimensions"
+    t.string   "stages",                default: [],                     array: true
   end
 
   add_index "orders", ["invoice_number"], name: "index_orders_on_invoice_number", using: :btree
