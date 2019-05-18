@@ -16,7 +16,8 @@ module OrdersControllerHelper
   def status(order)
     case order.status
       when 'ordered' then 'Zamówione'
-      when 'production' then 'Produkcja'
+      when 'queue' then 'Kolejka'
+      when 'assembly' then 'Produkcja'
       when 'suspended' then 'Zawieszone'
       when 'ready_to_delivery' then 'Gotowe do wysyłki'
       when 'delivered' then 'Zrealizowane'
@@ -71,7 +72,9 @@ module OrdersControllerHelper
   def options_for_status
     [
       ['Zamówione', 'ordered'],
-      ['Kolejka', 'assembly'],
+      ['Kolejka', 'queue'],
+      ['Zawieszone', 'suspended'],
+      ['Produkcja', 'assembly'],
       ['Gotowe do wysyłki', 'ready_to_delivery'],
       ['Zrealizowane', 'delivered'],
       ['Usunięte', 'deleted']

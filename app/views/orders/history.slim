@@ -52,9 +52,15 @@ h3
                   td.options = item.options
                   td.color = item.color
                   td.quantity = item.quantity
+            - if @order.payment_comment.present?
+              tr
+                td.comment colspan='6' = "Uwagi płatności: #{@order.payment_comment}"
+            - if @order.shipping_comment.present?
+              tr
+                td.comment colspan='6' = "Uwagi dostawy: #{@order.shipping_comment}"
             - if @order.comment.present?
               tr
-                td.comment colspan='6' = "Uwagi: #{@order.comment}"
+                td.comment colspan='6' = "Uwagi inne: #{@order.comment}"
         td.user = "#{@order.user.first_name} #{@order.user.last_name}"
         td.purchaser = @order&.purchaser&.name
         td.client_order_number = @order.client_order_number
@@ -107,9 +113,15 @@ h3
                       td.options = item_version.options
                       td.color = item_version.color
                       td.quantity = item_version.quantity
-                - if order_version.comment.present?
+                - if @order.payment_comment.present?
                   tr
-                    td.comment colspan='6' = "Uwagi: #{order_version.comment}"
+                    td.comment colspan='6' = "Uwagi płatności: #{@order.payment_comment}"
+                - if @order.shipping_comment.present?
+                  tr
+                    td.comment colspan='6' = "Uwagi dostawy: #{@order.shipping_comment}"
+                - if @order.comment.present?
+                  tr
+                    td.comment colspan='6' = "Uwagi inne: #{@order.comment}"
             td.user = "#{order_version.user.first_name} #{order_version.user.last_name}"
             td.purchaser = order_version&.purchaser&.name
             td.client_order_number = order_version.client_order_number

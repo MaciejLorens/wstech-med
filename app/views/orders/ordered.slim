@@ -50,9 +50,15 @@ h3
                   td.options = item.options
                   td.color = item.color
                   td.quantity = item.quantity
+              - if order.payment_comment.present?
+                tr
+                  td.comment colspan='6' = "Uwagi płatności: #{order.payment_comment}"
+              - if order.shipping_comment.present?
+                tr
+                  td.comment colspan='6' = "Uwagi dostawy: #{order.shipping_comment}"
               - if order.comment.present?
                 tr
-                  td.comment colspan='6' = "Uwagi: #{order.comment}"
+                  td.comment colspan='6' = "Uwagi inne: #{order.comment}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
           td.created_at = date(order.created_at)

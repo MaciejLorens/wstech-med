@@ -15,12 +15,9 @@ h3
     .form-group.col-md-3
       = f.label 'Na kiedy ma być zrobione'
       = f.text_field :delivery_request_date, class: 'datepicker form-control', placeholder: 7.days.from_now.strftime('%d-%m-%Y'), required: true
-
-  .row
     .form-group.col-md-3
       = f.label 'Zamawiający'
       = f.select :purchaser_id, options_for_select(@purchasers.map{|p| [p.name, p.id]}), {}, class: 'form-control selectpicker', 'data-live-search': true, require: true
-
     .form-group.col-md-3
       = f.label 'Numer zamówienia klienta'
       = f.text_field :client_order_number, class: 'form-control'
@@ -32,18 +29,19 @@ h3
     .form-group.col-md-3
       = f.label 'Numer seryjny'
       = f.text_field :serial_number, class: 'form-control'
-
-  .row
     .form-group.col-md-3
       = f.label 'Adres wysyłki'
       = f.text_field :shipping_address, class: 'form-control'
-    .form-group.col-md-3
-      = f.label 'Status'
-      = f.select :status, options_for_select(options_for_status), {}, class: 'form-control selectpicker'
 
   .row
-    .form-group.col-md-6
-      = f.label 'Uwagi'
+    .form-group.col-md-3
+      = f.label 'Uwagi płatności'
+      = f.text_area :payment_comment, class: 'form-control', rows: '4'
+    .form-group.col-md-3
+      = f.label 'Uwagi dostawy'
+      = f.text_area :shipping_comment, class: 'form-control', rows: '4'
+    .form-group.col-md-3
+      = f.label 'Uwagi inne'
       = f.text_area :comment, class: 'form-control', rows: '4'
 
   br

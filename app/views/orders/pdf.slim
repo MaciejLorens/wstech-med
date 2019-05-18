@@ -22,9 +22,28 @@ table.table.table-hover
         td.options = item.options
         td.color = item.color
         td.quantity = item.quantity
-    - if @order.comment.present?
-      tr
-        td.comment colspan='6' = "Uwagi: #{order.comment}"
+
+br
+br
+
+
+table.table
+  tr
+    td
+      | Uwagi płatności:
+      br
+      br
+      = @order.payment_comment
+    td
+      | Uwagi dostawy:
+      br
+      br
+      = @order.shipping_comment
+    td
+      | Uwagi inne:
+      br
+      br
+      = @order.comment
 
 br
 br
