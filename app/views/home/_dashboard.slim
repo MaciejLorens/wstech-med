@@ -1,0 +1,81 @@
+h3 Raporty Monterów
+
+.row
+  .col-md-6
+    h4 = "Dzisiaj (#{Date.today.strftime('%d-%m-%Y')})"
+    table.table.table-hover
+      tr
+        th Imię i nazwisko
+        th Ilość zamówień
+        th Zamówienia
+        th Ilość modeli
+        th Modele
+
+      tbody
+        - @assemblers.each do |assembler|
+          - orders = assembler.assembled_orders.ready_to_delivery_from_to(Time.now, Time.now)
+          tr
+            td = assembler.full_name
+            td = orders.count
+            td = orders.map(&:number).join(', ')
+            td = orders.map(&:items).flatten.count
+            td = orders.map(&:items).flatten.map(&:model).join(', ')
+
+  .col-md-6
+    - previous_working_day = 1.day.ago
+    - if Date.today.wday == 6 || Date.today.wday == 0 || Date.today.wday == 1
+      - previous_working_day = Date.yesterday.beginning_of_week(:friday)
+
+    h4 = "Poprzedni dzień (#{previous_working_day.strftime('%d-%m-%Y')})"
+    table.table.table-hover
+      tr
+        th Imię i nazwisko
+        th Ilość zamówień
+        th Zamówienia
+        th Ilość modeli
+        th Modele
+
+      tbody
+        - @assemblers.each do |assembler|
+          - orders = assembler.assembled_orders.ready_to_delivery_from_to(1.day.ago, 1.day.ago)
+          tr
+            td = assembler.full_name
+            td = orders.count
+            td = orders.map(&:number).join(', ')
+            td = orders.map(&:items).flatten.count
+            td = orders.map(&:items).flatten.map(&:model).join(', ')
+
+br
+br
+
+h4 Z okresu czasu
+
+= form_tag root_path, method: :get, class: 'filter-form'
+  .row
+    .col-md-1
+      = text_field_tag :from, params[:from] || 1.month.ago.strftime('%d-%m-%Y'), class: 'datepicker form-control', style: 'width: 140px'
+    .col-md-1
+      = text_field_tag :to, params[:to] || Date.today.strftime('%d-%m-%Y'), class: 'datepicker form-control', style: 'width: 140px'
+    .form-group.col-md-2
+      = submit_tag 'Filtruj', class: 'btn btn-default pull-right'
+      = link_to 'Czyść', root_path, class: 'btn btn-default pull-right', style: 'margin-right: 10px;'
+br
+.row
+  .col-md-12
+    table.table.table-hover
+      tr
+        th Imię i nazwisko
+        th Ilość zamówień
+        th Zamówienia
+        th Ilość modeli
+        th Modele
+
+      tbody
+        - @assemblers.each do |assembler|
+          - orders = assembler.assembled_orders.ready_to_delivery_from_to(params[:from] || 1.month.ago, params[:to] || Date.today)
+          tr
+            td = assembler.full_name
+            td = orders.count
+            td = orders.map(&:number).join(', ')
+            td = orders.map(&:items).flatten.count
+            td = orders.map(&:items).flatten.map(&:model).join(', ')

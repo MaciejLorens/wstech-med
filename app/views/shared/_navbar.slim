@@ -14,7 +14,7 @@
 
   ul.nav.navbar-nav.pull-right
     - if user_signed_in?
-      | #{current_user.first_name} #{current_user.last_name} &nbsp&nbsp
+      | #{current_user.full_name} &nbsp&nbsp
       = link_to 'Wyloguj', destroy_user_session_path, method: :delete, class: 'btn btn-default navbar-btn'
     - else
       = link_to 'Zaloguj', new_user_session_path, class: 'btn btn-default navbar-btn'

@@ -59,7 +59,7 @@ module OrdersControllerHelper
 
   def options_for_users
     User.all.map do |user|
-      [user.first_name, user.id]
+      [user.full_name, user.id]
     end
   end
 

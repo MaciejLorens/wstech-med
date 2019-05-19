@@ -141,6 +141,7 @@ class OrdersController < ApplicationController
     @order.update(
       status: 'ready_to_delivery',
       ready_to_delivery_at: Time.now,
+      ready_to_delivery_by: worker.id,
       package_dimensions: params[:package_dimensions],
       suspend_message: nil
     )

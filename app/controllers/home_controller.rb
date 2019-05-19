@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
 
   def index
-
+    @assemblers = User.where(admin: false)
   end
 
   def search

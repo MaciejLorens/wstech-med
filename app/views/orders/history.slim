@@ -22,6 +22,7 @@ h3
       th Utworzenie
       th Data montażu
       th Gotowe do wysyłki
+      th Monter
       th Zrealizo- wane
       th Numer faktury
       th Numer seryjny
@@ -61,12 +62,13 @@ h3
             - if @order.comment.present?
               tr
                 td.comment colspan='6' = "Uwagi inne: #{@order.comment}"
-        td.user = "#{@order.user.first_name} #{@order.user.last_name}"
+        td.user = "#{@order.user.full_name}"
         td.purchaser = @order&.purchaser&.name
         td.client_order_number = @order.client_order_number
         td.created_at = date(@order.created_at)
         td.delivery_request_date = date(@order.delivery_request_date)
         td.ready_to_delivery = date(@order.ready_to_delivery_at)
+        td.ready_to_delivery_by = @order&.assembler&.full_name
         td.delivered = date(@order.delivered_at)
         td.invoice_number = @order.invoice_number
         td.serial_number = @order.serial_number
@@ -86,7 +88,7 @@ h3
               li.stage Stolarka
             - if @order.stages.include?('assembly')
               li.stage Montaż
-        td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
+        td = "#{version_author&.full_name}"
         td = date_time_sec(version.created_at.localtime.to_datetime)
 
       - @order.versions.reverse.each_with_index do |version, index|
@@ -128,6 +130,7 @@ h3
             td.created_at = date(order_version.created_at)
             td.delivery_request_date = date(order_version.delivery_request_date)
             td.ready_to_delivery = date(order_version.ready_to_delivery_at)
+            td.ready_to_delivery_by = order_version&.assembler&.full_name
             td.delivered = date(order_version.delivered_at)
             td.invoice_number = order_version.invoice_number
             td.serial_number = order_version.serial_number
@@ -147,5 +150,5 @@ h3
                   li.stage Stolarka
                 - if order_version.stages&.include?('assembly')
                   li.stage Montaż
-            td = "#{version_author.try(:first_name)} #{version_author.try(:last_name)}"
+            td = "#{version_author&.full_name}"
             td = date_time_sec(version_after.created_at.localtime.to_datetime)

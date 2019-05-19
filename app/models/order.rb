@@ -10,6 +10,10 @@ class Order < ActiveRecord::Base
              class_name: User,
              foreign_key: :deleted_by_id
 
+  belongs_to :assembler,
+             class_name: User,
+             foreign_key: :ready_to_delivery_by
+
   accepts_nested_attributes_for :items
 
   has_paper_trail
@@ -18,7 +22,17 @@ class Order < ActiveRecord::Base
 
   before_create :set_number
 
-  scope :from_to, ->(from, to) { where('created_at >= ? AND created_at < ?', from.to_datetime.beginning_of_day, to.to_datetime.end_of_day) }
+  scope :from_to, ->(from, to) {
+    where('created_at >= ? AND created_at < ?',
+          from.to_datetime.beginning_of_day,
+          to.to_datetime.end_of_day)
+  }
+
+  scope :ready_to_delivery_from_to, ->(from, to) {
+    where('ready_to_delivery_at >= ? AND ready_to_delivery_at < ?',
+          from.to_datetime.beginning_of_day,
+          to.to_datetime.end_of_day)
+  }
   scope :delivered, ->() { where('status = ?', 'delivered') }
   scope :at_status, ->(status) { where('status = ?', status) }
   scope :at_year_at_month, ->(year, month) { where('orders.created_at >= ? AND orders.created_at < ?', "#{year}/#{month}/01".to_datetime, "#{year}/#{month}/01".to_datetime.end_of_month) }
