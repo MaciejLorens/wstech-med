@@ -37,6 +37,7 @@ h3
       th = delivered_sort_link('Utworzenie', 'created_at')
       th = delivered_sort_link('Na kiedy ma być', 'delivery_request_date')
       th = delivered_sort_link('Gotowe do wysyłki', 'ready_to_delivery_at')
+      th = delivered_sort_link('Monter', 'ready_to_delivery_by')
       th = delivered_sort_link('Zrealizowane', 'delivered_at')
       th = delivered_sort_link('Numer faktury', 'invoice_number')
       th = delivered_sort_link('Numer seryjny', 'serial_number')
@@ -71,6 +72,7 @@ h3
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
           td.ready_to_delivery = date(order.ready_to_delivery_at)
+          td.assembler = order&.assembler&.full_name
           td.delivered = date(order.delivered_at)
           td.invoice_number = order.invoice_number
           td.serial_number = order.serial_number
