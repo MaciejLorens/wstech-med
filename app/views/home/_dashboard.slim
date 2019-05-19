@@ -56,8 +56,8 @@ h4 Z okresu czasu
     .col-md-1
       = text_field_tag :to, params[:to] || Date.today.strftime('%d-%m-%Y'), class: 'datepicker form-control', style: 'width: 140px'
     .form-group.col-md-2
-      = submit_tag 'Filtruj', class: 'btn btn-default pull-right'
-      = link_to 'Czyść', root_path, class: 'btn btn-default pull-right', style: 'margin-right: 10px;'
+      = submit_tag 'Filtruj', class: 'btn btn-default'
+      = link_to 'Czyść', root_path, class: 'btn btn-default', style: 'margin-left: 10px;'
 br
 .row
   .col-md-12
