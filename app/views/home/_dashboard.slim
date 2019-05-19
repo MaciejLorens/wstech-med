@@ -37,7 +37,7 @@ h3 Raporty Monterów
 
       tbody
         - @assemblers.each do |assembler|
-          - orders = assembler.assembled_orders.ready_to_delivery_from_to(1.day.ago, 1.day.ago)
+          - orders = assembler.assembled_orders.ready_to_delivery_from_to(previous_working_day, previous_working_day)
           tr
             td = assembler.full_name
             td = orders.count
@@ -45,7 +45,6 @@ h3 Raporty Monterów
             td = orders.map(&:items).flatten.count
             td = orders.map(&:items).flatten.map(&:model).join(', ')
 
-br
 br
 
 h4 Z okresu czasu
