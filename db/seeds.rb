@@ -1,16 +1,81 @@
-maciej = User.create(first_name: 'Maciej', last_name: 'Lorens', email: 'maciej.lorens@gmail.com', password: '1234567890', admin: true)
-jacek = User.create(first_name: 'Jacek', last_name: 'Mazur', email: 'jmazur@pro.onet.pl', password: 'wstechjacek', admin: true)
-robert = User.create(first_name: 'Robert', last_name: 'Lorens', email: 'robertlo@op.pl', password: 'wstechrobert', admin: true)
+maciej = User.create(
+  first_name: 'Maciej',
+  last_name: 'Lorens',
+  email: 'maciej.lorens@gmail.com',
+  password: 'Im1bF5mF',
+  admin: true)
+
+jacek = User.create(
+  first_name: 'Jacek',
+  last_name: 'Mazur',
+  email: 'jmazur@pro.onet.pl',
+  password: 'h8c7Zpcr',
+  admin: true)
+
+robert = User.create(
+  first_name: 'Robert',
+  last_name: 'Lorens',
+  email: 'robertlo@op.pl',
+  password: 'uvhK9LlC',
+  admin: true)
+
+andrzej = User.create(
+  first_name: 'Andrzej',
+  last_name: '',
+  email: 'andrzej@wstech.eu',
+  password: 'gcN2xW99',
+  admin: true)
 
 
-paulina = User.create(first_name: 'Paulina', last_name: '', email: 'paulina@wstech.eu', password: 'wstechpaulina', admin: true)
-klaudia = User.create(first_name: 'Klaudia', last_name: '', email: 'klaudia@wstech.eu', password: 'wstechklaudia', admin: true)
-ilona = User.create(first_name: 'Ilona', last_name: '', email: 'ilona@wstech.eu', password: 'wstechilona', admin: true)
-bartek = User.create(first_name: 'Monter', last_name: '', email: 'monter@wstech.eu', password: 'wstechmonter', admin: false)
-monter1 = User.create(first_name: 'Monter1', last_name: '', email: 'monter1@wstech.eu', password: 'wstechmonter1', admin: false)
-monter2 = User.create(first_name: 'Monter2', last_name: '', email: 'monter2@wstech.eu', password: 'wstechmonter2', admin: false)
-monter3 = User.create(first_name: 'Monter3', last_name: '', email: 'monter3@wstech.eu', password: 'wstechmonter3', admin: false)
-monter4 = User.create(first_name: 'Monter4', last_name: '', email: 'monter4@wstech.eu', password: 'wstechmonter4', admin: false)
+paulina = User.create(
+  first_name: 'Paulina',
+  last_name: '',
+  email: 'paulina@wstech.eu',
+  password: 'SnJNx9jq',
+  admin: true)
+
+klaudia = User.create(
+  first_name: 'Klaudia',
+  last_name: '',
+  email: 'klaudia@wstech.eu',
+  password: '2qbEAkqD',
+  admin: true)
+
+ilona = User.create(
+  first_name: 'Ilona',
+  last_name: '',
+  email: 'ilona@wstech.eu',
+  password: 'fI9GmwE4',
+  admin: true)
+
+
+bartek = User.create(
+  first_name: 'Bartek',
+  last_name: '',
+  email: 'bartek@wstech.eu',
+  password: 'dtsMEmp3',
+  admin: false)
+
+wojtek = User.create(
+  first_name: 'Wojtek',
+  last_name: '',
+  email: 'wojtek@wstech.eu',
+  password: '8KAjmcai',
+  admin: false)
+
+bogdan = User.create(
+  first_name: 'Bogdan',
+  last_name: '',
+  email: 'bogdan@wstech.eu',
+  password: 'YVwDzH17',
+  admin: false)
+
+maciek = User.create(
+  first_name: 'Maciek',
+  last_name: '',
+  email: 'maciek@wstech.eu',
+  password: 'zQUVZU0y',
+  admin: false)
 
 
 purchaser_1 = Purchaser.create(name: 'Stomil')
