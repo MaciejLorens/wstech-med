@@ -35,22 +35,22 @@ $ ->
     production_order_modal.css('display', 'none')
     stages_order_modal.css('display', 'none')
 
-  $(".ready-to-delivery").click (e) ->
+  $(document).on 'click', '.ready-to-delivery', (e) ->
     e.preventDefault()
     ready_to_delivery_modal.css('display', 'block')
     $("#ready-to-delivery-form").prop('action', $(@).prop('href'))
 
-  $(".production-order").click (e) ->
+  $(document).on 'click', '.production-order', (e) ->
     e.preventDefault()
     production_order_modal.css('display', 'block')
     $("#production-order-form").prop('action', $(@).prop('href'))
 
-  $(".suspend-order").click (e) ->
+  $(document).on 'click', '.suspend-order', (e) ->
     e.preventDefault()
     suspend_order_modal.css('display', 'block')
     $("#suspend-order-form").prop('action', $(@).prop('href'))
 
-  $(".stages-order").click (e) ->
+  $(document).on 'click', '.stages-order', (e) ->
     e.preventDefault()
     stages_order_modal.css('display', 'block')
     $("#stages-order-form").prop('action', $(@).prop('href'))

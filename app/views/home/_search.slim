@@ -1,8 +1,13 @@
 h3
-  | Zawieszone
-br
+  | Wyniki wyszukania klucza:&nbsp;
+  span
+    = params[:query]
+  .pull-right
+    = link_to 'Wydrukuj', '#', onclick: 'window.print()', class: 'btn btn-default', style: 'margin-left: 20px'
+  br
+  br
 
-- if @suspended_orders.blank?
+- if @orders.blank?
   | - Brak zamówień -
 - else
   table.table.table-hover
@@ -22,10 +27,11 @@ br
       th Numer zamówienia klienta
       th Utworzenie
       th Na kiedy ma być
+      th Ukończone etapy
       th
 
     tbody
-      - @suspended_orders.each do |order|
+      - @orders.each do |order|
         tr
           td.id = order.number
           td.inner
@@ -50,89 +56,7 @@ br
               - if order.comment.present?
                 tr
                   td.comment colspan='6' = "Uwagi inne: #{order.comment}"
-          td.user = "#{order.user&.full_name}"
-          td.purchaser = order&.purchaser&.name
-          td.client_order_number = order.client_order_number
-          td.created_at = date(order.created_at)
-          td.delivery_request_date = date(order.delivery_request_date)
-          td.actions
-            = link_to 'Produkcja',
-                assembly_order_path(order),
-                class: 'btn btn-default btn-sm production-order'
-            = link_to 'PDF',
-                pdf_order_path(order),
-                class: 'btn btn-default btn-sm'
-            - if current_user.admin?
-              = link_to 'Edycja',
-                  edit_order_path(order),
-                  class: 'btn btn-default btn-sm'
-              - if order.unseen_for(current_user).present?
-                = link_to 'Nowa</br>Zmiana'.html_safe,
-                    history_order_path(order),
-                    class: "btn btn-default btn-sm unseen"
-              - else
-                = link_to 'Historia',
-                    history_order_path(order),
-                    class: 'btn btn-default btn-sm'
-              = link_to 'Usuń',
-                  order_path(order),
-                  data: { confirm: 'Czy na pewno chcesz usunąć zlecenie?' },
-                  method: :delete,
-                  class: 'btn btn-default btn-sm'
-
-br
-br
-h3
-  | W trakcie produkcji
-br
-
-- if @production_orders.blank?
-  | - Brak zamówień -
-- else
-  table.table.table-hover
-    tr
-      th.id Numer
-      th
-        table.inner-table
-          tr
-            th.lp Lp
-            th.product Produkt
-            th.model Model
-            th.options Opcje
-            th.color Kolor
-            th.quantity Ilość
-      th Twórca
-      th Zamawiający
-      th Numer zamówienia klienta
-      th Utworzenie
-      th Na kiedy ma być
-      th Ukończone etapy
-      th
-
-    tbody
-      - @production_orders.each do |order|
-        tr
-          td.id = order.number
-          td.inner
-            table.inner-table
-              - order.items.select(&:visible?).each_with_index do |item, index|
-                tr
-                  td.lp = "#{index + 1}."
-                  td.product = item.product
-                  td.model = item.model
-                  td.options = item.options
-                  td.color = item.color
-                  td.quantity = item.quantity
-              - if order.payment_comment.present?
-                tr
-                  td.comment colspan='6' = "Uwagi płatności: #{order.payment_comment}"
-              - if order.shipping_comment.present?
-                tr
-                  td.comment colspan='6' = "Uwagi dostawy: #{order.shipping_comment}"
-              - if order.comment.present?
-                tr
-                  td.comment colspan='6' = "Uwagi inne: #{order.comment}"
-          td.user = "#{order.user&.full_name}"
+          td.user = "#{order.user.full_name}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
           td.created_at = date(order.created_at)
@@ -152,6 +76,9 @@ br
               - if order.stages.include?('assembly')
                 li.stage Montaż
           td.actions
+            = link_to 'Produkcja',
+                assembly_order_path(order),
+                class: 'btn btn-default btn-sm production-order'
             = link_to 'Ukończ',
                 finish_order_path(order),
                 class: 'btn btn-default btn-sm ready-to-delivery'

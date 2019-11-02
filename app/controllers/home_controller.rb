@@ -5,13 +5,15 @@ class HomeController < ApplicationController
   end
 
   def search
+    q = "%#{params[:query].downcase}%"
+
     @orders = Order
                 .joins(:items)
-                .where('items.product LIKE ?', "%#{params[:query].downcase}%")
+                .where('orders.number LIKE ? OR items.product LIKE ? OR items.model LIKE ? OR items.options LIKE ?', q, q, q, q)
                 .includes(:purchaser, :user, :items)
                 .order(created_at: :desc)
 
-    render json: {content: render_to_string(partial: 'search')}
+    render partial: 'search'
   end
 
 end

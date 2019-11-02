@@ -12,6 +12,8 @@
       li= link_to 'Usunięte', deleted_orders_path(f_created_at_from: DateTime.now.beginning_of_month.strftime('%d-%m-%Y'), f_created_at_to: DateTime.now.strftime('%d-%m-%Y'))
       li= link_to 'Zamawiający', purchasers_path
 
+      = text_field_tag :search, '', placeholder: 'Szukaj', class: 'search-tag'
+
   ul.nav.navbar-nav.pull-right
     - if user_signed_in?
       | #{current_user.full_name} &nbsp&nbsp
