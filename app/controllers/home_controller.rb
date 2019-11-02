@@ -10,7 +10,6 @@ class HomeController < ApplicationController
     @orders = Order
                 .joins(:items)
                 .where('orders.number LIKE ? OR items.product LIKE ? OR items.model LIKE ? OR items.options LIKE ?', q, q, q, q)
-                .includes(:purchaser, :user, :items)
                 .order(created_at: :desc)
 
     render partial: 'search'
