@@ -5,11 +5,11 @@ class HomeController < ApplicationController
   end
 
   def search
-    q = "%#{params[:query].downcase}%"
+    q = "%#{params[:query]}%"
 
     @orders = Order
                 .joins(:items)
-                .where('orders.number LIKE ? OR items.product LIKE ? OR items.model LIKE ? OR items.options LIKE ?', q, q, q, q)
+                .where('orders.number ILIKE ? OR items.product ILIKE ? OR items.model ILIKE ? OR items.options ILIKE ?', q, q, q, q)
                 .order(created_at: :desc)
 
     render partial: 'search'
