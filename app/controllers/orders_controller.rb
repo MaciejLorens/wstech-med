@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
-  before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download, :queue]
-  before_action :set_order, only: [:show, :pdf, :edit, :update, :queue, :stages, :finish, :assembly, :suspend, :destroy, :history]
+  before_action :authorize, only: [:ready_to_delivery, :delivered, :deleted, :history, :show, :new, :edit, :create, :destroy, :download]
+  before_action :set_order, only: [:show, :pdf, :edit, :update, :stages, :finish, :assembly, :suspend, :destroy, :history]
   before_action :set_sorting, only: [:ordered, :ready_to_delivery, :delivered, :deleted]
 
   def ordered
@@ -14,10 +14,6 @@ class OrdersController < ApplicationController
   end
 
   def production
-    @queue_orders = Order
-                      .includes(:purchaser, :items, :user)
-                      .where(status: 'queue')
-
     @suspended_orders = Order
                           .includes(:purchaser, :items, :user)
                           .where(status: 'suspended')
@@ -115,12 +111,6 @@ class OrdersController < ApplicationController
     else
       render :edit
     end
-  end
-
-  def queue
-    @order.update(status: 'queue')
-    @order.create_unseens(current_user)
-    redirect_to action: :ordered
   end
 
   def stages

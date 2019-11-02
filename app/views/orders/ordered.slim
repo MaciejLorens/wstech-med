@@ -64,9 +64,9 @@ h3
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
           td.actions
-            = link_to 'Kolejkuj',
-                queue_order_path(order),
-                data: { confirm: 'Czy na pewno chcesz zakolejkować zlecenie?' },
+            = link_to 'Produkcja',
+                assembly_order_path(order),
+                data: { confirm: 'Czy na pewno chcesz przenieść zamówienie do produkcji?' },
                 method: :put,
                 class: 'btn btn-default btn-sm'
             = link_to 'PDF',

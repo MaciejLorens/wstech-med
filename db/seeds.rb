@@ -95,7 +95,7 @@ end
     user_id: [paulina, klaudia, ilona, bartek].sample.id,
     purchaser_id: [purchaser_1, purchaser_2, purchaser_3].sample.id,
     delivery_request_date: Time.now - rand(10).days,
-    status: %w(ordered queue assembly suspended ready_to_delivery delivered deleted).sample,
+    status: %w(ordered assembly suspended ready_to_delivery delivered deleted).sample,
     client_order_number: SecureRandom.hex(3),
     created_at: rand(150).days.ago
   )
