@@ -66,9 +66,7 @@ h3
           td.actions
             = link_to 'Produkcja',
                 assembly_order_path(order),
-                data: { confirm: 'Czy na pewno chcesz przenieść zamówienie do produkcji?' },
-                method: :put,
-                class: 'btn btn-default btn-sm'
+                class: 'btn btn-default btn-sm production-order'
             = link_to 'PDF',
                 pdf_order_path(order),
                 class: 'btn btn-default btn-sm'
@@ -86,6 +84,6 @@ h3
                     class: 'btn btn-default btn-sm'
               = link_to 'Usuń',
                   order_path(order),
-                  data: {confirm: 'Czy na pewno chcesz usunąć zlecenie?'},
+                  data: { confirm: 'Czy na pewno chcesz usunąć zlecenie?' },
                   method: :delete,
                   class: 'btn btn-default btn-sm'

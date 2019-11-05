@@ -17,11 +17,11 @@ br
             th.options Opcje
             th.color Kolor
             th.quantity Ilość
-      th Twórca
       th Zamawiający
       th Numer zamówienia klienta
       th Utworzenie
       th Na kiedy ma być
+      th Ukończone etapy
       th
 
     tbody
@@ -50,11 +50,24 @@ br
               - if order.comment.present?
                 tr
                   td.comment colspan='6' = "Uwagi inne: #{order.comment}"
-          td.user = "#{order.user&.full_name}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
           td.created_at = date(order.created_at)
           td.delivery_request_date = date(order.delivery_request_date)
+          td.stages
+            ul
+              - if order.stages.include?('welding')
+                li.stage Spawanie
+              - if order.stages.include?('cleaning')
+                li.stage Czyszczenie
+              - if order.stages.include?('painting')
+                li.stage Malowanie
+              - if order.stages.include?('upholstery')
+                li.stage Tapicerowanie
+              - if order.stages.include?('woodwork')
+                li.stage Stolarka
+              - if order.stages.include?('assembly')
+                li.stage Montaż
           td.actions
             = link_to 'Produkcja',
                 assembly_order_path(order),
@@ -101,7 +114,6 @@ br
             th.options Opcje
             th.color Kolor
             th.quantity Ilość
-      th Twórca
       th Zamawiający
       th Numer zamówienia klienta
       th Utworzenie
@@ -132,7 +144,6 @@ br
               - if order.comment.present?
                 tr
                   td.comment colspan='6' = "Uwagi inne: #{order.comment}"
-          td.user = "#{order.user&.full_name}"
           td.purchaser = order&.purchaser&.name
           td.client_order_number = order.client_order_number
           td.created_at = date(order.created_at)
